@@ -67,10 +67,7 @@ int Memory::Load(const char *filename)
 
 int Memory::RegInt(void)
 {
-  for (int i = 0; i < 5; i++)
-  {
-    flag_reg = flag_reg & (~(1 << (i - 1)));
-  }
+  flag_reg = 0;
   return 0;
 }
 
