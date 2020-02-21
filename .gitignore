@@ -4,6 +4,7 @@ lol
 *.json
 
 build/
+libs/
 
 *.bin
 
@@ -13,6 +14,6 @@ dep/
 
 bin/
 
-libs/
+
 
 *.a
