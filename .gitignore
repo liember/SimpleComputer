@@ -4,3 +4,9 @@ lol
 *.json
 
 build/
+
+*.bin
+
+dep/
+
+*.o
