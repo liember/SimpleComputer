@@ -12,3 +12,5 @@ dep/
 *.o
 
 bin/
+
+libs/
