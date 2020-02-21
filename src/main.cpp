@@ -1,5 +1,6 @@
 #include "memory.hpp"
-#include "commandHandler.hpp"
+#include "registers.hpp"
+#include "interpreter.hpp"
 
 #include <iostream>
 #include <stdio.h>
@@ -43,13 +44,13 @@ int main()
   sc_memory.Show();
 
   // test 7
-  sc_memory.RegInt();
-  sc_memory.RegSet(TOO_FULL, 1);
-  sc_memory.RegGet(TOO_FULL, &value);
+  Registers::Init();
+  Registers::Set(TOO_FULL, 1);
+  Registers::Get(TOO_FULL, &value);
   cout << "Register \"TOO_FULL\" is:" << value << endl;
 
   // test 8
-  commandHandler sc_command;
+  interpreter sc_command;
   int val = 0;
   if (sc_command.Encode(READ, 10, &val))
     return 1;
