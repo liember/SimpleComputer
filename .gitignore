@@ -10,3 +10,5 @@ build/
 dep/
 
 *.o
+
+bin/
