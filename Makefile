@@ -41,7 +41,7 @@ libgen:
 
 
 dirs:
-	mkdir -p $(OBJDIR) $(BINDIR) $(DEPDIR)
+	mkdir -p $(OBJDIR) $(BINDIR) $(DEPDIR) $(LIBDIR)
 		
 clean:
 	rm -f $(BINDIR)* $(OBJDIR)*.o $(DEPDIR)*.d
