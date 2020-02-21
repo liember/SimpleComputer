@@ -1,14 +1,13 @@
+PROJECT_LIBS = -lregisters
 OTHER_LIBS =
-
-abs =
 
 CC = g++
 
 CFLAGS = -Wall
 DEPFLAGS = -MP -MMD
 
-INCLUDEDIR = ../../include
-LIBSDIR = ../../libs
+INCLUDEDIR = ../../../include
+LIBSDIR = ../../../libs
 
 DEPDIR = dep/
 OBJDIR = build/
@@ -35,6 +34,6 @@ dirs:
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJDIR)*.o $(DEPDIR)*.d 
+	rm -rf $(OBJDIR)*.o $(DEPDIR)*.d $(LIBSDIR)/lib$(CURRENT_DIR).a
 
 include $(DEP_FILES)

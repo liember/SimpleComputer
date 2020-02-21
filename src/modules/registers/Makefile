@@ -1,15 +1,13 @@
-PROJECT_LIBS = 
+PROJECT_LIBS = -lregisters
 OTHER_LIBS =
-
-abs =
 
 CC = g++
 
 CFLAGS = -Wall
 DEPFLAGS = -MP -MMD
 
-INCLUDE_FLAG = -I include
-LIBS_FLAG = -L libs
+INCLUDEDIR = ../../../include
+LIBSDIR = ../../../libs
 
 DEPDIR = dep/
 OBJDIR = build/
@@ -25,10 +23,10 @@ MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 CURRENT_DIR := $(notdir $(patsubst %/,%,$(dir $(MKFILE_PATH))))
 
 all: dirs $(OBJ_FILES)
-	ar rvs libs/lib$(CURRENT_DIR).a $(OBJ_FILES)
+	ar rvs $(LIBSDIR)/lib$(CURRENT_DIR).a $(OBJ_FILES)
 
 $(OBJDIR)%.o : $(SRCDIR)%.cpp
-	$(CC) $(CFLAGS) $(DEPFLAGS) $(INCLUDE_FLAG) $(LIBS) -c -o $@ $< 
+	$(CC) $(CFLAGS) $(DEPFLAGS) -I $(INCLUDEDIR) $(LIBS) -c -o $@ $< 
 	mv -f $(OBJDIR)$*.d $(DEPDIR)$*.d
 
 dirs:
@@ -36,6 +34,6 @@ dirs:
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJDIR)*.o $(DEPDIR)*.d 
+	rm -rf $(OBJDIR)*.o $(DEPDIR)*.d $(LIBSDIR)/lib$(CURRENT_DIR).a
 
 include $(DEP_FILES)
