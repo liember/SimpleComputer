@@ -35,13 +35,16 @@ $(OBJDIR)%.o : $(SRCDIR)%.cpp
 	mv -f $(OBJDIR)$*.d $(DEPDIR)$*.d
 
 libgen:
-	find $(MODDIR) -type d -exec make -f {}/Makefile abs = {}\;
+	cd $(MODDIR)/memory && make
+	cd $(MODDIR)/interpreter && make
+	cd $(MODDIR)/registers && make
+
 
 dirs:
 	mkdir -p $(OBJDIR) $(BINDIR) $(DEPDIR)
 		
 clean:
-	rm -f $(BINDIR)* $(OBJDIR)*.o $(DEPDIR)*.d 
+	rm -f $(BINDIR)* $(OBJDIR)*.o $(DEPDIR)*.d
 
 cleanall:
 	rm -R bin build dep
