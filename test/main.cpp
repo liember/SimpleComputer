@@ -82,12 +82,12 @@ int main()
 
   //################### lab 2 #####################
   myTerm term;
-  std::cin >> val;
   //test 1
   term.ClrScr();
 
   //test 2
   term.SetFgColor(myTerm::colors::red);
+  term.GotoXY(120, 10);
   std::cout << " Hello world" << std::endl;
   term.SetFgColor(myTerm::colors::defaul);
 
