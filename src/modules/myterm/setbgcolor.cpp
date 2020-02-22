@@ -1,35 +1,36 @@
 #include "myTerm.hpp"
+#include <iostream>
 
 int myTerm::SetBgColor(enum colors color)
 {
 	switch (color)
 	{
 	case black:
-		printf("\E[40m");
+		std::cout << "\E[40m";
 		break;
 	case red:
-		printf("\E[41m");
+		std::cout << "\E[41m";
 		break;
 	case green:
-		printf("\E[42m");
+		std::cout << "\E[42m";
 		break;
 	case brown:
-		printf("\E[43m");
+		std::cout << "\E[43m";
 		break;
 	case blue:
-		printf("\E[44m");
+		std::cout << "\E[44m";
 		break;
 	case magenta:
-		printf("\E[45m");
+		std::cout << "\E[45m";
 		break;
 	case cyan:
-		printf("\E[46m");
+		std::cout << "\E[46m";
 		break;
 	case light_blue:
-		printf("\E[47m");
+		std::cout << "\E[47m";
 		break;
 	case defaul:
-		printf("\E[49m");
+		std::cout << "\E[49m";
 		break;
 	default:
 		return -1;

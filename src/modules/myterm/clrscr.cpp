@@ -1,7 +1,8 @@
 #include "myTerm.hpp"
+#include <iostream>
 
 int myTerm::ClrScr()
 {
-	printf("\E[H\E[2J");
+	std::cout << "\E[H\E[2J";
 	return 0;
 }
