@@ -1,6 +1,7 @@
 #include "memory.hpp"
 #include "registers.hpp"
 #include "interpreter.hpp"
+#include "myTerm.hpp"
 
 #include <iostream>
 #include <stdio.h>
@@ -9,6 +10,7 @@ using namespace std;
 
 int main()
 {
+  //################### lab 1 #####################
   int value;
   //int command = 33, operand = 9;
   const char *input_file = "input_data.bin";
@@ -77,5 +79,21 @@ int main()
   //test 13
   val = 0x0000C2FF;
   sc_command.Decode(val, &command, &operand);
+
+  //################### lab 2 #####################
+  myTerm term;
+  std::cin >> val;
+  //test 1
+  term.ClrScr();
+
+  //test 2
+  term.SetFgColor(myTerm::colors::red);
+  std::cout << " Hello world" << std::endl;
+  term.SetFgColor(myTerm::colors::defaul);
+
+  // test 3
+  term.SetBgColor(myTerm::colors::defaul);
+  std::cout << " Hello world " << std::endl;
+
   return 0;
 }
