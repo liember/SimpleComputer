@@ -2,6 +2,7 @@
 #include "registers.hpp"
 #include "interpreter.hpp"
 #include "myTerm.hpp"
+#include "myBigChars.hpp"
 
 #include <iostream>
 #include <stdio.h>
@@ -89,11 +90,36 @@ int main()
   term.SetFgColor(myTerm::colors::red);
   term.GotoXY(120, 10);
   std::cout << " Hello world" << std::endl;
-  term.SetFgColor(myTerm::colors::defaul);
 
   // test 3
+  term.SetFgColor(myTerm::colors::defaul);
   term.SetBgColor(myTerm::colors::defaul);
   std::cout << " Hello world " << std::endl;
+
+  //################### lab 3 #####################
+  myBigChars bc(&term);
+
+  char bigchar_0[64] = {
+      0, 0, 1, 1, 1, 1, 0, 0,
+      0, 1, 0, 0, 0, 0, 1, 0,
+      1, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 1,
+      0, 1, 0, 0, 0, 0, 1, 0,
+      0, 0, 1, 1, 1, 1, 0, 0};
+
+  bc.PrintBox(1, 1, 80, 10);
+
+  int *zero = bc.arr_to_big(bigchar_0);
+  bc.PrintBigChar(zero, 2, 2, myTerm::colors::defaul, myTerm::colors::defaul);
+  bc.PrintBigChar(zero, 11, 2, myTerm::colors::defaul, myTerm::colors::defaul);
+  bc.PrintBigChar(zero, 20, 2, myTerm::colors::defaul, myTerm::colors::defaul);
+  bc.PrintBigChar(zero, 29, 2, myTerm::colors::defaul, myTerm::colors::defaul);
+  bc.PrintBigChar(zero, 38, 2, myTerm::colors::defaul, myTerm::colors::defaul);
+  bc.PrintBigChar(zero, 47, 2, myTerm::colors::defaul, myTerm::colors::defaul);
+  bc.PrintBigChar(zero, 56, 2, myTerm::colors::defaul, myTerm::colors::defaul);
+  bc.PrintBigChar(zero, 65, 2, myTerm::colors::defaul, myTerm::colors::defaul);
 
   return 0;
 }
