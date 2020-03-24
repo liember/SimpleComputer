@@ -17,7 +17,7 @@ public:
 		magenta,
 		cyan,
 		light_blue,
-		defaul
+		defaul = 9
 	};
 
 	int rows;
@@ -31,5 +31,8 @@ public:
 	int GotoXY(int x, int y);
 	int SetFgColor(enum colors color);
 	int SetBgColor(enum colors color);
+
+	int GetScreenSizeX();
+	int GetScreenSizeY();
 	myTerm();
 };
