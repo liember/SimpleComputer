@@ -3,19 +3,17 @@
 # use " se456es " with ctrl + F for fast searc it
 
 # ------------------------------------------------------------------------------------
-.PHONY: test
-.PHONY: clean
-.PHONY: cleanall
-.PHONY: all
-
 # compiler 
 CC = g++
-
-# list of used modules
-LIBS = -linterpreter -lmemory -lregisters -lmyterm
-
 # compiler flags
 CFLAGS := -Wall -g
+
+# other modules
+# just libraries that project not contain
+C_MODULES = 
+# list of used modules
+MODULES = myterm interpreter memory mybigchars registers
+LIBS = $(addprefix -l,$(MODULES)) $(addprefix -l,$(C_MODULES))
 
 # name and directory of yor project
 PROJ := project.cpp
@@ -29,26 +27,31 @@ TARGET ?= test
 TEST := test.cpp
 TESTDIR = test/
 
+# directory of modules sourses
+MODDIR = $(SRCDIR)modules/
+
 # include and module destination flags
 # and him destinations 
 LIBDIR = libs
 INCDIR = include
-
-INCLUDE_FLAG = -I $(INCDIR)
-LIBS_FLAG = -L $(LIBDIR)
-
-# necessary flag for compiling 
-# do not touch!!!
-DEPFLAGS := -MP -MMD 
-DEPDIR = dep/
 
 # directoryes
 OBJDIR = build/
 BINDIR = bin/
 SRCDIR = src/
 
-# directory of modules sourses
-MODDIR = $(SRCDIR)modules/
+# necessary flag for compiling 
+# do not touch!!!
+DEPFLAGS := -MP -MMD 
+DEPDIR = dep/
+
+
+############################################ END OF CONFIGUREABLE VARIABLES #################################################
+
+
+# add include flag to include paths
+INCLUDE_FLAG = -I $(INCDIR)
+LIBS_FLAG = -L $(LIBDIR)
 
 # aoutosearch of sources files
 SRC_FILES = $(wildcard $(SRCDIR)*.cpp) $(TARGET)/main.cpp
@@ -59,36 +62,46 @@ OBJ_FILES = $(patsubst $(SRCDIR)%.cpp,$(OBJDIR)%.o,$(SRC_FILES))
 # autogen of ".d" file dependenses (DEPDIR)
 DEP_FILES = $(wildcard $(DEPDIR)*.d)
 
+# generate modules dependenses
+MOD_MAKES := $(addsuffix .lol,$(addprefix $(MODDIR),$(MODULES)))
+
 # destination of executeable file
 EXECUTABLE = $(BINDIR)main
 
-all:clrBin dirs libgen $(EXECUTABLE)
-
-# remove old exec file
-clrBin:
-	rm -rf bin/main
-
+all:clean dirs $(MOD_MAKES) $(EXECUTABLE)
+	@echo
+	@echo [!][!][!][!][!] COMPILATION SUCSESS [!][!][!][!][!]
+	@echo
+	
 # now its not autoconfigurable dependece
-libgen:
-	cd $(MODDIR)/memory && make
-	cd $(MODDIR)/interpreter && make
-	cd $(MODDIR)/registers && make
-	cd $(MODDIR)/myterm && make
+$(MODDIR)%:
+	echo lol
+	make -C $(basename $@)
 
+# link object file with modules and compile
 $(EXECUTABLE): $(OBJ_FILES)
 	$(CC) $(CFLAGS) $^ $(INCLUDE_FLAG) $(LIBS_FLAG) $(LIBS) -o $@
  
+ # make object files from files in " SRCDIR " directory
 $(OBJDIR)%.o : $(SRCDIR)%.cpp
-	$(CC) $(CFLAGS) $(DEPFLAGS) $(INCLUDE_FLAG) $(LIBS_FLAG) $(LIBS) -c -o $@ $< 
+	$(CC) $(CFLAGS) $(DEPFLAGS) $(INCLUDE_FLAG) -c -o $@ $< 
 	mv -f $(OBJDIR)$*.d $(DEPDIR)$*.d
 
+# make project's dirs
 dirs:
 	mkdir -p $(OBJDIR) $(BINDIR) $(DEPDIR) $(LIBDIR)
-		
+
+# remove unnecessary content of project's dirs	
 clean:
 	rm -f $(BINDIR)* $(OBJDIR)*.o $(DEPDIR)*.d
 
+# remove project's dirs (don't remove " SRCDIR ")
 cleanall:
 	rm -R $(OBJDIR) $(BINDIR) $(DEPDIR) $(LIBDIR)
 
 include $(DEP_FILES)
+
+.PHONY: test
+.PHONY: clean
+.PHONY: cleanall
+.PHONY: all
