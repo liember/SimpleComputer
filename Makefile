@@ -12,7 +12,7 @@ CFLAGS := -Wall -g
 # just libraries that project not contain
 C_MODULES = 
 # list of used modules
-MODULES = myterm interpreter memory mybigchars myreadkey registers
+MODULES = myterm interpreter memory mybigchars myreadkey registers guikit
 LIBS = $(addprefix -l,$(MODULES)) $(addprefix -l,$(C_MODULES))
 
 # name and directory of yor project

@@ -1,8 +1,14 @@
+
 #include "memory.hpp"
 #include "registers.hpp"
 #include "interpreter.hpp"
+
 #include "myTerm.hpp"
+
 #include "myBigChars.hpp"
+
+#include "SimpleComputer.hpp"
+#include "guikit.hpp"
 
 #include <iostream>
 #include <stdio.h>
@@ -111,7 +117,7 @@ int main()
 
   bc.PrintBox(1, 1, 80, 10);
 
-  int *zero = bc.arr_to_big(bigchar_0);
+  int *zero = bc.ArrToBig(bigchar_0);
   bc.PrintBigChar(zero, 2, 2, myTerm::colors::defaul, myTerm::colors::defaul);
   bc.PrintBigChar(zero, 11, 2, myTerm::colors::defaul, myTerm::colors::defaul);
   bc.PrintBigChar(zero, 20, 2, myTerm::colors::defaul, myTerm::colors::defaul);
@@ -120,6 +126,26 @@ int main()
   bc.PrintBigChar(zero, 47, 2, myTerm::colors::defaul, myTerm::colors::defaul);
   bc.PrintBigChar(zero, 56, 2, myTerm::colors::defaul, myTerm::colors::defaul);
   bc.PrintBigChar(zero, 65, 2, myTerm::colors::defaul, myTerm::colors::defaul);
+
+  int ret1 = bc.PrintBox(-1, 1, 8, 8);
+  int ret2 = bc.PrintBox(1, 10000, 10, 10);
+  cout << endl
+       << endl
+       << "PrintBox returned 1:" << ret1 << " 2:" << ret2 << endl;
+
+  //################### gui tests #####################
+  gui_kit::VOS *window = new gui_kit::VOS(&term, &bc);
+  gui_kit::base_parameters::SetVOS(window);
+
+  gui_kit::titled_box box(20, 5, 1, 1, "hello");
+  gui_kit::untitled_box ubox(20, 5, 22, 1);
+  gui_kit::big_hex_bumbers bignum(1234, 1, 8);
+
+  window->SetSize(50, 100);
+  window->ClrScr();
+  bignum.Draw();
+
+  window->GoToLastRow();
 
   return 0;
 }
