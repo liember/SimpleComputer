@@ -13,3 +13,19 @@ int myTerm::GetScreenSize()
 	else
 		return -1;
 }
+
+int myTerm::GetScreenSizeX()
+{
+	return cols;
+}
+
+int myTerm::GetScreenSizeY()
+{
+	return rows;
+}
+
+void myTerm::SetScreenSize(int r, int c)
+{
+	rows = r;
+	cols = c;
+}

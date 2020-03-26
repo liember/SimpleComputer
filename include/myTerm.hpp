@@ -27,6 +27,10 @@ private:
 	int GetScreenSize();
 
 public:
+	// sets custom terminal size
+	// may be unpredictable
+	void SetScreenSize(int r, int c);
+
 	int ClrScr();
 	int GotoXY(int x, int y);
 	int SetFgColor(enum colors color);
