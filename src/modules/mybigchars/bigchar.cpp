@@ -11,7 +11,7 @@ myBigChars::myBigChars(myTerm *t)
     term = t;
 }
 
-int *myBigChars::arr_to_big(char *arr)
+int *myBigChars::ArrToBig(char *arr)
 {
     int *big = new int[2];
     int i;
