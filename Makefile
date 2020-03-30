@@ -8,24 +8,11 @@ CC = g++
 # compiler flags
 CFLAGS := -Wall -g
 
-# other modules
-# just libraries that project not contain
-C_MODULES = 
-# list of used modules
-MODULES = myterm interpreter memory mybigchars myreadkey registers guikit
-LIBS = $(addprefix -l,$(MODULES)) $(addprefix -l,$(C_MODULES))
-
-# name and directory of yor project
-PROJ := project.cpp
-PROJDIR = project/
+LIBS = 
 
 # mutable variable for different compile targets
 # se456es
-TARGET ?= test
-
-# name and directory of tests files
-TEST := test.cpp
-TESTDIR = test/
+TARGET ?= project
 
 # directory of modules sourses
 MODDIR = $(SRCDIR)modules/
@@ -54,7 +41,7 @@ INCLUDE_FLAG = -I $(INCDIR)
 LIBS_FLAG = -L $(LIBDIR)
 
 # aoutosearch of sources files
-SRC_FILES = $(wildcard $(SRCDIR)*.cpp) $(TARGET)/main.cpp
+SRC_FILES = $(wildcard $(SRCDIR)*.cpp) $(TARGET)/main.cpp $(MODDIR)*.cpp
 
 # autogen of ".o" file dependenses
 OBJ_FILES = $(patsubst $(SRCDIR)%.cpp,$(OBJDIR)%.o,$(SRC_FILES))
@@ -63,18 +50,18 @@ OBJ_FILES = $(patsubst $(SRCDIR)%.cpp,$(OBJDIR)%.o,$(SRC_FILES))
 DEP_FILES = $(wildcard $(DEPDIR)*.d)
 
 # generate modules dependenses
-MOD_MAKES := $(addsuffix .lol,$(addprefix $(MODDIR),$(MODULES)))
+MOD_MAKES := $(addprefix $(MODDIR),$(wildcard $(MODDIR)*.cpp))
 
 # destination of executeable file
 EXECUTABLE = $(BINDIR)main
 
-all:clean dirs $(MOD_MAKES) $(EXECUTABLE)
+all:dirs $(MODDIR) $(EXECUTABLE)
 	@echo
 	@echo [!][!][!][!][!] COMPILATION SUCSESS [!][!][!][!][!]
 	@echo
 	
 # now its not autoconfigurable dependece
-$(MODDIR)%:
+$(MODDIR)*.cpp: $(MOD_MAKES)
 	echo lol
 	make -C $(basename $@)
 

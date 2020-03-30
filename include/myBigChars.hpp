@@ -38,5 +38,5 @@ public:
 
     // specific func for transform array into big char
     // char bigchar_array[64] = {}
-    int *ArrToBig(char *arr);
+    int *ArrToBig(const char *arr);
 };
