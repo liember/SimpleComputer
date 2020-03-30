@@ -24,7 +24,7 @@ CURRENT_DIR := $(notdir $(patsubst %/,%,$(dir $(MKFILE_PATH))))
 
 all: dirs $(OBJ_FILES)
 	ar rvs $(LIBSDIR)/lib$(CURRENT_DIR).a $(OBJ_FILES)
-
+	ranlib $(LIBSDIR)/lib$(CURRENT_DIR).a
 $(OBJDIR)%.o : $(SRCDIR)%.cpp
 	$(CC) $(CFLAGS) $(DEPFLAGS) -I $(INCLUDEDIR) $(LIBS) -c -o $@ $< 
 	mv -f $(OBJDIR)$*.d $(DEPDIR)$*.d
