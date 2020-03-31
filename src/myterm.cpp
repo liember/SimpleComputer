@@ -1,5 +1,7 @@
-#include "myTerm.hpp"
+#include "terminal.hpp"
 #include <iostream>
+
+using namespace terminal;
 
 int myTerm::SetFgColor(enum colors color)
 {

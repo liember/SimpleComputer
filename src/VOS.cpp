@@ -1,6 +1,7 @@
-#include "guikit.hpp"
+#include "terminal.hpp"
+#include <iostream>
 
-using namespace gui_kit;
+using namespace terminal;
 
 VOS::VOS(/* args */)
 {

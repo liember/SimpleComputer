@@ -1,6 +1,8 @@
 #pragma once
 
-#include "myTerm.hpp"
+#include <sys/ioctl.h>
+#include <stdio.h>
+#include <unistd.h>
 
 #define BOXCHAR_REC 'a'
 #define BOXCHAR_BR "j"
@@ -9,6 +11,46 @@
 #define BOXCHAR_TL "l"
 #define BOXCHAR_VERT "x"
 #define BOXCHAR_HOR "q"
+
+namespace terminal
+{
+
+class myTerm
+{
+public:
+    enum colors
+    {
+        black,
+        red,
+        green,
+        brown,
+        blue,
+        magenta,
+        cyan,
+        light_blue,
+        defaul = 9
+    };
+
+    int rows;
+    int cols;
+
+private:
+    int GetScreenSize();
+
+public:
+    // sets custom terminal size
+    // may be unpredictable
+    void SetScreenSize(int r, int c);
+
+    int ClrScr();
+    int GotoXY(int x, int y);
+    int SetFgColor(enum colors color);
+    int SetBgColor(enum colors color);
+
+    int GetScreenSizeX();
+    int GetScreenSizeY();
+    myTerm();
+};
 
 class myBigChars
 {
@@ -40,3 +82,22 @@ public:
     // char bigchar_array[64] = {}
     int *ArrToBig(const char *arr);
 };
+
+//Adapter for myTerm and myBigChars modules
+class VOS // visual output system
+{
+public:
+    myBigChars *bc;
+    myTerm *term;
+
+public:
+    void SetSize(int row, int col);
+    void ClrScr();
+    void GoToLastRow();
+
+    VOS(/* args */);
+    VOS(myTerm *t, myBigChars *b);
+    ~VOS();
+};
+
+} // namespace terminal

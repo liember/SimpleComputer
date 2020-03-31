@@ -1,4 +1,6 @@
-#include "myBigChars.hpp"
+#include "terminal.hpp"
+
+using namespace terminal;
 
 int myBigChars::PrintA(char *str)
 {
@@ -98,6 +100,7 @@ int myBigChars::PrintBox(int x1, int y1, int x2, int y2)
     PrintA(BOXCHAR_BR);
     return 0;
 }
+
 int myBigChars::PrintBigChar(int *big, int x, int y, enum myTerm::colors fg, enum myTerm::colors bg)
 {
     int maxx = term->GetScreenSizeX(), maxy = term->GetScreenSizeY();
@@ -128,6 +131,7 @@ int myBigChars::PrintBigChar(int *big, int x, int y, enum myTerm::colors fg, enu
     term->SetBgColor(myTerm::colors::defaul);
     return 0;
 }
+
 int myBigChars::Read(int fd, int *big, int need_count, int *count)
 {
     int n, cnt, err;
