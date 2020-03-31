@@ -10,26 +10,8 @@
 class myReadkey
 {
 public:
-    enum keys
-    {
-        l,
-        s,
-        r,
-        t,
-        i,
-        q,
-        f5,
-        f6,
-        up,
-        down,
-        left,
-        right,
-        enter,
-        other
-    };
-
 private:
-    enum keys lastkey;
+    char lastkey[16];
 
 public:
     int ReadKey();
@@ -38,5 +20,5 @@ public:
     int SaveTerm();
     int RestoreTerm();
 
-    keys GetKey() { return lastkey; }
+    char *GetKey() { return lastkey; }
 };
