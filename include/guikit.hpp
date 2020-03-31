@@ -1,7 +1,6 @@
 #pragma once
 
-#include "myTerm.hpp"
-#include "myBigChars.hpp"
+#include "terminal.hpp"
 
 #include <iostream>
 #include <map>
@@ -11,46 +10,27 @@ namespace gui_kit
 
 //################## functions #######################
 
-
-
 // ####################### classes ######################
-
-//Adapter for myTerm and myBigChars modules
-class VOS // visual output system
-{
-public:
-    myBigChars *bc;
-    myTerm *term;
-
-public:
-    void SetSize(int row, int col);
-    void ClrScr();
-    void GoToLastRow();
-
-    VOS(/* args */);
-    VOS(myTerm *t, myBigChars *b);
-    ~VOS();
-};
-
 class base_parameters
 {
 private:
     int x, y;
-    myTerm::colors bgcolor;
-    myTerm::colors fgcolor;
-    static VOS *vos;
+    terminal::myTerm::colors bgcolor;
+    terminal::myTerm::colors fgcolor;
+    static terminal::VOS *vos;
 
 public:
-    static void SetVOS(VOS *out);
-    void SetFgColor(myTerm::colors c = myTerm::colors::defaul);
-    void SetBgColor(myTerm::colors c = myTerm::colors::defaul);
+    static void SetVOS(terminal::VOS *out);
+    void SetFgColor(terminal::myTerm::colors c = terminal::myTerm::colors::defaul);
+    void SetBgColor(terminal::myTerm::colors c = terminal::myTerm::colors::defaul);
     void SetPos(int new_x, int new_y);
 
-    myTerm::colors BgColor();
-    myTerm::colors FgColor();
+    base_parameters();
+    terminal::myTerm::colors BgColor();
+    terminal::myTerm::colors FgColor();
     int PosX();
     int PosY();
-    static VOS *Window();
+    static terminal::VOS *Window();
 };
 
 class titled_box : public base_parameters

@@ -2,19 +2,26 @@
 
 using namespace gui_kit;
 
-VOS *base_parameters::vos = nullptr;
+terminal::VOS *base_parameters::vos = nullptr;
 
-void base_parameters::SetVOS(VOS *out)
+base_parameters::base_parameters()
+{
+    SetBgColor(terminal::myTerm::colors::defaul);
+    SetFgColor(terminal::myTerm::colors::defaul);
+    SetPos(0, 0);
+}
+
+void base_parameters::SetVOS(terminal::VOS *out)
 {
     base_parameters::vos = out;
 }
 
-void base_parameters::SetBgColor(myTerm::colors c)
+void base_parameters::SetBgColor(terminal::myTerm::colors c)
 {
     bgcolor = c;
 }
 
-void base_parameters::SetFgColor(myTerm::colors c)
+void base_parameters::SetFgColor(terminal::myTerm::colors c)
 {
     fgcolor = c;
 }
@@ -25,12 +32,12 @@ void base_parameters::SetPos(int new_x, int new_y)
     y = new_y;
 }
 
-myTerm::colors base_parameters::FgColor()
+terminal::myTerm::colors base_parameters::FgColor()
 {
     return fgcolor;
 }
 
-myTerm::colors base_parameters::BgColor()
+terminal::myTerm::colors base_parameters::BgColor()
 {
     return bgcolor;
 }
@@ -45,7 +52,7 @@ int base_parameters::PosY()
     return y;
 }
 
-VOS *base_parameters::Window()
+terminal::VOS *base_parameters::Window()
 {
     return base_parameters::vos;
 }
