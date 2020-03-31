@@ -37,4 +37,6 @@ public:
 
     int SaveTerm();
     int RestoreTerm();
+
+    keys GetKey() { return lastkey; }
 };
