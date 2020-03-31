@@ -7,7 +7,6 @@ int Memory::Get(int adress, int *value)
 {
     if (adress >= 100)
     {
-        std::cout << "[!] Over the borders." << std::endl;
         rg->Set(OVER_THE_BORDER, 1);
         return 1;
     }
@@ -27,7 +26,6 @@ int Memory::Load(const char *filename)
     FILE *fp;
     if ((fp = fopen(filename, "rb")) == NULL)
     {
-        std::cout << "[!] Cannot open file." << std::endl;
         return 1;
     }
     fread(mem, sizeof(int), 100, fp);
