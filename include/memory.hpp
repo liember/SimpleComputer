@@ -27,10 +27,20 @@
 namespace memory
 {
 
+class accamulator
+{
+private:
+    uint16_t cell;
+
+public:
+    void Set(uint16_t v) { cell = v; }
+    uint16_t Get() { return cell; }
+};
+
 class Registers
 {
 private:
-    int flag;
+    uint8_t flag;
 
 public:
     int Flag() { return flag; }
