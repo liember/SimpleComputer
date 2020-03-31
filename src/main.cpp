@@ -2,7 +2,7 @@
 
 int main()
 {
-  SimpleComputer Computer;
+  myspc::SimpleComputer Computer;
 
   Computer.Init();
 
