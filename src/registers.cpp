@@ -1,11 +1,11 @@
-#include "registers.hpp"
+#include "memory.hpp"
 #include <iostream>
 
-int Registers::flag = 0;
+using namespace memory;
 
 int Registers::Get(int regist, int *value)
 {
-    int flag = (flag >> (regist - 1)) & 0x1;
+    flag = (flag >> (regist - 1)) & 0x1;
     *value = flag;
     return 0;
 }
@@ -24,7 +24,6 @@ int Registers::Set(int regist, int value)
         flag = flag & (~(1 << regist));
     else
     {
-        std::cout << "[!] Invalid value." << std::endl;
         return 1;
     }
     return 0;

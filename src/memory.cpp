@@ -1,13 +1,14 @@
-#include "registers.hpp"
 #include <iostream>
 #include "memory.hpp"
+
+using namespace memory;
 
 int Memory::Get(int adress, int *value)
 {
     if (adress >= 100)
     {
         std::cout << "[!] Over the borders." << std::endl;
-        Registers::Set(OVER_THE_BORDER, 1);
+        rg->Set(OVER_THE_BORDER, 1);
         return 1;
     }
     *value = mem[adress];
@@ -32,7 +33,7 @@ int Memory::Load(const char *filename)
     fread(mem, sizeof(int), 100, fp);
     return 0;
 }
-int Memory::mem[MEM_SIZE];
+int16_t Memory::mem[MEM_SIZE];
 
 int Memory::Save(const char *filename)
 {
@@ -55,7 +56,7 @@ int Memory::Set(int adress, int value)
     if (adress >= MEM_SIZE)
     {
         std::cout << "[!] Over the borders." << std::endl;
-        Registers::Set(OVER_THE_BORDER, 1);
+        rg->Set(OVER_THE_BORDER, 1);
         return 1;
     }
     mem[adress] = value;
