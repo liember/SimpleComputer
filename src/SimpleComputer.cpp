@@ -1,9 +1,13 @@
 #include "SimpleComputer.hpp"
 
+using namespace myspc;
+
 void SimpleComputer::Init()
 {
     rg = new memory::Registers();
     sc_mem = new memory::Memory(rg);
+    acc = new memory::accamulator();
+
     window = new terminal::VOS();
     user_interface = new sc_ui(window, sc_mem, rg);
     keyboard = new myReadkey();
@@ -16,25 +20,10 @@ void SimpleComputer::Init()
     user_interface->Init();
 }
 
-void SimpleComputer::DrawUI()
-{
-    user_interface->Draw();
-}
-
-void SimpleComputer::InputHandle()
-{
-    window->term->GotoXY(0, 22);
-    cout << endl;
-
-    keyboard->ReadKey();
-}
-
-void SimpleComputer::Process()
-{
-}
-
 void SimpleComputer::Save()
 {
+    window->ClrScr();
+    std::cout << "Start saving configuration of SimpleCopmuter" << std::endl;
 }
 
 void sc_ui::print_flags(int x, int y)
@@ -93,9 +82,19 @@ void sc_ui::print_memory(int x, int y)
             smem = memory::Memory::mem[i * 10 + j] & 0x3FF;
             command = (memory::Memory::mem[i * 10 + j] >> 14) & 1;
             if (command == 0)
+            {
+                window->term->SetBgColor(terminal::myTerm::colors::brown);
                 printf("+");
+            }
             else
+            {
+                window->term->SetBgColor(terminal::myTerm::colors::magenta);
                 printf(" ");
+            }
+            if (i * 10 + j == selected_number)
+            {
+                window->term->SetBgColor(terminal::myTerm::colors::green);
+            }
             printf("%0*X ", 4, smem);
         }
         smem = memory::Memory::mem[i * 10 + j] & 0x3FF;
@@ -106,6 +105,7 @@ void sc_ui::print_memory(int x, int y)
             printf(" ");
         printf("%0*X", 4, smem);
     }
+    window->term->SetBgColor(terminal::myTerm::colors::defaul);
 }
 
 sc_ui::sc_ui(terminal::VOS *win, memory::Memory *m, memory::Registers *r)
@@ -117,6 +117,7 @@ sc_ui::sc_ui(terminal::VOS *win, memory::Memory *m, memory::Registers *r)
 
 int sc_ui::Init()
 {
+    selected_number = 0;
     box_memory = new gui_kit::titled_box(60, 11, 1, 1, "Memory");
     box_accamulator = new gui_kit::titled_box(25, 2, 62, 1, "Accumulator");
     box_instruction_counter = new gui_kit::titled_box(25, 2, 62, 4, "Instruction Counter");
@@ -143,6 +144,7 @@ int sc_ui::Draw()
 
     number_selector->Draw();
     bh_selected_number->Draw();
+    bh_selected_number->SetNumber(memory::Memory::mem[selected_number]);
     // help window
     box_help->Draw();
     print_keys(50, 14);
@@ -152,6 +154,5 @@ int sc_ui::Draw()
 
 void sc_ui::SetSelectedNumber(int i)
 {
-
     selected_number = i;
 }
