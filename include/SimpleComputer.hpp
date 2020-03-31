@@ -9,6 +9,9 @@
 
 using namespace std;
 
+namespace myspc
+{
+
 class sc_ui
 {
 private:
@@ -16,7 +19,7 @@ private:
     memory::Memory *mem;
     memory::Registers *rg;
 
-    int selected_number;
+    int selected_number; // index of selected number!!!!!
 
 private:
     //ui components
@@ -38,6 +41,7 @@ private:
     void print_flags(int x, int y);
 
 public:
+    int Update();
     int Init();
     int Draw();
 
@@ -51,6 +55,7 @@ class SimpleComputer
 private:
     memory::Registers *rg;
     memory::Memory *sc_mem;
+    memory::accamulator *acc;
 
     terminal::VOS *window;
 
@@ -61,8 +66,11 @@ private:
     bool run_status;
 
 private:
+    void CustomInit();
+
 public:
     void Init();
+
     void DrawUI();
     void InputHandle();
     void Process();
@@ -71,3 +79,5 @@ public:
 
     void Save();
 };
+
+} // namespace myspc
