@@ -2,56 +2,41 @@
 
 using namespace myspc;
 
-void SimpleComputer::Init()
+void ui::print_flags(int x, int y)
 {
-    rg = new memory::Registers();
-    sc_mem = new memory::Memory(rg);
-    acc = new memory::accamulator();
-
-    window = new terminal::VOS();
-    user_interface = new sc_ui(window, sc_mem, rg);
-    keyboard = new myReadkey();
-
-    run_status = true;
-
-    gui_kit::base_parameters::SetVOS(window);
-
-    sc_mem->Init();
-    user_interface->Init();
-}
-
-void SimpleComputer::Save()
-{
-    window->ClrScr();
-    std::cout << "Start saving configuration of SimpleCopmuter" << std::endl;
-}
-
-void sc_ui::print_flags(int x, int y)
-{
+    x += 6;
     window->term->GotoXY(x, y);
     if (rg->Flag() & (1 << FLAG_OVERFLOW))
         cout << "O";
     else
         printf(" ");
+
+    window->term->GotoXY(x + 3, y);
     if (rg->Flag() & (1 << FLAG_COMMAND))
         cout << "E";
     else
         printf(" ");
+
+    window->term->GotoXY(x + 6, y);
     if (rg->Flag() & (1 << FLAG_INTERRUPT))
         printf("V");
     else
         printf(" ");
+
+    window->term->GotoXY(x + 9, y);
     if (rg->Flag() & (1 << FLAG_OUTMEM))
         printf("M");
     else
         printf(" ");
+
+    window->term->GotoXY(x + 12, y);
     if (rg->Flag() & (1 << FLAG_DIVISION))
         printf("Z");
     else
         printf(" ");
 }
 
-void sc_ui::print_keys(int x, int y)
+void ui::print_keys(int x, int y)
 {
     window->term->GotoXY(x, y);
     printf("l  - load");
@@ -69,7 +54,7 @@ void sc_ui::print_keys(int x, int y)
     printf("F6 - instructionCounter");
 }
 
-void sc_ui::print_memory(int x, int y)
+void ui::print_memory(int x, int y)
 {
     int i, j;
     int smem, command;
@@ -84,16 +69,21 @@ void sc_ui::print_memory(int x, int y)
             if (command == 0)
             {
                 window->term->SetBgColor(terminal::myTerm::colors::brown);
-                printf("+");
+                std::cout << "+";
             }
             else
             {
                 window->term->SetBgColor(terminal::myTerm::colors::magenta);
-                printf(" ");
+                std::cout << " ";
             }
+
             if (i * 10 + j == selected_number)
             {
                 window->term->SetBgColor(terminal::myTerm::colors::green);
+            }
+            else if (i * 10 + j == current_operation)
+            {
+                window->term->SetBgColor(terminal::myTerm::colors::red);
             }
             printf("%0*X ", 4, smem);
         }
@@ -108,14 +98,15 @@ void sc_ui::print_memory(int x, int y)
     window->term->SetBgColor(terminal::myTerm::colors::defaul);
 }
 
-sc_ui::sc_ui(terminal::VOS *win, memory::Memory *m, memory::Registers *r)
+ui::ui(terminal::VOS *win, memory::Memory *m, memory::Registers *r, memory::accamulator *a)
 {
     window = win;
     mem = m;
     rg = r;
+    ac = a;
 }
 
-int sc_ui::Init()
+int ui::Init()
 {
     selected_number = 0;
     box_memory = new gui_kit::titled_box(60, 11, 1, 1, "Memory");
@@ -132,15 +123,23 @@ int sc_ui::Init()
     return 0;
 }
 
-int sc_ui::Draw()
+int ui::Draw()
 {
     box_memory->Draw();
     print_memory(2, 2);
 
     box_accamulator->Draw();
+    window->term->GotoXY(72, 2);
+    printf("%0*X ", 4, ac->Get());
+
     box_instruction_counter->Draw();
+
     box_operation->Draw();
+    window->term->GotoXY(72, 8);
+    printf("%0*X ", 4, memory::Memory::mem[current_operation]);
+
     box_flag->Draw();
+    print_flags(62, 11);
 
     number_selector->Draw();
     bh_selected_number->Draw();
@@ -149,10 +148,22 @@ int sc_ui::Draw()
     box_help->Draw();
     print_keys(50, 14);
 
+    window->term->GotoXY(1, 23);
+    std::cout << "Input/Output: " << std::endl;
     return 0;
 }
 
-void sc_ui::SetSelectedNumber(int i)
+void ui::SetSelectedCell(int i)
 {
     selected_number = i;
+}
+
+int ui::CurrentCell()
+{
+    return selected_number;
+}
+
+void ui::SetSelectedOperation(int i)
+{
+    current_operation = i;
 }
