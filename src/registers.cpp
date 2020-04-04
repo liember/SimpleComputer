@@ -3,11 +3,10 @@
 
 using namespace memory;
 
-int Registers::Get(int regist, int *value)
+int Registers::Get(int regist)
 {
     flag = (flag >> (regist - 1)) & 0x1;
-    *value = flag;
-    return 0;
+    return flag;
 }
 
 int Registers::Init(void)
