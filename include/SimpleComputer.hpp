@@ -7,19 +7,25 @@
 
 #include <iostream>
 
+// !!! Just know this !!!
+// All functions of this header are named as sc_<module>.cpp
+
 using namespace std;
 
 namespace myspc
 {
 
-class sc_ui
+// specific user interface class
+class ui
 {
 private:
     terminal::VOS *window;
     memory::Memory *mem;
     memory::Registers *rg;
+    memory::accamulator *ac;
 
-    int selected_number; // index of selected number!!!!!
+    int selected_number;   // index of selected number!!!!!
+    int current_operation; // index of selected number!!!!!
 
 private:
     //ui components
@@ -41,13 +47,17 @@ private:
     void print_flags(int x, int y);
 
 public:
-    int Update();
-    int Init();
-    int Draw();
+    int Init(); // init boxes
 
-    void SetSelectedNumber(int i);
+    int Draw(); // draw boxes and states of spc
 
-    sc_ui(terminal::VOS *win, memory::Memory *m, memory::Registers *r);
+    void SetSelectedCell(int i); // index of cell!!!
+    int CurrentCell();           // index of cell!!!
+
+    void
+    SetSelectedOperation(int i); // index of cell!!!
+
+    ui(terminal::VOS *win, memory::Memory *m, memory::Registers *r, memory::accamulator *a);
 };
 
 class SimpleComputer
@@ -61,13 +71,32 @@ private:
 
     myReadkey *keyboard;
 
-    sc_ui *user_interface;
+    ui *user_interface;
 
     bool run_status;
+    uint16_t current_operation;
 
 private:
     void CustomInit();
 
+    // key handling functions
+    void Load();
+    void Save();
+
+    void Run();
+    void Step();
+    void Reset();
+    void Enter();
+
+    void Accamulator();
+    void InstructionCounter();
+
+    void SelectUpper();
+    void SelectLower();
+    void SelectRight();
+    void SelectLeft();
+
+    int ALU(int command, int operand);
 public:
     void Init();
 
@@ -77,7 +106,7 @@ public:
 
     bool IsRunning() { return run_status; }
 
-    void Save();
+    void End();
 };
 
 } // namespace myspc
