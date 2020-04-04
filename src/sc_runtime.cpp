@@ -5,11 +5,16 @@ using namespace myspc;
 void SimpleComputer::CustomInit()
 {
     window->ClrScr();
+    user_interface->SetSelectedCell(14);
+
+    rg->Set(FLAG_INTERRUPT, 1);
 }
 
 void SimpleComputer::DrawUI()
 {
     user_interface->Draw();
+    window->GoToLastRow();
+    std::cout << endl;
 }
 
 void SimpleComputer::InputHandle()
@@ -20,26 +25,22 @@ void SimpleComputer::InputHandle()
     keyboard->ReadKey();
     char *buf = keyboard->GetKey();
 
-    int lastkey = 0;
-
     if (strcmp(buf, "l") == 0)
-        lastkey = l;
+        Load();
     else if (strcmp(buf, "s") == 0)
-        lastkey = s;
+        Save();
     else if (strcmp(buf, "r") == 0)
-        lastkey = r;
+        Run();
     else if (strcmp(buf, "t") == 0)
-        lastkey = t;
+        Step();
     else if (strcmp(buf, "i") == 0)
-        lastkey = i;
-    else if (strcmp(buf, "q") == 0)
-        lastkey = q;
+        Reset();
     else if (strcmp(buf, "\n") == 0)
-        lastkey = enter;
+        Enter();
     else if (strcmp(buf, "\033[15~") == 0)
-        lastkey = f5;
+        Accamulator();
     else if (strcmp(buf, "\033[17~") == 0)
-        lastkey = f6;
+        InstructionCounter();
     else if (strcmp(buf, "\033[A") == 0)
         SelectUpper();
     else if (strcmp(buf, "\033[B") == 0)
@@ -48,13 +49,8 @@ void SimpleComputer::InputHandle()
         SelectRight();
     else if (strcmp(buf, "\033[D") == 0)
         SelectLeft();
-    else
-        lastkey = other;
-    * /
 }
 
 void SimpleComputer::Process()
 {
-    memory::Memory::mem[0] = 123;
-    user_interface->SetSelectedNumber(0);
 }
