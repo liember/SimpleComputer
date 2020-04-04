@@ -10,10 +10,11 @@ int main()
   {
     Computer.DrawUI();
     Computer.InputHandle();
+    Computer.DrawUI();
     Computer.Process();
   }
 
-  Computer.Save();
+  Computer.End();
 
   return 0;
 }
