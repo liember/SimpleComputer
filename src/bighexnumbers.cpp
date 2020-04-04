@@ -1,6 +1,8 @@
 #include "guikit.hpp"
 
+#include <string>
 #include <sstream>
+#include <iomanip>
 
 using namespace gui_kit;
 
@@ -213,16 +215,12 @@ void big_hex_bumbers::Move(int new_x, int new_y)
 void big_hex_bumbers::Draw()
 {
     std::ostringstream ostr;
-    ostr << std::hex << number;
+    ostr << std::hex << std::setfill('0') << std::setw(4) << number;
     std::string s = ostr.str();
-    if (s.length() < 4)
+    if (number <= 0b100000000000000)
     {
-        for (size_t i = 0; 4 - s.length(); i++)
-        {
-            s.insert(s.begin(), '0');
-        }
+        s.insert(s.begin(), '+');
     }
-    s.insert(s.begin(), '+');
     for (int i = 0; i < (int)s.length(); i++)
     {
         Window()->bc->PrintBigChar(alf.find(s.c_str()[i])->second, PosX() + i * 9, PosY(), BgColor(), FgColor());
