@@ -45,7 +45,7 @@ private:
 public:
     int Flag() { return flag; }
     int Init();
-    int Get(int regist, int *value);
+    int Get(int regist);
     int Set(int regist, int value);
 };
 
