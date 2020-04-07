@@ -1,16 +1,23 @@
 #pragma once
 
 #include "memory.hpp"
+
 #include "interpreter.hpp"
 #include "guikit.hpp"
 #include "myReadkey.hpp"
 
 #include <iostream>
+#include <csignal>
 
 // !!! Just know this !!!
 // All functions of this header are named as sc_<module>.cpp
 
 using namespace std;
+
+namespace
+{
+volatile std::sig_atomic_t gSignalStatus;
+}
 
 namespace myspc
 {
@@ -63,18 +70,23 @@ public:
 class SimpleComputer
 {
 private:
-    memory::Registers *rg;
-    memory::Memory *sc_mem;
-    memory::accamulator *acc;
+    interpreter interpreter;
 
-    terminal::VOS *window;
+    memory::Registers rg;
+    memory::accamulator acc;
 
-    myReadkey *keyboard;
+    memory::Memory sc_mem;
 
-    ui *user_interface;
+    terminal::VOS window;
+
+    myReadkey keyboard;
+
+    ui user_interface;
 
     bool run_status;
+
     uint16_t current_operation;
+    uint16_t inst_counter;
 
 private:
     void CustomInit();
@@ -97,16 +109,36 @@ private:
     void SelectLeft();
 
     int ALU(int command, int operand);
+    void CU();
+
+    void InputHandle();
+
 public:
     void Init();
 
     void DrawUI();
-    void InputHandle();
     void Process();
+
+    void SigHandle(int sig);
 
     bool IsRunning() { return run_status; }
 
     void End();
+};
+
+class SignalHandler
+{
+private:
+    static constexpr int ContinueWorking = 1; // timeout let's go to working!
+    static constexpr int ResetSystem = 2;
+
+    static SimpleComputer *ScPc;
+
+public:
+    static void SignalHandle(int sig);
+    static void Reset(int sig);
+
+    SignalHandler(SimpleComputer *);
 };
 
 } // namespace myspc
