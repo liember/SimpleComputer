@@ -4,26 +4,26 @@ using namespace myspc;
 
 void SimpleComputer::CustomInit()
 {
-    window->ClrScr();
-    user_interface->SetSelectedCell(14);
+    window.ClrScr();
+    user_interface.SetSelectedCell(14);
 
-    rg->Set(FLAG_INTERRUPT, 1);
+    rg.Set(FLAG_INTERRUPT, 1);
 }
 
 void SimpleComputer::DrawUI()
 {
-    user_interface->Draw();
-    window->GoToLastRow();
+    user_interface.Draw();
+    window.GoToLastRow();
     std::cout << endl;
 }
 
 void SimpleComputer::InputHandle()
 {
-    window->term->GotoXY(0, 22);
+    window.term->GotoXY(0, 22);
     cout << endl;
 
-    keyboard->ReadKey();
-    char *buf = keyboard->GetKey();
+    keyboard.ReadKey();
+    char *buf = keyboard.GetKey();
 
     if (strcmp(buf, "l") == 0)
         Load();
@@ -53,4 +53,11 @@ void SimpleComputer::InputHandle()
 
 void SimpleComputer::Process()
 {
+    if (rg.Get(FLAG_INTERRUPT))
+    {
+        InputHandle();
+    }
+    else
+    {
+    }
 }
