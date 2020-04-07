@@ -48,15 +48,6 @@ class Interface
 private:
     RandomAcsessMemory ram;
 
-public:
-    void RamInit();
-
-    void RamSet(int, uint16_t);
-    uint16_t RamGet(unsigned int);
-
-    void RamSave(const char *);
-    void RamLoad(const char *);
-
     Interface();
     explicit Interface(int ram_size);
 };

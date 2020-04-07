@@ -1,13 +1,15 @@
 #pragma once
 
-#include "memory.hpp"
-
-#include "interpreter.hpp"
-#include "guikit.hpp"
-#include "myReadkey.hpp"
-
 #include <iostream>
 #include <csignal>
+
+#include "interpreter.hpp" // TO DO EXECUTOR INTERFACE
+
+#include "mem_extern.hpp"
+#include "mem_intern.hpp"
+
+#include "SC_GUI.hpp"
+#include "myReadkey.hpp"
 
 // !!! Just know this !!!
 // All functions of this header are named as sc_<module>.cpp
@@ -22,71 +24,16 @@ volatile std::sig_atomic_t gSignalStatus;
 namespace myspc
 {
 
-// specific user interface class
-class ui
-{
-private:
-    terminal::VOS *window;
-    memory::Memory *mem;
-    memory::Registers *rg;
-    memory::accamulator *ac;
-
-    int selected_number;   // index of selected number!!!!!
-    int current_operation; // index of selected number!!!!!
-
-private:
-    //ui components
-    gui_kit::titled_box *box_memory;
-
-    gui_kit::titled_box *box_accamulator;
-    gui_kit::titled_box *box_instruction_counter;
-    gui_kit::titled_box *box_operation;
-    gui_kit::titled_box *box_flag;
-
-    gui_kit::untitled_box *number_selector;
-    gui_kit::big_hex_bumbers *bh_selected_number;
-
-    gui_kit::untitled_box *box_help;
-
-    // ui drawing
-    void print_memory(int x, int y);
-    void print_keys(int x, int y);
-    void print_flags(int x, int y);
-
-public:
-    int Init(); // init boxes
-
-    int Draw(); // draw boxes and states of spc
-
-    void SetSelectedCell(int i); // index of cell!!!
-    int CurrentCell();           // index of cell!!!
-
-    void
-    SetSelectedOperation(int i); // index of cell!!!
-
-    ui(terminal::VOS *win, memory::Memory *m, memory::Registers *r, memory::accamulator *a);
-};
-
 class SimpleComputer
 {
 private:
     interpreter interpreter;
 
-    memory::Registers rg;
-    memory::accamulator acc;
+    internal_memory::Interface internal_mem;
+    external_memory::Interface external_mem;
 
-    memory::Memory sc_mem;
-
-    terminal::VOS window;
-
+    user_interface out;
     myReadkey keyboard;
-
-    ui user_interface;
-
-    bool run_status;
-
-    uint16_t current_operation;
-    uint16_t inst_counter;
 
 private:
     void CustomInit();
@@ -108,25 +55,24 @@ private:
     void SelectRight();
     void SelectLeft();
 
-    int ALU(int command, int operand);
+    int ALU(int command, int operand); // TO DO MOVE THIS INTO EXECUTOR
     void CU();
 
     void InputHandle();
+    void SigHandle(int sig);
 
 public:
+    bool run_status;
+
     void Init();
 
     void DrawUI();
     void Process();
 
-    void SigHandle(int sig);
-
-    bool IsRunning() { return run_status; }
-
     void End();
 };
 
-class SignalHandler
+class InterruptManager
 {
 private:
     static constexpr int ContinueWorking = 1; // timeout let's go to working!
@@ -138,7 +84,7 @@ public:
     static void SignalHandle(int sig);
     static void Reset(int sig);
 
-    SignalHandler(SimpleComputer *);
+    InterruptManager();
 };
 
 } // namespace myspc
