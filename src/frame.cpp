@@ -9,8 +9,6 @@ int main()
   while (Computer.IsRunning())
   {
     Computer.DrawUI();
-    Computer.InputHandle();
-    Computer.DrawUI();
     Computer.Process();
   }
 
