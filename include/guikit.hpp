@@ -15,22 +15,21 @@ class base_parameters
 {
 private:
     int x, y;
-    terminal::myTerm::colors bgcolor;
-    terminal::myTerm::colors fgcolor;
-    static terminal::VOS *vos;
+    terminal::colors bgcolor;
+    terminal::colors fgcolor;
 
 public:
-    static void SetVOS(terminal::VOS *out);
-    void SetFgColor(terminal::myTerm::colors c = terminal::myTerm::colors::defaul);
-    void SetBgColor(terminal::myTerm::colors c = terminal::myTerm::colors::defaul);
+    static terminal::Interface terminal;
+
+    void SetFgColor(terminal::colors c = terminal::colors::defaul);
+    void SetBgColor(terminal::colors c = terminal::colors::defaul);
     void SetPos(int new_x, int new_y);
 
     base_parameters();
-    terminal::myTerm::colors BgColor();
-    terminal::myTerm::colors FgColor();
+    terminal::colors BgColor();
+    terminal::colors FgColor();
     int PosX();
     int PosY();
-    static terminal::VOS *Window();
 };
 
 class titled_box : public base_parameters
