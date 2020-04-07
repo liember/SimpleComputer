@@ -15,34 +15,31 @@
 namespace terminal
 {
 
+enum colors
+{
+    black,
+    red,
+    green,
+    brown,
+    blue,
+    magenta,
+    cyan,
+    light_blue,
+    defaul = 9
+};
+
 class myTerm
 {
 public:
-    enum colors
-    {
-        black,
-        red,
-        green,
-        brown,
-        blue,
-        magenta,
-        cyan,
-        light_blue,
-        defaul = 9
-    };
-
     int rows;
     int cols;
 
-private:
-    int GetScreenSize();
-
 public:
+    int GetScreenSize();
     // sets custom terminal size
-    // may be unpredictable
     void SetScreenSize(int r, int c);
 
-    int ClrScr();
+    int ClrScreen();
     int GotoXY(int x, int y);
     int SetFgColor(enum colors color);
     int SetBgColor(enum colors color);
@@ -52,11 +49,8 @@ public:
     myTerm();
 };
 
-class myBigChars
+class myBigChars : public myTerm
 {
-private:
-    myTerm *term;
-
 private:
     // prints string using additional code table
     int PrintA(char *str);
@@ -65,13 +59,11 @@ private:
     int GetBigCharPos(int *big, int x, int y, int *value);
 
 public:
-    myBigChars(myTerm *t);
-
     // prints box, just box ;)
     int PrintBox(int x1, int y1, int x2, int y2);
 
     // prints big char 8x8
-    int PrintBigChar(int *big, int x, int y, enum myTerm::colors fg, enum myTerm::colors bg);
+    int PrintBigChar(int *big, int x, int y, enum colors fg, enum colors bg);
 
     //write 'count' bigchars 'big' into 'fd'
     int Write(int fd, int *big, int count);
@@ -84,20 +76,13 @@ public:
 };
 
 //Adapter for myTerm and myBigChars modules
-class VOS // visual output system
+class Interface // visual output system
 {
 public:
-    myBigChars *bc;
-    myTerm *term;
-
-public:
-    void SetSize(int row, int col);
-    void ClrScr();
+    myBigChars term;
     void GoToLastRow();
 
-    VOS(/* args */);
-    VOS(myTerm *t, myBigChars *b);
-    ~VOS();
+    Interface() : term() {}
 };
 
 } // namespace terminal
