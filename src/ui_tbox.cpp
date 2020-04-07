@@ -15,14 +15,14 @@ void titled_box::Resize(int new_width, int new_height)
 
 void titled_box::Draw()
 {
-    Window()->bc->PrintBox(PosX(), PosY(), PosX() + width, PosY() + height);
+    terminal.term.PrintBox(PosX(), PosY(), PosX() + width, PosY() + height);
     if ((int)title.length() > width)
     {
-        Window()->term->GotoXY(PosX(), PosY());
+        terminal.term.GotoXY(PosX(), PosY());
     }
     else
     {
-        Window()->term->GotoXY(PosX() + (width / 2 - title.length() / 2), PosY());
+        terminal.term.GotoXY(PosX() + (width / 2 - title.length() / 2), PosY());
     }
     std::cout << " " << title << " ";
 }

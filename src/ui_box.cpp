@@ -15,7 +15,7 @@ void untitled_box::Resize(int new_width, int new_height)
 
 void untitled_box::Draw()
 {
-    Window()->bc->PrintBox(PosX(), PosY(), PosX() + width, PosY() + height);
+    terminal.term.PrintBox(PosX(), PosY(), PosX() + width, PosY() + height);
 }
 
 untitled_box::untitled_box(int w, int h, int _x, int _y)

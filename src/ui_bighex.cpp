@@ -183,23 +183,23 @@ big_hex_bumbers::big_hex_bumbers(int num, int new_x, int new_y)
     SetPos(new_x, new_y);
 
     number = num;
-    alf['+'] = Window()->bc->ArrToBig(bc_plus);
-    alf['0'] = Window()->bc->ArrToBig(bc_0);
-    alf['1'] = Window()->bc->ArrToBig(bc_1);
-    alf['2'] = Window()->bc->ArrToBig(bc_2);
-    alf['3'] = Window()->bc->ArrToBig(bc_3);
-    alf['4'] = Window()->bc->ArrToBig(bc_4);
-    alf['5'] = Window()->bc->ArrToBig(bc_5);
-    alf['6'] = Window()->bc->ArrToBig(bc_6);
-    alf['7'] = Window()->bc->ArrToBig(bc_7);
-    alf['8'] = Window()->bc->ArrToBig(bc_8);
-    alf['9'] = Window()->bc->ArrToBig(bc_9);
-    alf['a'] = Window()->bc->ArrToBig(bc_A);
-    alf['b'] = Window()->bc->ArrToBig(bc_B);
-    alf['c'] = Window()->bc->ArrToBig(bc_C);
-    alf['d'] = Window()->bc->ArrToBig(bc_D);
-    alf['e'] = Window()->bc->ArrToBig(bc_E);
-    alf['f'] = Window()->bc->ArrToBig(bc_F);
+    alf['+'] = terminal.term.ArrToBig(bc_plus);
+    alf['0'] = terminal.term.ArrToBig(bc_0);
+    alf['1'] = terminal.term.ArrToBig(bc_1);
+    alf['2'] = terminal.term.ArrToBig(bc_2);
+    alf['3'] = terminal.term.ArrToBig(bc_3);
+    alf['4'] = terminal.term.ArrToBig(bc_4);
+    alf['5'] = terminal.term.ArrToBig(bc_5);
+    alf['6'] = terminal.term.ArrToBig(bc_6);
+    alf['7'] = terminal.term.ArrToBig(bc_7);
+    alf['8'] = terminal.term.ArrToBig(bc_8);
+    alf['9'] = terminal.term.ArrToBig(bc_9);
+    alf['a'] = terminal.term.ArrToBig(bc_A);
+    alf['b'] = terminal.term.ArrToBig(bc_B);
+    alf['c'] = terminal.term.ArrToBig(bc_C);
+    alf['d'] = terminal.term.ArrToBig(bc_D);
+    alf['e'] = terminal.term.ArrToBig(bc_E);
+    alf['f'] = terminal.term.ArrToBig(bc_F);
 }
 
 void big_hex_bumbers::SetNumber(int new_number)
@@ -223,6 +223,6 @@ void big_hex_bumbers::Draw()
     }
     for (int i = 0; i < (int)s.length(); i++)
     {
-        Window()->bc->PrintBigChar(alf.find(s.c_str()[i])->second, PosX() + i * 9, PosY(), BgColor(), FgColor());
+        terminal.term.PrintBigChar(alf.find(s.c_str()[i])->second, PosX() + i * 9, PosY(), BgColor(), FgColor());
     }
 }
