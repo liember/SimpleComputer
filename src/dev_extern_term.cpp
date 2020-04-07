@@ -8,11 +8,6 @@ int myBigChars::PrintA(char *str)
     return 0;
 }
 
-myBigChars::myBigChars(myTerm *t)
-{
-    term = t;
-}
-
 int *myBigChars::ArrToBig(const char *arr)
 {
     int *big = new int[2];
@@ -64,7 +59,7 @@ int myBigChars::SetBigCharPos(int *big, int x, int y, int value)
 int myBigChars::PrintBox(int x1, int y1, int x2, int y2)
 {
     int tmp;
-    int maxx = term->GetScreenSizeX(), maxy = term->GetScreenSizeY();
+    int maxx = GetScreenSizeX(), maxy = GetScreenSizeY();
 
     if (x1 > x2)
     {
@@ -81,19 +76,19 @@ int myBigChars::PrintBox(int x1, int y1, int x2, int y2)
     if ((x1 < 0) || (y1 < 0) || (x2 > maxx) || (y2 > maxy) || (x2 - x1 < 2) ||
         (y2 - y1 < 2))
         return -1;
-    term->GotoXY(x1, y1);
+    GotoXY(x1, y1);
     PrintA(BOXCHAR_TL);
     for (int i = x1 + 1; i < x2; i++)
         PrintA(BOXCHAR_HOR);
     PrintA(BOXCHAR_TR);
     for (int i = y1 + 1; i < y2; i++)
     {
-        term->GotoXY(x1, i);
+        GotoXY(x1, i);
         PrintA(BOXCHAR_VERT);
-        term->GotoXY(x2, i);
+        GotoXY(x2, i);
         PrintA(BOXCHAR_VERT);
     }
-    term->GotoXY(x1, y2);
+    GotoXY(x1, y2);
     PrintA(BOXCHAR_BL);
     for (int i = x1 + 1; i < x2; i++)
         PrintA(BOXCHAR_HOR);
@@ -101,9 +96,9 @@ int myBigChars::PrintBox(int x1, int y1, int x2, int y2)
     return 0;
 }
 
-int myBigChars::PrintBigChar(int *big, int x, int y, enum myTerm::colors fg, enum myTerm::colors bg)
+int myBigChars::PrintBigChar(int *big, int x, int y, enum colors fg, enum colors bg)
 {
-    int maxx = term->GetScreenSizeX(), maxy = term->GetScreenSizeY();
+    int maxx = GetScreenSizeX(), maxy = GetScreenSizeY();
     int pos, bit;
     int i, j;
     char row[9];
@@ -111,8 +106,8 @@ int myBigChars::PrintBigChar(int *big, int x, int y, enum myTerm::colors fg, enu
     if ((x < 0) || (y < 0) || (x + 8 > maxx) || (y + 8 > maxy))
         return -1;
     row[8] = '\0';
-    term->SetFgColor(fg);
-    term->SetBgColor(bg);
+    SetFgColor(fg);
+    SetBgColor(bg);
     for (i = 0; i < 8; i++)
     {
         for (j = 0; j < 8; j++)
@@ -124,11 +119,11 @@ int myBigChars::PrintBigChar(int *big, int x, int y, enum myTerm::colors fg, enu
             else
                 row[j] = BOXCHAR_REC;
         }
-        term->GotoXY(x, y + i);
+        GotoXY(x, y + i);
         PrintA(row);
     }
-    term->SetFgColor(myTerm::colors::defaul);
-    term->SetBgColor(myTerm::colors::defaul);
+    SetFgColor(colors::defaul);
+    SetBgColor(colors::defaul);
     return 0;
 }
 
