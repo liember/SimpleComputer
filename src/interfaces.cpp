@@ -9,7 +9,7 @@ internal_memory::Interface::Interface()
     instruction_count.Set(0);
 }
 
-external_memory::Interface::Interface()
+external_memory::Interface::Interface() : ram(standart_memory_size)
 {
     ram.Init();
 }
