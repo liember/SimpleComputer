@@ -133,6 +133,8 @@ int ui::Draw()
     printf("%0*X ", 4, ac->Get());
 
     box_instruction_counter->Draw();
+    window->term->GotoXY(72, 5);
+    printf("%0*X ", 4, current_operation);
 
     box_operation->Draw();
     window->term->GotoXY(72, 8);
