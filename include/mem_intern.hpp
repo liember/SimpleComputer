@@ -1,4 +1,4 @@
-#pragma once;
+#pragma once
 
 #include <cstdint>
 #include <exception>
@@ -17,20 +17,19 @@ namespace internal_memory
 
 class Accamulator
 {
-private:
+public:
     uint16_t cell;
 
-public:
     void Set(uint16_t v) { cell = v; }
     uint16_t Get() { return cell; }
 };
 
 class Registers
 {
-private:
-    uint8_t flags;
 
 public:
+    uint8_t flags;
+
     void Init();
     bool Get(uint8_t regist);
     void Set(uint8_t regist, bool value);

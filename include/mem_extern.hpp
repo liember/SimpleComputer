@@ -25,11 +25,11 @@ inline constexpr uint16_t standart_memory_size = 100;
 
 class RandomAcsessMemory
 {
-private:
-    int memory_size;
+public:
     uint16_t *memory;
 
-public:
+    const int size;
+
     RandomAcsessMemory();
     explicit RandomAcsessMemory(int size);
     ~RandomAcsessMemory();
@@ -45,7 +45,7 @@ public:
 
 class Interface
 {
-private:
+public:
     RandomAcsessMemory ram;
 
     Interface();
