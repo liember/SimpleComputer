@@ -2,12 +2,12 @@
 
 using namespace external_memory;
 
-RandomAcsessMemory::RandomAcsessMemory()
+RandomAcsessMemory::RandomAcsessMemory() : size(standart_memory_size)
 {
     memory = new uint16_t[standart_memory_size];
 }
 
-RandomAcsessMemory::RandomAcsessMemory(int size)
+RandomAcsessMemory::RandomAcsessMemory(int s) : size(s)
 {
     memory = new uint16_t[size];
 }
@@ -26,7 +26,7 @@ uint16_t RandomAcsessMemory::Get(unsigned int index)
 
 void RandomAcsessMemory::Init()
 {
-    for (int i = 0; i < memory_size; i++)
+    for (int i = 0; i < size; i++)
     {
         memory[i] = 0;
     }
@@ -39,7 +39,7 @@ void RandomAcsessMemory::Load(const char *filename)
     {
         throw FILE_FAIL;
     }
-    fread(memory, sizeof(int), memory_size, fp);
+    fread(memory, sizeof(int), size, fp);
     fclose(fp);
 }
 
@@ -50,7 +50,7 @@ void RandomAcsessMemory::Save(const char *filename)
     {
         throw FILE_FAIL;
     }
-    for (int i = 0; i < memory_size; i++)
+    for (int i = 0; i < size; i++)
     {
         fwrite(&memory[i], sizeof(int), 1, fp);
     }
@@ -59,7 +59,7 @@ void RandomAcsessMemory::Save(const char *filename)
 
 void RandomAcsessMemory::Set(int adress, uint16_t value)
 {
-    if (adress >= memory_size)
+    if (adress >= size)
     {
         throw OVER_THE_BORDER;
     }
