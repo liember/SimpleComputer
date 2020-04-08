@@ -2,25 +2,19 @@
 
 using namespace myspc;
 
-SimpleComputer *SignalHandler::ScPc = nullptr;
-
-SignalHandler::SignalHandler(SimpleComputer *p)
+SimpleComputer::SimpleComputer() : interpreter(),
+                                   internal_mem(),
+                                   external_mem(),
+                                   system_io(external_mem, internal_mem)
 {
-    ScPc = p;
-    signal(SIGALRM, SignalHandle);
-    signal(SIGUSR1, Reset);
 }
 
-void SignalHandler::SignalHandle(int sig)
+void SimpleComputer::DrawUI()
 {
-    ScPc->SigHandle(ContinueWorking);
+    system_io.DrawInterface();
 }
 
-void SignalHandler::Reset(int sig)
-{
-    ScPc->SigHandle(ResetSystem);
-}
-
+/*
 void SimpleComputer::SigHandle(int sig)
 {
     switch (sig)
@@ -42,32 +36,37 @@ void SimpleComputer::SigHandle(int sig)
         break;
     }
 }
+*/
 
 void SimpleComputer::Init()
 {
-    rg = new memory::Registers();
-    sc_mem = new memory::Memory(rg);
-    acc = new memory::accamulator();
-
-    window = new terminal::VOS();
-    user_interface = new ui(window, sc_mem, rg, acc);
-    keyboard = new myReadkey();
-
     run_status = true;
-    current_operation = 0;
-
-    gui_kit::base_parameters::SetVOS(&window);
-
-    sc_mem.Init();
-    user_interface.Init();
-
-    SignalHandler sh(this);
-
     CustomInit();
 }
 
 void SimpleComputer::End()
 {
-    window.ClrScr();
+    //gui.ClrScr();
     std::cout << "Start saving configuration of SimpleCopmuter" << std::endl;
 }
+
+/*
+SimpleComputer *InterruptManager::ScPc = nullptr;
+
+InterruptManager::InterruptManager(SimpleComputer *p)
+{
+    ScPc = p;
+    signal(SIGALRM, SignalHandle);
+    signal(SIGUSR1, Reset);
+}
+
+void InterruptManager::SignalHandle(int sig)
+{
+    ScPc->SigHandle(ContinueWorking);
+}
+
+void InterruptManager::Reset(int sig)
+{
+    ScPc->SigHandle(ResetSystem);
+}
+*/
