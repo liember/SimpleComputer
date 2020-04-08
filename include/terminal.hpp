@@ -4,13 +4,13 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#define BOXCHAR_REC 'a'
-#define BOXCHAR_BR "j"
-#define BOXCHAR_BL "m"
-#define BOXCHAR_TR "k"
-#define BOXCHAR_TL "l"
-#define BOXCHAR_VERT "x"
-#define BOXCHAR_HOR "q"
+inline constexpr char BOXCHAR_REC = 'a';
+inline constexpr char *const BOXCHAR_BR = (char *)"j";
+inline constexpr char *const BOXCHAR_BL = (char *)"m";
+inline constexpr char *const BOXCHAR_TR = (char *)"k";
+inline constexpr char *const BOXCHAR_TL = (char *)"l";
+inline constexpr char *const BOXCHAR_VERT = (char *)"x";
+inline constexpr char *const BOXCHAR_HOR = (char *)"q";
 
 namespace terminal
 {
