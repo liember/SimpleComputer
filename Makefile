@@ -2,7 +2,7 @@
 .PHONY: all
 
 CC = clang++
-CFLAGS = -Wall -I include
+CFLAGS = -Wall -std=c++17 -I include
 DEPFLAGS = -MP -MMD 
 DEPDIR = dep/
 
@@ -29,7 +29,6 @@ dirs:
 		
 clean:
 	rm -f $(BINDIR)* $(OBJDIR)*.o $(DEPDIR)*.d 
-	rm -f $(BINDIR_TEST)* $(OBJDIR_TEST)*.o $(DEPDIR_TEST)*.d
 
 cleanall:
 	rm -R bin build dep
