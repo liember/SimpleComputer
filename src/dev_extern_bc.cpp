@@ -59,7 +59,7 @@ int myTerm::GotoXY(int x, int y)
 		return -1;
 }
 
-int myTerm::ClrScr()
+int myTerm::ClrScreen()
 {
 	std::cout << "\E[H\E[2J";
 	return 0;
