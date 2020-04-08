@@ -13,13 +13,12 @@ namespace gui_kit
 // ####################### classes ######################
 class base_parameters
 {
-private:
+public:
     int x, y;
     terminal::colors bgcolor;
     terminal::colors fgcolor;
 
-public:
-    static terminal::Interface terminal;
+    static terminal::Interface &output();
 
     void SetFgColor(terminal::colors c = terminal::colors::defaul);
     void SetBgColor(terminal::colors c = terminal::colors::defaul);
@@ -32,42 +31,29 @@ public:
     int PosY();
 };
 
-class titled_box : public base_parameters
-{
-private:
-    std::string title;
-
-    // box size
-    int width;
-    int height;
-
-public:
-    void Move(int new_x, int new_y);
-    void Resize(int new_width, int new_height);
-
-    void Draw();
-
-    void ChangeTitle(std::string new_title);
-
-    titled_box(int w, int h, int _x, int _y, std::string _title);
-};
-
 class untitled_box : public base_parameters
 {
-private:
-    std::string title;
-
+public:
     // box size
     int width;
     int height;
 
-public:
     void Move(int x, int y);
     void Resize(int w, int h);
 
-    void Draw();
+    virtual void Draw();
 
     untitled_box(int w, int h, int x, int y);
+};
+
+class titled_box : public untitled_box
+{
+public:
+    std::string title;
+
+    void Draw();
+    void ChangeTitle(std::string new_title);
+    titled_box(int w, int h, int _x, int _y, std::string _title);
 };
 
 class big_hex_bumbers : public base_parameters
@@ -75,9 +61,9 @@ class big_hex_bumbers : public base_parameters
 private:
     std::map<int, int *> alf;
 
+public:
     int number;
 
-public:
     big_hex_bumbers(int num, int new_x = 0, int new_y = 0);
 
     void SetNumber(int new_number);
