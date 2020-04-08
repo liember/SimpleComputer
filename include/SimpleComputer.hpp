@@ -8,8 +8,7 @@
 #include "mem_extern.hpp"
 #include "mem_intern.hpp"
 
-#include "SC_GUI.hpp"
-#include "myReadkey.hpp"
+#include "user_interaction.hpp"
 
 // !!! Just know this !!!
 // All functions of this header are named as sc_<module>.cpp
@@ -32,36 +31,19 @@ private:
     internal_memory::Interface internal_mem;
     external_memory::Interface external_mem;
 
-    user_interface out;
-    myReadkey keyboard;
-
+    user_interaction::Interface system_io; // input output
 private:
     void CustomInit();
 
-    // key handling functions
-    void Load();
-    void Save();
+    // TO DO MOVE THIS INTO EXECUTOR
+    // int ALU(int command, int operand);
+    // void CU();
 
-    void Run();
-    void Step();
-    void Reset();
-    void Enter();
-
-    void Accamulator();
-    void InstructionCounter();
-
-    void SelectUpper();
-    void SelectLower();
-    void SelectRight();
-    void SelectLeft();
-
-    int ALU(int command, int operand); // TO DO MOVE THIS INTO EXECUTOR
-    void CU();
-
-    void InputHandle();
     void SigHandle(int sig);
 
 public:
+    SimpleComputer();
+
     bool run_status;
 
     void Init();

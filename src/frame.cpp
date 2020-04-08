@@ -6,7 +6,7 @@ int main()
 
   Computer.Init();
 
-  while (Computer.IsRunning())
+  while (Computer.run_status)
   {
     Computer.DrawUI();
     Computer.Process();
