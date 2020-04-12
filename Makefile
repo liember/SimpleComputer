@@ -2,7 +2,7 @@
 .PHONY: all
 
 CC = clang++
-CFLAGS = -Wall -std=c++17 -I include
+CFLAGS = -Wall -std=c++17 -g -I include
 DEPFLAGS = -MP -MMD 
 DEPDIR = dep/
 

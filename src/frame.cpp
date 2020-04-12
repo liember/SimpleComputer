@@ -8,7 +8,6 @@ int main()
 
   while (Computer.run_status)
   {
-    Computer.DrawUI();
     Computer.Process();
   }
 
