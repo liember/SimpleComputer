@@ -18,7 +18,7 @@ public:
     terminal::colors bgcolor;
     terminal::colors fgcolor;
 
-    static terminal::Interface &output();
+    static terminal::Interface output;
 
     void SetFgColor(terminal::colors c = terminal::colors::defaul);
     void SetBgColor(terminal::colors c = terminal::colors::defaul);

@@ -2,24 +2,23 @@
 
 using namespace myspc;
 
-void SimpleComputer::CustomInit()
+SimpleComputer::SimpleComputer() : internal_mem(),
+                                   external_mem(),
+                                   system_io(external_mem, internal_mem)
 {
-    //user_interface.ClearrScreen();
-    //user_interface.SetSelectedCell(14);
+}
 
-    internal_mem.registers.Set(FLAG_INTERRUPT, 1);
+void SimpleComputer::Init()
+{
+    run_status = true;
+}
+
+void SimpleComputer::End()
+{
 }
 
 void SimpleComputer::Process()
 {
-    //TO DO INTERUPT MANAGER
-    /*
-    if (.Get(FLAG_INTERRUPT))
-    {
-        InputHandle();
-    }
-    else
-    {
-    }
-    */
+    system_io.DrawInterface();
+    system_io.ReadKey();
 }
