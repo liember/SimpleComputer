@@ -1,7 +1,9 @@
-#include "interpreter.hpp"
+#include "Executor.hpp"
 #include <iostream>
 
-int interpreter::Decode(int value, int *command, int *operand)
+using namespace ALU;
+
+int Interpreter::Decode(int value, int *command, int *operand)
 {
     int attribute;
     int tmp_command, tmp_operand;
@@ -10,14 +12,16 @@ int interpreter::Decode(int value, int *command, int *operand)
     {
         tmp_command = (value >> 7) & 0x7F;
         tmp_operand = value & 0x7F;
-        bool command_is_defined = false;
-        for (int i = 0; i < 12; i++)
-        {
-            if (tmp_command == comands_list[i])
-            {
-                command_is_defined = true;
-            }
-        }
+
+        // TO DO CHECKING COMAND DEFIFNITIONS
+        bool command_is_defined = true;
+        // for (int i = 0; i < 12; i++)
+        // {
+        //     if (command == comands_list[i])
+        //     {
+        //         command_is_defined = true;
+        //     }
+        // }
         if (command_is_defined)
         {
             *command = tmp_command;
@@ -36,21 +40,23 @@ int interpreter::Decode(int value, int *command, int *operand)
     }
     return 0;
 }
-int interpreter::Encode(int command, int operand, int *value)
+int Interpreter::Encode(int command, int operand, int *value)
 {
     if (operand > 127)
     {
         std::cout << "[!] very long operand" << std::endl;
         return 2;
     }
-    bool command_is_defined = false;
-    for (int i = 0; i < 12; i++)
-    {
-        if (command == comands_list[i])
-        {
-            command_is_defined = true;
-        }
-    }
+
+    // TO DO CHECKING COMAND DEFIFNITIONS
+    bool command_is_defined = true;
+    // for (int i = 0; i < 12; i++)
+    // {
+    //     if (command == comands_list[i])
+    //     {
+    //         command_is_defined = true;
+    //     }
+    // }
     if (command_is_defined)
     {
         *value = 0;
