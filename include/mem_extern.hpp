@@ -47,7 +47,7 @@ class Interface
 {
 public:
     RandomAcsessMemory ram;
-
+    void Init();
     Interface();
     explicit Interface(int ram_size);
 };

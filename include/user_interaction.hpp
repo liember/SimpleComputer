@@ -14,8 +14,6 @@ namespace user_interaction
 class GraphicalInterface
 {
 private:
-    gui_kit::base_parameters sys_draw;
-
     //ui components
     gui_kit::titled_box box_memory;
     gui_kit::titled_box box_accamulator;
@@ -33,6 +31,8 @@ private:
 
 public:
     int selected_mem;
+    gui_kit::base_parameters sys_draw;
+
     GraphicalInterface();
 
     // Print elements thats refers to external/internal memory
@@ -45,7 +45,7 @@ public:
 
 class KeyHandler
 {
-
+private:
 public:
     myReadkey keyboard;
 
@@ -55,16 +55,14 @@ public:
 
     void Run();
     void Step();
-    void Reset();
     void Enter();
 
-    void Accamulator();
-    void InstructionCounter();
+    uint16_t GetValue();
 
-    void SelectUpper();
-    void SelectLower();
-    void SelectRight();
-    void SelectLeft();
+    void SelectUpper(int &);
+    void SelectLower(int &);
+    void SelectRight(int &);
+    void SelectLeft(int &);
 };
 
 class Interface
@@ -73,12 +71,17 @@ public:
     KeyHandler input_handler;
     GraphicalInterface gui;
 
-    const external_memory::Interface &external_memory;
-    const internal_memory::Interface &internal_memory;
+    external_memory::Interface &external_memory;
+    internal_memory::Interface &internal_memory;
 
-    Interface(const external_memory::Interface &, const internal_memory::Interface &);
+    int &selected_memory = gui.selected_mem;
+
+    Interface(external_memory::Interface &, internal_memory::Interface &);
 
     void DrawInterface();
+    void ClearScreen();
+
+    int ReadKey();
 };
 
 } // namespace user_interaction

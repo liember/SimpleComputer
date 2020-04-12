@@ -20,8 +20,10 @@ class Accamulator
 public:
     uint16_t cell;
 
-    void Set(uint16_t v) { cell = v; }
-    uint16_t Get() { return cell; }
+    Accamulator();
+
+    void Set(uint16_t v);
+    uint16_t Get();
 };
 
 class Registers
@@ -42,6 +44,8 @@ public:
     Accamulator instruction_count;
 
     Registers registers;
+
+    void Init();
 
     Interface();
 };

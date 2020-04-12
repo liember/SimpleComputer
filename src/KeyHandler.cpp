@@ -4,10 +4,10 @@ using namespace user_interaction;
 
 void KeyHandler::Load()
 {
-    // std::cout << "Filename: ";
-    // std::string name;
-    // std::cin >> name;
-    // sc_mem->Load(name.c_str());
+    std::cout << "Filename: ";
+    std::string name;
+    std::cin >> name;
+    //sc_mem->Load(name.c_str());
 }
 
 void KeyHandler::Save()
@@ -34,59 +34,41 @@ void KeyHandler::Run()
 
 void KeyHandler::Step() {}
 
-void KeyHandler::Reset()
+uint16_t KeyHandler::GetValue()
 {
-    // sc_mem->Init();
-    // acc->Set(0);
-    // current_operation = 0;
+    std::cout << "Value: ";
+    uint16_t val;
+    std::cin >> val;
+    return val;
 }
 
-void KeyHandler::Accamulator()
+void KeyHandler::SelectUpper(int &cur)
 {
-    // std::cout << "Value: ";
-    // uint16_t val;
-    // std::cin >> val;
-    // acc->Set(val);
+    if (cur / 10 != 0)
+    {
+        cur -= 10;
+    }
+}
+void KeyHandler::SelectLower(int &cur)
+{
+    if (cur + 10 < 99)
+    {
+        cur += 10;
+    }
 }
 
-void KeyHandler::InstructionCounter()
+void KeyHandler::SelectRight(int &cur)
 {
-    // std::cout << "I dont know what is this ;D";
+    if (cur % 10 != 9)
+    {
+        cur++;
+    }
 }
 
-void KeyHandler::SelectUpper()
+void KeyHandler::SelectLeft(int &cur)
 {
-    // int cur = user_interface->CurrentCell();
-
-    // if (cur / 10 != 0)
-    // {
-    //     user_interface->SetSelectedCell(cur - 10);
-    // }
-}
-void KeyHandler::SelectLower()
-{
-    // int cur = user_interface->CurrentCell();
-    // std::cout << cur;
-    // if (cur + 10 < 99)
-    // {
-    //     user_interface->SetSelectedCell(cur + 10);
-    // }
-}
-
-void KeyHandler::SelectRight()
-{
-    // int cur = user_interface->CurrentCell();
-    // if (cur % 10 != 9)
-    // {
-    //     user_interface->SetSelectedCell(cur + 1);
-    // }
-}
-
-void KeyHandler::SelectLeft()
-{
-    // int cur = user_interface->CurrentCell();
-    // if (cur % 10 != 0)
-    // {
-    //     user_interface->SetSelectedCell(cur - 1);
-    // }
+    if (cur % 10 != 0)
+    {
+        cur--;
+    }
 }
