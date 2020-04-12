@@ -31,3 +31,7 @@ void Registers::Set(uint8_t regist, bool value)
     else
         flags = flags & (~(1 << regist));
 }
+
+void Accamulator::Set(uint16_t v) { cell = v; }
+uint16_t Accamulator::Get() { return cell; }
+Accamulator::Accamulator() : cell(0) {}
