@@ -12,10 +12,10 @@ void KeyHandler::Load()
 
 void KeyHandler::Save()
 {
-    // std::cout << "Filename: ";
-    // std::string name;
-    // std::cin >> name;
-    // sc_mem->Save(name.c_str());
+    std::cout << "Filename: ";
+    std::string name;
+    std::cin >> name;
+    //sc_mem->Save(name.c_str());
 }
 
 void KeyHandler::Run()
