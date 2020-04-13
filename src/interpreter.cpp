@@ -3,7 +3,7 @@
 
 using namespace ALU;
 
-int Interpreter::Decode(const int value, uint8_t *command, uint8_t *operand)
+int Interpreter::Decode(const uint16_t value, uint8_t *command, uint8_t *operand)
 {
     int attribute;
     int tmp_command, tmp_operand;
@@ -37,7 +37,7 @@ int Interpreter::Decode(const int value, uint8_t *command, uint8_t *operand)
     }
     return 0;
 }
-int Interpreter::Encode(uint8_t command, uint8_t operand, int *value)
+int Interpreter::Encode(uint8_t command, uint8_t operand, uint16_t *value)
 {
     if (operand > 127)
     {
