@@ -2,7 +2,9 @@
 
 using namespace ALU;
 
-int Executor::Calculate(const uint16_t command, const uint16_t operand, uint16_t &accum)
+// TO DO MAKE EXCEPTIONS CHECKING
+
+int Executor::Calculate(const uint8_t command, const uint8_t operand, uint8_t &accum)
 {
     switch (command)
     {
@@ -26,7 +28,7 @@ int Executor::Calculate(const uint16_t command, const uint16_t operand, uint16_t
     return 0;
 }
 
-int Commutate(const uint16_t command, const uint16_t operand, const uint16_t accum, uint16_t &counter)
+int Executor::Commutate(const uint8_t command, const uint8_t operand, const uint8_t accum, uint8_t &counter)
 {
     switch (command)
     {
@@ -54,10 +56,41 @@ int Commutate(const uint16_t command, const uint16_t operand, const uint16_t acc
     return 0;
 }
 
-int Move(const uint16_t command, const uint16_t &operand, uint16_t &accum)
+int Executor::Move(const uint8_t command, uint8_t &operand, uint8_t &accum)
 {
+    switch (command)
+    {
+    case comands::load:
+        accum = operand;
+        break;
+
+    case comands::store:
+        operand = accum;
+        break;
+    }
+    return 0;
 }
 
-int InputOut(const uint16_t command, const uint16_t &operand)
+int Executor::InputOut(const uint8_t command, uint8_t &operand)
 {
+    switch (command)
+    {
+    case comands::Read:
+        int val;
+        std::cin >> val;
+        if (val <= 127)
+        {
+            operand = val;
+        }
+        else
+        {
+            throw overflow;
+        }
+        break;
+
+    case comands::Write:
+        std::cout << operand;
+        break;
+    }
+    return 0;
 }
