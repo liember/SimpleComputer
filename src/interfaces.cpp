@@ -1,8 +1,12 @@
 #include "mem_extern.hpp"
 #include "mem_intern.hpp"
+
 #include "terminal.hpp"
+
 #include "user_interaction.hpp"
 #include "StringSwitch.hpp"
+
+#include "Executor.hpp"
 
 internal_memory::Interface::Interface() : accamulator(), instruction_count(), registers()
 {
@@ -97,5 +101,33 @@ int user_interaction::Interface::ReadKey()
         ss_case("\033[D") : input_handler.SelectLeft(selected_memory);
         break;
     }
+    return 0;
+}
+
+//  ############## executeor #####################
+
+ALU::Interface::Interface(external_memory::Interface &external,
+                          internal_memory::Interface &internal)
+    : translateor(),
+      maker(),
+      external_memory(external),
+      internal_memory(internal)
+{
+}
+
+int ALU::Interface::Step()
+{
+    uint8_t comand, operand;
+
+    uint16_t value = external_memory.ram.Get(internal_memory.instruction_count.cell);
+    translateor.Decode(value, &comand, &operand);
+
+    uint16_t &operand_value = external_memory.ram.memory[operand];
+
+    maker.Calculate(comand,
+                    operand_value,
+                    internal_memory.accamulator.cell,
+                    internal_memory.instruction_count.cell);
+
     return 0;
 }
