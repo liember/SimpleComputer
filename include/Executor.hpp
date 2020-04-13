@@ -6,6 +6,14 @@
 namespace ALU
 {
 
+enum errors
+{
+    overflow,
+    undef_comand,
+    non_comand_data,
+    long_operand,
+};
+
 enum comands
 {
     // input/output
@@ -30,19 +38,35 @@ enum comands
 
 class Interpreter
 {
+private:
+    int check_list_size = 13;
+    static constexpr uint8_t check_list[] = {comands::Read,
+                                             comands::Write,
+                                             comands::load,
+                                             comands::store,
+                                             comands::add,
+                                             comands::sub,
+                                             comands::divide,
+                                             comands::mul,
+                                             comands::jump,
+                                             comands::jneg,
+                                             comands::jz,
+                                             comands::halt,
+                                             comands::And};
+
 public:
-    int Encode(int command, int operand, int *value);
-    int Decode(int value, int *command, int *operand);
+    int Encode(uint8_t command, uint8_t operand, int *value);
+    int Decode(const int value, uint8_t *command, uint8_t *operand);
 };
 
 class Executor
 {
 public:
     // operand means cell of memory
-    int Calculate(const uint16_t command, const uint16_t operand, uint16_t &accum);
-    int Commutate(const uint16_t command, const uint16_t operand, const uint16_t accum, uint16_t &counter);
-    int Move(const uint16_t command, const uint16_t &operand, uint16_t &accum);
-    int InputOut(const uint16_t command, const uint16_t &operand);
+    int Calculate(const uint8_t command, const uint8_t operand, uint8_t &accum);
+    int Commutate(const uint8_t command, const uint8_t operand, const uint8_t accum, uint8_t &counter);
+    int Move(const uint8_t command, uint8_t &operand, uint8_t &accum);
+    int InputOut(const uint8_t command, uint8_t &operand);
 };
 
 class Interface
