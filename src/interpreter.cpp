@@ -3,7 +3,7 @@
 
 using namespace ALU;
 
-int Interpreter::Decode(int value, int *command, int *operand)
+int Interpreter::Decode(const int value, uint8_t *command, uint8_t *operand)
 {
     int attribute;
     int tmp_command, tmp_operand;
@@ -13,15 +13,14 @@ int Interpreter::Decode(int value, int *command, int *operand)
         tmp_command = (value >> 7) & 0x7F;
         tmp_operand = value & 0x7F;
 
-        // TO DO CHECKING COMAND DEFIFNITIONS
         bool command_is_defined = true;
-        // for (int i = 0; i < 12; i++)
-        // {
-        //     if (command == comands_list[i])
-        //     {
-        //         command_is_defined = true;
-        //     }
-        // }
+        for (int i = 0; i < check_list_size; i++)
+        {
+            if (*command == check_list[i])
+            {
+                command_is_defined = true;
+            }
+        }
         if (command_is_defined)
         {
             *command = tmp_command;
@@ -29,40 +28,35 @@ int Interpreter::Decode(int value, int *command, int *operand)
         }
         else
         {
-            std::cout << "[!] undefined command" << std::endl;
-            return 1;
+            throw errors::undef_comand;
         }
     }
     else
     {
-        std::cout << "[!] attribute of non comand data" << std::endl;
-        return 1;
+        throw errors::non_comand_data;
     }
     return 0;
 }
-int Interpreter::Encode(int command, int operand, int *value)
+int Interpreter::Encode(uint8_t command, uint8_t operand, int *value)
 {
     if (operand > 127)
     {
-        std::cout << "[!] very long operand" << std::endl;
-        return 2;
+        throw errors::long_operand;
     }
 
-    // TO DO CHECKING COMAND DEFIFNITIONS
     bool command_is_defined = true;
-    // for (int i = 0; i < 12; i++)
-    // {
-    //     if (command == comands_list[i])
-    //     {
-    //         command_is_defined = true;
-    //     }
-    // }
-    if (command_is_defined)
+    for (int i = 0; i < check_list_size; i++)
     {
-        *value = 0;
-        *value = (command << 7) | operand;
-        return 0;
+        if (command == check_list[i])
+        {
+            command_is_defined = true;
+        }
     }
-    std::cout << "[!] undefined command" << std::endl;
-    return 1;
+    if (!command_is_defined)
+    {
+        throw errors::undef_comand;
+    }
+    *value = 0;
+    *value = (command << 7) | operand;
+    return 0;
 }
