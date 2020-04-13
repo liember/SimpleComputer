@@ -4,7 +4,7 @@ using namespace ALU;
 
 // TO DO MAKE EXCEPTIONS CHECKING
 
-int Executor::Calculate(const uint8_t command, const uint8_t operand, uint8_t &accum)
+int Executor::Calculate(uint8_t command, uint16_t &operand, uint16_t &accum, uint16_t &counter)
 {
     switch (command)
     {
@@ -24,14 +24,7 @@ int Executor::Calculate(const uint8_t command, const uint8_t operand, uint8_t &a
     case comands::divide:
         accum /= operand;
         break;
-    }
-    return 0;
-}
 
-int Executor::Commutate(const uint8_t command, const uint8_t operand, const uint8_t accum, uint8_t &counter)
-{
-    switch (command)
-    {
     case comands::jump:
         counter = operand;
         break;
@@ -50,16 +43,6 @@ int Executor::Commutate(const uint8_t command, const uint8_t operand, const uint
         }
         break;
 
-    case comands::halt:
-        break;
-    }
-    return 0;
-}
-
-int Executor::Move(const uint8_t command, uint8_t &operand, uint8_t &accum)
-{
-    switch (command)
-    {
     case comands::load:
         accum = operand;
         break;
@@ -67,14 +50,7 @@ int Executor::Move(const uint8_t command, uint8_t &operand, uint8_t &accum)
     case comands::store:
         operand = accum;
         break;
-    }
-    return 0;
-}
 
-int Executor::InputOut(const uint8_t command, uint8_t &operand)
-{
-    switch (command)
-    {
     case comands::Read:
         int val;
         std::cin >> val;
@@ -91,6 +67,10 @@ int Executor::InputOut(const uint8_t command, uint8_t &operand)
     case comands::Write:
         std::cout << operand;
         break;
+
+    case comands::halt:
+        break;
     }
+
     return 0;
 }

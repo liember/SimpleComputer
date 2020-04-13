@@ -55,18 +55,15 @@ private:
                                              comands::And};
 
 public:
-    int Encode(uint8_t command, uint8_t operand, int *value);
-    int Decode(const int value, uint8_t *command, uint8_t *operand);
+    int Encode(uint8_t command, uint8_t operand, uint16_t *value);
+    int Decode(const uint16_t value, uint8_t *command, uint8_t *operand);
 };
 
 class Executor
 {
 public:
     // operand means cell of memory
-    int Calculate(const uint8_t command, const uint8_t operand, uint8_t &accum);
-    int Commutate(const uint8_t command, const uint8_t operand, const uint8_t accum, uint8_t &counter);
-    int Move(const uint8_t command, uint8_t &operand, uint8_t &accum);
-    int InputOut(const uint8_t command, uint8_t &operand);
+    int Calculate(uint8_t command, uint16_t &operand, uint16_t &accum, uint16_t &counter);
 };
 
 class Interface
@@ -75,11 +72,13 @@ public:
     Interpreter translateor;
     Executor maker;
 
-    const external_memory::Interface &external_memory;
-    const internal_memory::Interface &internal_memory;
+    external_memory::Interface &external_memory;
+    internal_memory::Interface &internal_memory;
 
-    Interface(const external_memory::Interface &,
-              const internal_memory::Interface &);
+    Interface(external_memory::Interface &,
+              internal_memory::Interface &);
+
+    int Step();
 };
 
 } // namespace ALU
