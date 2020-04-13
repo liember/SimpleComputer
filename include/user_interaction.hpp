@@ -43,6 +43,13 @@ public:
     int Draw();
 };
 
+enum states
+{
+    run_until_next,
+    run_until_end,
+    exit
+};
+
 class KeyHandler
 {
 private:
@@ -50,12 +57,8 @@ public:
     myReadkey keyboard;
 
     // key handling functions
-    void Load();
-    void Save();
-
-    void Run();
-    void Step();
-    void Enter();
+    void Load(external_memory::RandomAcsessMemory &mem);
+    void Save(external_memory::RandomAcsessMemory &mem);
 
     uint16_t GetValue();
 

@@ -78,16 +78,19 @@ int user_interaction::Interface::ReadKey()
 
     ss_switch(key)
     {
-        ss_case("l") : input_handler.Load();
+        ss_case("l") : input_handler.Load(external_memory.ram);
         break;
-        ss_case("s") : input_handler.Save();
+        ss_case("s") : input_handler.Save(external_memory.ram);
         break;
-        ss_case("r") : break;
-        ss_case("t") : break;
+        ss_case("r") : return states::run_until_end;
+        break;
+        ss_case("t") : return states::run_until_next;
+        break;
         ss_case("i") : internal_memory.Init();
         external_memory.Init();
         break;
-        ss_case("q") : break;
+        ss_case("q") : return states::exit;
+        break;
         ss_case("\033[15~") : internal_memory.accamulator.cell = input_handler.GetValue();
         break;
         ss_case("\033[17~") : internal_memory.instruction_count.cell = input_handler.GetValue();

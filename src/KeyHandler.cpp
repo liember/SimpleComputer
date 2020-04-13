@@ -2,37 +2,21 @@
 
 using namespace user_interaction;
 
-void KeyHandler::Load()
+void KeyHandler::Load(external_memory::RandomAcsessMemory &mem)
 {
     std::cout << "Filename: ";
     std::string name;
     std::cin >> name;
-    //sc_mem->Load(name.c_str());
+    mem.Load(name.c_str());
 }
 
-void KeyHandler::Save()
+void KeyHandler::Save(external_memory::RandomAcsessMemory &mem)
 {
     std::cout << "Filename: ";
     std::string name;
     std::cin >> name;
-    //sc_mem->Save(name.c_str());
+    mem.Save(name.c_str());
 }
-
-void KeyHandler::Run()
-{
-    //if (rg->Get(FLAG_INTERRUPT))
-    //{
-    //    rg->Set(FLAG_INTERRUPT, 0);
-    //timer_handler(SIGALRM);
-    //}
-    //else
-    //{
-    //    alarm(0);
-    //    rg->Set(FLAG_INTERRUPT, 1);
-    //}
-}
-
-void KeyHandler::Step() {}
 
 uint16_t KeyHandler::GetValue()
 {
