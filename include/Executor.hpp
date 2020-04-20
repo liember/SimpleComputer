@@ -11,7 +11,7 @@ namespace errors
 namespace execution
 {
 inline constexpr int overflow = 11;
-inline constexpr int zero_division = 11;
+inline constexpr int zero_division = 22;
 } // namespace execution
 
 namespace translation
