@@ -3,27 +3,29 @@
 #include <cstdint>
 #include <exception>
 
-#define FLAG_OVERFLOW 0
-#define FLAG_DIVISION 1
-#define FLAG_OUTMEM 2
-#define FLAG_INTERRUPT 3
-#define FLAG_COMMAND 4
-#define FLAG_ODD 5
-
-#define UNKONWN_REGISTER 3
-
 namespace internal_memory
 {
+
+namespace flags
+{
+inline constexpr int overflow = 0;      // переполнение  при  выполнении  операции
+inline constexpr int zero_division = 1; // ошибка  деления  на  0
+inline constexpr int out_of_mem = 2;    // ошибка выхода за границы памяти
+inline constexpr int interrupt = 3;     // игнорирование тактовых импульсов
+inline constexpr int command = 4;       // указа-на неверная команда
+
+inline constexpr int unkonwn_register = 3;
+} // namespace flags
 
 class Accamulator
 {
 public:
-    uint16_t cell;
+    int16_t cell;
 
     Accamulator();
 
-    void Set(uint16_t v);
-    uint16_t Get();
+    void Set(int16_t v);
+    int16_t Get();
 };
 
 class Registers
