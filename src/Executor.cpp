@@ -4,7 +4,7 @@ using namespace ALU;
 
 // TO DO MAKE EXCEPTIONS CHECKING
 
-int Executor::Calculate(uint8_t command, uint16_t &operand, uint16_t &accum, uint16_t &counter)
+int Executor::Calculate(uint8_t command, int16_t &operand, int16_t &accum, int16_t &counter)
 {
     switch (command)
     {
@@ -54,18 +54,18 @@ int Executor::Calculate(uint8_t command, uint16_t &operand, uint16_t &accum, uin
     case comands::Read:
         int val;
         std::cin >> val;
-        if (val <= 127)
+        if (val <= 0x3fff)
         {
             operand = val;
         }
         else
         {
-            throw overflow;
+            return errors::execution::overflow;
         }
         break;
 
     case comands::Write:
-        std::cout << operand;
+        std::cout << operand << std::endl;
         break;
 
     case comands::halt:
