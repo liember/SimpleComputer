@@ -3,21 +3,18 @@
 
 using namespace internal_memory;
 
-bool Registers::Get(uint8_t regist)
+int Registers::Get(uint8_t regist)
 {
-    int ans = (flags >> (regist - 1)) & 0x1;
-
-    if (ans == 1)
+    if ((regist >= 0) && (regist <= 4))
     {
-        return true;
+        return (((flags) >> regist) & 1);
     }
-    return false;
+    else
+        throw 12;
+    return 0;
 }
 
-void Registers::Init()
-{
-    flags = 0;
-}
+void Registers::Init() { flags = 0; }
 
 void Registers::Set(uint8_t regist, bool value)
 {
