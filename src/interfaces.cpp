@@ -78,30 +78,31 @@ int user_interaction::Interface::ReadKey()
 
     ss_switch(key)
     {
-        ss_case("l") : input_handler.Load(external_memory.ram);
+        ss_case(l_key) : input_handler.Load(external_memory.ram);
         break;
-        ss_case("s") : input_handler.Save(external_memory.ram);
+        ss_case(s_key) : input_handler.Save(external_memory.ram);
         break;
-        ss_case("r") : return states::run_until_end;
+        ss_case(r_key) : return states::run_until_end;
         break;
-        ss_case("t") : return states::run_until_next;
+        ss_case(t_key) : return states::run_until_next;
         break;
-        ss_case("i") : internal_memory.Init();
+        ss_case(i_key) : internal_memory.Init();
         external_memory.Init();
         break;
-        ss_case("q") : return states::exit;
+        ss_case(q_key) : return states::exit;
         break;
-        ss_case("\033[15~") : internal_memory.accamulator.cell = input_handler.GetValue();
+        ss_case(f5_key) : internal_memory.accamulator.cell = input_handler.GetValue();
         break;
-        ss_case("\033[17~") : internal_memory.instruction_count.cell = input_handler.GetValue();
+        ss_case(f6_key) : internal_memory.instruction_count.cell = input_handler.GetValue();
+        internal_memory.registers.Set(internal_memory::flags::command, false);
         break;
-        ss_case("\033[A") : input_handler.SelectUpper(selected_memory);
+        ss_case(ar_up_key) : input_handler.SelectUpper(selected_memory);
         break;
-        ss_case("\033[B") : input_handler.SelectLower(selected_memory);
+        ss_case(ar_do_key) : input_handler.SelectLower(selected_memory);
         break;
-        ss_case("\033[C") : input_handler.SelectRight(selected_memory);
+        ss_case(ar_ri_key) : input_handler.SelectRight(selected_memory);
         break;
-        ss_case("\033[D") : input_handler.SelectLeft(selected_memory);
+        ss_case(ar_le_key) : input_handler.SelectLeft(selected_memory);
         break;
     }
     return 0;
@@ -121,16 +122,37 @@ ALU::Interface::Interface(external_memory::Interface &external,
 int ALU::Interface::Step()
 {
     uint8_t comand, operand;
+    int16_t value = external_memory.ram.Get(internal_memory.instruction_count.cell);
 
-    uint16_t value = external_memory.ram.Get(internal_memory.instruction_count.cell);
-    translateor.Decode(value, &comand, &operand);
+    if (!translateor.Decode(value, &comand, &operand))
+    {
+        int16_t &operand_value = external_memory.ram.memory[operand];
+        int result_flag = maker.Calculate(comand,
+                                          operand_value,
+                                          internal_memory.accamulator.cell,
+                                          internal_memory.instruction_count.cell);
+        if (!result_flag)
+        {
+            internal_memory.instruction_count.cell++;
+        }
+        else
+        {
+            internal_memory.registers.Set(internal_memory::flags::interrupt, true);
+            switch (result_flag)
+            {
+            case ALU::errors::execution::overflow:
+                /* code */
+                break;
 
-    uint16_t &operand_value = external_memory.ram.memory[operand];
-
-    maker.Calculate(comand,
-                    operand_value,
-                    internal_memory.accamulator.cell,
-                    internal_memory.instruction_count.cell);
+            default:
+                break;
+            }
+        }
+    }
+    else
+    {
+        internal_memory.registers.Set(internal_memory::flags::command, true);
+    }
 
     return 0;
 }
