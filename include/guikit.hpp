@@ -62,7 +62,7 @@ private:
     std::map<int, int *> alf;
 
 public:
-    int number;
+    uint16_t number;
 
     big_hex_bumbers(int num, int new_x = 0, int new_y = 0);
 
