@@ -26,7 +26,7 @@ inline constexpr uint16_t standart_memory_size = 100;
 class RandomAcsessMemory
 {
 public:
-    uint16_t *memory;
+    int16_t *memory;
 
     const int size;
 
@@ -37,7 +37,7 @@ public:
     void Init();
 
     void Set(int, uint16_t);
-    uint16_t Get(unsigned int);
+    int16_t Get(unsigned int);
 
     void Save(const char *);
     void Load(const char *);
