@@ -18,7 +18,7 @@ void KeyHandler::Save(external_memory::RandomAcsessMemory &mem)
     mem.Save(name.c_str());
 }
 
-uint16_t KeyHandler::GetValue()
+int16_t KeyHandler::GetValue()
 {
     std::cout << "Value: ";
     uint16_t val;
@@ -35,7 +35,7 @@ void KeyHandler::SelectUpper(int &cur)
 }
 void KeyHandler::SelectLower(int &cur)
 {
-    if (cur + 10 < 99)
+    if (cur + 10 < 100)
     {
         cur += 10;
     }
