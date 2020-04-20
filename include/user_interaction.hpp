@@ -10,6 +10,28 @@
 
 namespace user_interaction
 {
+namespace
+{
+inline constexpr char *l_key = (char *const) "l";
+inline constexpr char *s_key = (char *const) "s";
+inline constexpr char *r_key = (char *const) "r";
+inline constexpr char *t_key = (char *const) "t";
+inline constexpr char *i_key = (char *const) "i";
+inline constexpr char *q_key = (char *const) "q";
+inline constexpr char *f5_key = (char *const) "\033[15~";
+inline constexpr char *f6_key = (char *const) "\033[17~";
+inline constexpr char *ar_up_key = (char *const) "\033[A";
+inline constexpr char *ar_do_key = (char *const) "\033[B";
+inline constexpr char *ar_ri_key = (char *const) "\033[C";
+inline constexpr char *ar_le_key = (char *const) "\033[D";
+} // namespace
+
+namespace states
+{
+inline constexpr int run_until_next = 213;
+inline constexpr int run_until_end = 124124;
+inline constexpr int exit = 12312;
+} // namespace states
 
 class GraphicalInterface
 {
@@ -27,7 +49,7 @@ private:
     // some ui elements drawing
     void print_keys(int x, int y);
     void print_flags(int x, int y, int registers);
-    void print_memory(int x, int y, uint16_t *mem, int selected);
+    void print_memory(int x, int y, int16_t *mem, int selected, int scomand);
 
 public:
     int selected_mem;
@@ -36,18 +58,11 @@ public:
     GraphicalInterface();
 
     // Print elements thats refers to external/internal memory
-    void PrintInfo(int registers, int acc, int inst_count, uint16_t *mem);
+    void PrintInfo(int registers, int acc, int inst_count, int16_t *mem);
 
     // draw boxes and states of spc,
     //but do not draw elements thats refers to memory
     int Draw();
-};
-
-enum states
-{
-    run_until_next,
-    run_until_end,
-    exit
 };
 
 class KeyHandler
@@ -60,7 +75,7 @@ public:
     void Load(external_memory::RandomAcsessMemory &mem);
     void Save(external_memory::RandomAcsessMemory &mem);
 
-    uint16_t GetValue();
+    int16_t GetValue();
 
     void SelectUpper(int &);
     void SelectLower(int &);
