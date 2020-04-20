@@ -6,35 +6,44 @@
 namespace ALU
 {
 
-enum errors
+namespace errors
 {
-    overflow,
-    undef_comand,
-    non_comand_data,
-    long_operand,
-};
+namespace execution
+{
+inline constexpr int overflow = 11;
+inline constexpr int zero_division = 11;
+} // namespace execution
 
-enum comands
+namespace translation
 {
-    // input/output
-    Read = 0x10,
-    Write = 0x11,
-    // moving
-    load = 0x20,
-    store = 0x21,
-    // match
-    add = 0x30,
-    sub = 0x31,
-    divide = 0x32,
-    mul = 0x33,
-    // controll flow
-    jump = 0x40,
-    jneg = 0x41,
-    jz = 0x42,
-    halt = 0x43,
-    // logic
-    And = 0x52
-};
+inline constexpr int undef_comand = 22;
+inline constexpr int non_comand_data = 33;
+inline constexpr int long_operand = 44;
+} // namespace translation
+
+} // namespace errors
+
+namespace comands
+{
+// input/output
+inline constexpr int Read = 0x10;
+inline constexpr int Write = 0x11;
+// moving
+inline constexpr int load = 0x20;
+inline constexpr int store = 0x21;
+// match
+inline constexpr int add = 0x30;
+inline constexpr int sub = 0x31;
+inline constexpr int divide = 0x32;
+inline constexpr int mul = 0x33;
+// controll flow
+inline constexpr int jump = 0x40;
+inline constexpr int jneg = 0x41;
+inline constexpr int jz = 0x42;
+inline constexpr int halt = 0x43;
+// logic
+inline constexpr int And = 0x52;
+} // namespace comands
 
 class Interpreter
 {
@@ -55,15 +64,15 @@ private:
                                              comands::And};
 
 public:
-    int Encode(uint8_t command, uint8_t operand, uint16_t *value);
-    int Decode(const uint16_t value, uint8_t *command, uint8_t *operand);
+    int Encode(uint8_t command, uint8_t operand, int16_t *value);
+    int Decode(const int16_t value, uint8_t *command, uint8_t *operand);
 };
 
 class Executor
 {
 public:
     // operand means cell of memory
-    int Calculate(uint8_t command, uint16_t &operand, uint16_t &accum, uint16_t &counter);
+    int Calculate(uint8_t command, int16_t &operand, int16_t &accum, int16_t &counter);
 };
 
 class Interface
