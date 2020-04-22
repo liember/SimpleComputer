@@ -154,6 +154,7 @@ int ALU::Interface::Step()
                 break;
 
             default:
+                internal_memory.instruction_count.cell++;
                 return 0;
                 break;
             }
