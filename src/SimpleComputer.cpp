@@ -2,8 +2,8 @@
 
 using namespace mySimpleComputer;
 
-SimpleComputer::SimpleComputer() : internal_mem(),
-                                   external_mem(),
+SimpleComputer::SimpleComputer() : internal_mem(100),
+                                   external_mem(100),
                                    system_io(external_mem, internal_mem),
                                    processor(external_mem, internal_mem)
 {
@@ -38,14 +38,16 @@ void SimpleComputer::Process()
         internal_mem.registers.Set(internal_memory::flags::interrupt, false);
         while (internal_mem.registers.Get(internal_memory::flags::interrupt) == 0)
         {
-            system_io.ReadKey();
             processor.Step();
+            system_io.ClearScreen();
             system_io.DrawInterface();
+            internal_mem.instruction_count.up();
         }
         break;
 
     case user_interaction::states::run_until_next:
         processor.Step();
+        internal_mem.instruction_count.up();
         break;
 
     case user_interaction::states::exit:
