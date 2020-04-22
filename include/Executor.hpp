@@ -8,18 +8,19 @@ namespace ALU
 
 namespace errors
 {
-namespace execution
+enum execution
 {
-inline constexpr int overflow = 11;
-inline constexpr int zero_division = 22;
-} // namespace execution
+    overflow = 11,
+    zero_division = 22,
+    endprogram = 33
+};
 
-namespace translation
+enum translation
 {
-inline constexpr int undef_comand = 22;
-inline constexpr int non_comand_data = 33;
-inline constexpr int long_operand = 44;
-} // namespace translation
+    undef_comand = 44,
+    non_comand_data = 55,
+    long_operand = 66
+};
 
 } // namespace errors
 
