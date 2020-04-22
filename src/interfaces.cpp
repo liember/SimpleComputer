@@ -8,7 +8,7 @@
 
 #include "Executor.hpp"
 
-internal_memory::Interface::Interface() : accamulator(), instruction_count(), registers()
+internal_memory::Interface::Interface(int memsize) : accamulator(), instruction_count(memsize), registers()
 {
     registers.Init();
 }
@@ -153,8 +153,10 @@ int ALU::Interface::Step()
                 internal_memory.registers.Set(internal_memory::flags::zero_division, true);
                 break;
 
+            case ALU::errors::execution::endprogram:
+                internal_memory.instruction_count.Set(operand);
+                internal_memory.registers.Set(internal_memory::flags::interrupt, true);
             default:
-                internal_memory.instruction_count.cell++;
                 return 0;
                 break;
             }

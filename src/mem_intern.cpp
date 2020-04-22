@@ -10,7 +10,10 @@ int Registers::Get(uint8_t regist)
         return (((flags) >> regist) & 1);
     }
     else
-        throw 12;
+        std::cout << std::endl
+                  << std::endl
+                  << "Undefined register, check your program pls" << std::endl;
+    exit(1);
     return 0;
 }
 
@@ -27,3 +30,20 @@ void Registers::Set(uint8_t regist, bool value)
 void Accamulator::Set(int16_t v) { cell = v; }
 int16_t Accamulator::Get() { return cell; }
 Accamulator::Accamulator() : cell(0) {}
+
+InstructionCounter::InstructionCounter(int limit) : Accamulator(), lim(limit)
+{
+}
+
+InstructionCounter::InstructionCounter(int limit, uint16_t val) : Accamulator(), lim(limit)
+{
+    cell = val;
+}
+
+void InstructionCounter::up()
+{
+    if (cell + 1 < lim)
+    {
+        cell++;
+    }
+}
