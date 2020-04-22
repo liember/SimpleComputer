@@ -2,27 +2,54 @@
 
 using namespace ALU;
 
-// TO DO MAKE EXCEPTIONS CHECKING
-
 int Executor::Calculate(uint8_t command, int16_t &operand, int16_t &accum, int16_t &counter)
 {
     switch (command)
     {
     case comands::add:
-
-        accum += operand;
+        if (accum + operand < 0x3fff)
+        {
+            accum += operand;
+        }
+        else
+        {
+            return errors::execution::overflow;
+        }
         break;
 
     case comands::sub:
-        accum -= operand;
+        if (accum - operand > -0x3fff)
+        {
+            accum -= operand;
+        }
+        else
+        {
+            return errors::execution::overflow;
+        }
         break;
 
     case comands::mul:
-        accum *= operand;
+        if (accum * operand < 0x3fff)
+        {
+            accum *= operand;
+        }
+        else
+        {
+            return errors::execution::overflow;
+        }
         break;
 
     case comands::divide:
-        accum /= operand;
+        if (operand != 0)
+        {
+
+            accum /= operand;
+        }
+        else
+        {
+            return errors::execution::zero_division;
+        }
+
         break;
 
     case comands::jump:
@@ -69,6 +96,7 @@ int Executor::Calculate(uint8_t command, int16_t &operand, int16_t &accum, int16
         break;
 
     case comands::halt:
+        return errors::execution::endprogram;
         break;
     }
 
