@@ -1,0 +1,11 @@
+0   READ    9 
+1   READ    10 
+2   LOAD    9 
+3   SUB     10 
+4   JNEG    7 
+5   WRITE   9 
+6   HALT    0 
+7   WRITE   10 
+8   HALT    0 
+9   =       0000
+10  =       9999
