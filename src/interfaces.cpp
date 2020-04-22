@@ -71,31 +71,11 @@ void user_interaction::Interface::ClearScreen()
 
 int user_interaction::Interface::ReadKey()
 {
-    gui.sys_draw.output.term.ClrScreen();
     input_handler.keyboard.ReadKey();
 
     std::string key(input_handler.keyboard.GetKey());
-
     ss_switch(key)
     {
-        ss_case(l_key) : input_handler.Load(external_memory.ram);
-        break;
-        ss_case(s_key) : input_handler.Save(external_memory.ram);
-        break;
-        ss_case(r_key) : return states::run_until_end;
-        break;
-        ss_case(t_key) : return states::run_until_next;
-        break;
-        ss_case(i_key) : internal_memory.Init();
-        external_memory.Init();
-        break;
-        ss_case(q_key) : return states::exit;
-        break;
-        ss_case(f5_key) : internal_memory.accamulator.cell = input_handler.GetValue();
-        break;
-        ss_case(f6_key) : internal_memory.instruction_count.cell = input_handler.GetValue();
-        internal_memory.registers.Set(internal_memory::flags::command, false);
-        break;
         ss_case(ar_up_key) : input_handler.SelectUpper(selected_memory);
         break;
         ss_case(ar_do_key) : input_handler.SelectLower(selected_memory);
@@ -104,7 +84,36 @@ int user_interaction::Interface::ReadKey()
         break;
         ss_case(ar_le_key) : input_handler.SelectLeft(selected_memory);
         break;
+
+    default:
+        if (internal_memory.registers.Get(internal_memory::flags::interrupt) == 1)
+        {
+            ss_switch(key)
+            {
+                ss_case(l_key) : input_handler.Load(external_memory.ram);
+                break;
+                ss_case(s_key) : input_handler.Save(external_memory.ram);
+                break;
+                ss_case(r_key) : return states::run_until_end;
+                break;
+                ss_case(t_key) : return states::run_until_next;
+                break;
+                ss_case(i_key) : internal_memory.Init();
+                external_memory.Init();
+                break;
+                ss_case(q_key) : return states::exit;
+                break;
+                ss_case(f5_key) : internal_memory.accamulator.cell = input_handler.GetValue();
+                break;
+                ss_case(f6_key) : internal_memory.instruction_count.cell = input_handler.GetValue();
+                internal_memory.registers.Init();
+                internal_memory.registers.Set(internal_memory::flags::interrupt, true);
+                break;
+            }
+        }
+        break;
     }
+
     return 0;
 }
 
@@ -124,35 +133,41 @@ int ALU::Interface::Step()
     uint8_t comand, operand;
     int16_t value = external_memory.ram.Get(internal_memory.instruction_count.cell);
 
-    if (!translateor.Decode(value, &comand, &operand))
+    if (translateor.Decode(value, &comand, &operand) == 0)
     {
-        int16_t &operand_value = external_memory.ram.memory[operand];
-        int result_flag = maker.Calculate(comand,
-                                          operand_value,
-                                          internal_memory.accamulator.cell,
-                                          internal_memory.instruction_count.cell);
-        if (!result_flag)
+        if (operand <= 100)
         {
-            internal_memory.instruction_count.cell++;
-        }
-        else
-        {
-            internal_memory.registers.Set(internal_memory::flags::interrupt, true);
-            switch (result_flag)
+            int16_t &operand_value = external_memory.ram.memory[operand];
+            switch (maker.Calculate(comand,
+                                    operand_value,
+                                    internal_memory.accamulator.cell,
+                                    internal_memory.instruction_count.cell))
             {
             case ALU::errors::execution::overflow:
-                /* code */
+                internal_memory.registers.Set(internal_memory::flags::interrupt, true);
+                internal_memory.registers.Set(internal_memory::flags::overflow, true);
+                break;
+
+            case ALU::errors::execution::zero_division:
+                internal_memory.registers.Set(internal_memory::flags::interrupt, true);
+                internal_memory.registers.Set(internal_memory::flags::zero_division, true);
                 break;
 
             default:
+                return 0;
                 break;
             }
+        }
+        else
+        {
+            internal_memory.registers.Set(internal_memory::flags::out_of_mem, true);
+            internal_memory.registers.Set(internal_memory::flags::interrupt, true);
         }
     }
     else
     {
         internal_memory.registers.Set(internal_memory::flags::command, true);
+        internal_memory.registers.Set(internal_memory::flags::interrupt, true);
     }
-
-    return 0;
+    return 1;
 }
