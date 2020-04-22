@@ -38,8 +38,10 @@ void SimpleComputer::Process()
         internal_mem.registers.Set(internal_memory::flags::interrupt, false);
         while (internal_mem.registers.Get(internal_memory::flags::interrupt) == 0)
         {
+            system_io.ReadKey();
+            processor.Step();
+            system_io.DrawInterface();
         }
-        alarm(1);
         break;
 
     case user_interaction::states::run_until_next:
