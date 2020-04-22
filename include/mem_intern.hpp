@@ -27,6 +27,17 @@ public:
     int16_t Get();
 };
 
+class InstructionCounter : public Accamulator
+{
+private:
+    int lim;
+
+public:
+    InstructionCounter(int limit);
+    InstructionCounter(int limit, uint16_t val);
+    void up();
+};
+
 class Registers
 {
 
@@ -42,10 +53,10 @@ class Interface
 {
 public:
     Accamulator accamulator;
-    Accamulator instruction_count;
+    InstructionCounter instruction_count;
     Registers registers;
     void Init();
-    Interface();
+    Interface(int memsize);
 };
 
 } // namespace internal_memory
