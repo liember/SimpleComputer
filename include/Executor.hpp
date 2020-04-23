@@ -24,27 +24,27 @@ enum translation
 
 } // namespace errors
 
-namespace comands
+enum comands
 {
-// input/output
-inline constexpr int Read = 0x10;
-inline constexpr int Write = 0x11;
-// moving
-inline constexpr int load = 0x20;
-inline constexpr int store = 0x21;
-// match
-inline constexpr int add = 0x30;
-inline constexpr int sub = 0x31;
-inline constexpr int divide = 0x32;
-inline constexpr int mul = 0x33;
-// controll flow
-inline constexpr int jump = 0x40;
-inline constexpr int jneg = 0x41;
-inline constexpr int jz = 0x42;
-inline constexpr int halt = 0x43;
-// logic
-inline constexpr int And = 0x52;
-} // namespace comands
+    // input/output
+    Read = 0x10,
+    Write = 0x11,
+    // moving
+    load = 0x20,
+    store = 0x21,
+    // match
+    add = 0x30,
+    sub = 0x31,
+    divide = 0x32,
+    mul = 0x33,
+    // controll flow
+    jump = 0x40,
+    jneg = 0x41,
+    jz = 0x42,
+    halt = 0x43,
+    // logic
+    And = 0x52
+};
 
 class Interpreter
 {
