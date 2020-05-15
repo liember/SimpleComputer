@@ -12,7 +12,7 @@ expressions::number_expression::~number_expression()
 
 void expressions::number_expression::Print()
 {
-    std::cout << "Num: [" << value << "]";
+    std::cout << "Num: [" << value << "] ";
 }
 
 int expressions::number_expression::Eval()

@@ -14,9 +14,9 @@ OutputStatement::~OutputStatement()
 }
 void OutputStatement::Print()
 {
-    std::cout << "Address: [" << address << "] Ccommand: OUTPUT Expression: ";
+    std::cout << "[ " << address << " ] [ OUTPUT ] [ ";
     expr->Print();
-    std::cout << std::endl;
+    std::cout << "] " << std::endl;
 }
 
 void OutputStatement::EvalExpression()
@@ -46,13 +46,16 @@ bool OutputStatement::Analyze()
 
     if (expr->GetType() == number_expr || expr->GetType() == number_type)
     {
-        std::cout << "[ ATTENTION ] Incorrect expression: \n\t\t[ Address: " << address << "] [ OUTPUT ] > IMUTABLE EXPRESSION <" << std::endl;
+        std::cout << "[ ATTENTION ] Suspicious expression: " << std::endl;
+        std::cout << "\t\t [Address:" << address << "][OUTPUT]<IMUTABLE EXPRESSION> " << std::endl;
+        std::cout << "\t\t ";
+        expr->Print();
         return true;
     }
 
     if (expr->GetType() == var_expr)
     {
-        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ OUTPUT ] > MULTIPLE VARIABLES EXPRESSION <" << std::endl;
+        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ OUTPUT ] < MULTIPLE VARIABLES EXPRESSION >" << std::endl;
         return false;
     }
 

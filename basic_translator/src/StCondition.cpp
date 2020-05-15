@@ -20,12 +20,12 @@ ConditionStatement::~ConditionStatement()
 
 void ConditionStatement::Print()
 {
-    std::cout << "Address: [" << address << "] Ccommand: IF Expression: [ ";
+    std::cout << "[ " << address << " ] [ IF ] [ ";
     expr1->Print();
-    std::cout << "] [ " << comparator << " ] Expression [ ";
+    std::cout << "] [ " << comparator << " ] [ ";
     expr2->Print();
-    std::cout << "]" << std::endl
-              << "\tThen ";
+    std::cout << "] " << std::endl
+              << "\t [ Then ] ";
     statement->Print();
 }
 
@@ -36,14 +36,14 @@ bool ConditionStatement::Analyze()
 
     if (expr1->GetType() != var_type && expr1->GetType() != number_type)
     {
-        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ IF ] > NOT VALUE < [ CMP ] [ VALUE ] [ OPERATION ]" << std::endl;
+        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ IF ] < NOT VALUE > [ CMP ] [ VALUE ] [ OPERATION ]" << std::endl;
         std::cout << " \t\t Expression has a type:" << expr1->GetType() << std::endl;
         return false;
     }
 
     if (expr2->GetType() != var_type && expr2->GetType() != number_type)
     {
-        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ IF ] [ VALUE ] [ CMP ]  > NOT VALUE < [ OPERATION ]" << std::endl;
+        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ IF ] [ VALUE ] [ CMP ]  < NOT VALUE > [ OPERATION ]" << std::endl;
         return false;
     }
 

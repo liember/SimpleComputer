@@ -14,9 +14,9 @@ GoToStatement::~GoToStatement()
 }
 void GoToStatement::Print()
 {
-    std::cout << "Address: [" << address << "] Ccommand: GOTO Expression: ";
+    std::cout << "[ " << address << " ] [ GOTO ] [ ";
     expr->Print();
-    std::cout << std::endl;
+    std::cout << "] " << std::endl;
 }
 
 bool GoToStatement::Analyze()

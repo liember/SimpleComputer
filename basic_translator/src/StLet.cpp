@@ -24,9 +24,9 @@ void LetStatement::RegValues()
 
 void LetStatement::Print()
 {
-    std::cout << "Address: [" << address << "] Ccommand: LET Expression: ";
+    std::cout << "[ " << address << " ] [ LET ] [ ";
     expr->Print();
-    std::cout << std::endl;
+    std::cout << "] " << std::endl;
 }
 
 void LetStatement::EvalExpression()
@@ -38,7 +38,5 @@ void LetStatement::EvalExpression()
         expr = new expressions::number_expression(ex_value);
     }
     else
-    {
         expr->Eval();
-    }
 }

@@ -11,10 +11,10 @@ expressions::binary_expression::binary_expression(int op, expressions::expressio
     const int number_expr = expressions::types::ConstExpression;
     const int number_type = expressions::types::ConstValue;
 
-    if ((expr1->GetType() != number_expr && expr1->GetType() != number_type) || (expr2->GetType() != number_type && expr1->GetType() != number_expr))
-        expression_type = expressions::types::VariableExpression;
-    else
+    if ((expr1->GetType() == number_expr || expr1->GetType() == number_type) && (expr2->GetType() == number_type || expr2->GetType() == number_expr))
         expression_type = expressions::types::ConstExpression;
+    else
+        expression_type = expressions::types::VariableExpression;
 }
 
 expressions::binary_expression::~binary_expression()
@@ -91,22 +91,21 @@ int expressions::binary_expression::GetType()
 
 void expressions::binary_expression::Print()
 {
-    std::cout << " ( ";
+    std::cout << "Op( ";
     expr1->Print();
-    std::cout << " Operation: ";
     switch (operation)
     {
     case lexer::token::sum:
-        std::cout << "[+]";
+        std::cout << "[+] ";
         break;
     case lexer::token::dif:
-        std::cout << "[-]";
+        std::cout << "[-] ";
         break;
     case lexer::token::div:
-        std::cout << "[/]";
+        std::cout << "[/] ";
         break;
     case lexer::token::mul:
-        std::cout << "[*]";
+        std::cout << "[*] ";
         break;
 
     default:
@@ -114,7 +113,7 @@ void expressions::binary_expression::Print()
         break;
     }
     expr2->Print();
-    std::cout << " )";
+    std::cout << ") ";
 }
 
 void expressions::binary_expression::RegValues()

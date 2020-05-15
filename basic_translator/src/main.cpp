@@ -33,6 +33,8 @@ int main(int argc, char **argv)
     composer configurator(&v);
     configurator.CheckFails();
     configurator.Optimize();
+
+    std::cout << std::endl;
     std::cout << std::endl;
 
     for (auto &&i : v)

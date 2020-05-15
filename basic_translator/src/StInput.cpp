@@ -14,7 +14,7 @@ InputStatement::~InputStatement()
 
 void InputStatement::Print()
 {
-    std::cout << "Address: [" << address << "] Ccommand: INPUT Variable: [";
+    std::cout << "[ " << address << " ] [ INPUT ] [ ";
     var->Print();
     std::cout << "] " << std::endl;
 }
@@ -27,7 +27,7 @@ bool InputStatement::Analyze()
 {
     if (var->GetType() != expressions::types::MutableValue)
     {
-        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ INPUT ] > CONSTANT VALUE <" << std::endl;
+        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ INPUT ] < CONSTANT VALUE >" << std::endl;
         return false;
     }
     return true;

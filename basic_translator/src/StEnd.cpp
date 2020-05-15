@@ -18,7 +18,7 @@ bool EndStatement::Analyze()
 
 void EndStatement::Print()
 {
-    std::cout << "Address: [" << address << "] Ccommand: END " << std::endl;
+    std::cout << "[ " << address << " ] [ END ] " << std::endl;
 }
 
 void EndStatement::EvalExpression()
