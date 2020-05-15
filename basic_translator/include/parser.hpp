@@ -67,23 +67,6 @@ namespace parsing
                 void RegValues() override;
             };
 
-            class unary_expression : public expression
-            {
-            private:
-                expression *expr;
-                int operation;
-                int expression_type;
-
-            public:
-                unary_expression(int op, expression *e1);
-                ~unary_expression() override;
-                void Print() override;
-                int Eval() override;
-                int GetType() override;
-
-                void RegValues() override;
-            };
-
             class binary_expression : public expression
             {
             private:
