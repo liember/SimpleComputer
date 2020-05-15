@@ -49,11 +49,11 @@ namespace library
     class addressTable
     {
     private:
-        //static std::vector<value *> values;
+        std::vector<value *> values;
 
     public:
-        static bool Add(std::string v); // false if value already exists
-        static bool Add(char v);        // false if value already exists
+        bool Add(std::string v); // false if value already exists
+        bool Add(char v);        // false if value already exists
     };
 
 } // namespace library
