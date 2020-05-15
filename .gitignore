@@ -17,3 +17,9 @@ bin/
 
 
 *.a
+
+*.asm
+
+*.bas
+
+asm_trranslator/test
