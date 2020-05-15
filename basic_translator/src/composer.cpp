@@ -20,7 +20,6 @@ void composer::CheckFails()
 
 void composer::Optimize()
 {
-    if (optimizations)
-        for (auto &&i : *commands)
-            i->EvalExpression();
+    for (auto &&i : *commands)
+        i->EvalExpression();
 }
