@@ -11,7 +11,7 @@ expressions::binary_expression::binary_expression(int op, expressions::expressio
     const int number_expr = expressions::types::ConstExpression;
     const int number_type = expressions::types::ConstValue;
 
-    if (expr1->GetType() != number_expr || expr2->GetType() != number_expr || expr1->GetType() != number_type || expr2->GetType() != number_type)
+    if ((expr1->GetType() != number_expr && expr1->GetType() != number_type) || (expr2->GetType() != number_type && expr1->GetType() != number_expr))
         expression_type = expressions::types::VariableExpression;
     else
         expression_type = expressions::types::ConstExpression;
