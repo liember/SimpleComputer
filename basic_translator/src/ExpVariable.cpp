@@ -12,7 +12,7 @@ expressions::variable_expression::~variable_expression()
 
 void expressions::variable_expression::Print()
 {
-    std::cout << "Variable: " << value;
+    std::cout << "Var: " << value;
 }
 
 int expressions::variable_expression::Eval()
