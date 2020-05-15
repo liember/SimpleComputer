@@ -25,6 +25,6 @@ void EndStatement::EvalExpression()
 {
 }
 
-void EndStatement::RegValues()
+void EndStatement::RegValues(library::addressTable *lib)
 {
 }

@@ -116,8 +116,8 @@ void expressions::binary_expression::Print()
     std::cout << ") ";
 }
 
-void expressions::binary_expression::RegValues()
+void expressions::binary_expression::RegValues(library::addressTable *lib)
 {
-    expr1->RegValues();
-    expr2->RegValues();
+    expr1->RegValues(lib);
+    expr2->RegValues(lib);
 }

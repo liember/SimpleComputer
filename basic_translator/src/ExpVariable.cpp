@@ -25,7 +25,7 @@ int expressions::variable_expression::GetType()
     return expressions::types::MutableValue;
 }
 
-void expressions::variable_expression::RegValues()
+void expressions::variable_expression::RegValues(library::addressTable *lib)
 {
-    library::addressTable::Add(value);
+    lib->Add(value);
 }

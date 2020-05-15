@@ -40,6 +40,6 @@ void GoToStatement::EvalExpression()
     expr = new expressions::number_expression(ex_value);
 }
 
-void GoToStatement::RegValues()
+void GoToStatement::RegValues(library::addressTable *lib)
 {
 }

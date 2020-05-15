@@ -31,8 +31,10 @@ int main(int argc, char **argv)
     std::vector<parsing::AST::Statement *> v = p.Parse();
 
     composer configurator(&v);
+
     configurator.CheckFails();
     configurator.Optimize();
+    configurator.GenerateVarCommands();
 
     std::cout << std::endl;
     std::cout << std::endl;

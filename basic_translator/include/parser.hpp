@@ -34,7 +34,7 @@ namespace parsing
                 virtual int GetType() = 0;
                 virtual ~expression() {}
 
-                virtual void RegValues() = 0;
+                virtual void RegValues(library::addressTable *lib) = 0;
             };
 
             class variable_expression : public expression
@@ -49,7 +49,7 @@ namespace parsing
                 int Eval() override;
                 int GetType() override;
 
-                void RegValues() override;
+                void RegValues(library::addressTable *lib) override;
             };
 
             class number_expression : public expression
@@ -64,7 +64,7 @@ namespace parsing
                 int Eval() override;
                 int GetType() override;
 
-                void RegValues() override;
+                void RegValues(library::addressTable *lib) override;
             };
 
             class binary_expression : public expression
@@ -83,7 +83,7 @@ namespace parsing
                 int Eval() override;
                 int GetType() override;
 
-                void RegValues() override;
+                void RegValues(library::addressTable *lib) override;
             };
         } // namespace expressions
 
@@ -95,7 +95,7 @@ namespace parsing
             virtual void Print() = 0;
             virtual void EvalExpression() = 0;
 
-            virtual void RegValues() = 0;
+            virtual void RegValues(library::addressTable *lib) = 0;
             virtual bool Analyze() = 0;
         };
 
@@ -111,7 +111,7 @@ namespace parsing
             void EvalExpression() override;
             void Print() override;
 
-            void RegValues() override;
+            void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
         };
 
@@ -127,7 +127,7 @@ namespace parsing
             void EvalExpression() override;
             void Print() override;
 
-            void RegValues() override;
+            void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
         };
 
@@ -143,7 +143,7 @@ namespace parsing
             void EvalExpression() override;
             void Print() override;
 
-            void RegValues() override;
+            void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
         };
 
@@ -163,7 +163,7 @@ namespace parsing
             void EvalExpression() override;
             void Print() override;
 
-            void RegValues() override;
+            void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
         };
 
@@ -179,7 +179,7 @@ namespace parsing
             void EvalExpression() override;
             void Print() override;
 
-            void RegValues() override;
+            void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
         };
 
@@ -194,7 +194,7 @@ namespace parsing
             void EvalExpression() override;
             void Print() override;
 
-            void RegValues() override;
+            void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
         };
 

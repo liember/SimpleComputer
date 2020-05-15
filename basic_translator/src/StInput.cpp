@@ -33,6 +33,7 @@ bool InputStatement::Analyze()
     return true;
 }
 
-void InputStatement::RegValues()
+void InputStatement::RegValues(library::addressTable *lib)
 {
+    var->RegValues(lib);
 }

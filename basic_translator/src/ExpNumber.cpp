@@ -25,7 +25,7 @@ int expressions::number_expression::GetType()
     return expressions::types::ConstValue;
 }
 
-void expressions::number_expression::RegValues()
+void expressions::number_expression::RegValues(library::addressTable *lib)
 {
-    library::addressTable::Add(value);
+    lib->Add(value);
 }

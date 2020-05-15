@@ -62,6 +62,7 @@ bool OutputStatement::Analyze()
     return true;
 }
 
-void OutputStatement::RegValues()
+void OutputStatement::RegValues(library::addressTable *lib)
 {
+    expr->RegValues(lib);
 }

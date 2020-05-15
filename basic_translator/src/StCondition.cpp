@@ -54,6 +54,8 @@ void ConditionStatement::EvalExpression()
 {
 }
 
-void ConditionStatement::RegValues()
+void ConditionStatement::RegValues(library::addressTable *lib)
 {
+    expr1->RegValues(lib);
+    expr2->RegValues(lib);
 }

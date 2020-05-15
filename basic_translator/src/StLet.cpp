@@ -18,8 +18,9 @@ LetStatement::~LetStatement()
     delete expr;
 }
 
-void LetStatement::RegValues()
+void LetStatement::RegValues(library::addressTable *lib)
 {
+    expr->RegValues(lib);
 }
 
 void LetStatement::Print()
