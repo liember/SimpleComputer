@@ -55,39 +55,24 @@ AST::expressions::expression *parser::Additive()
 
 AST::expressions::expression *parser::Multyplicative()
 {
-    AST::expressions::expression *expr = Unary();
+    AST::expressions::expression *expr = Primary();
     while (true)
     {
         if (Match(lexer::token::mul))
         {
             //std::cout << "Binary [*] ";
-            expr = new AST::expressions::binary_expression(lexer::token::mul, expr, Unary());
+            expr = new AST::expressions::binary_expression(lexer::token::mul, expr, Primary());
             continue;
         }
         if (Match(lexer::token::div))
         {
             //std::cout << "Binary [/] ";
-            expr = new AST::expressions::binary_expression(lexer::token::div, expr, Unary());
+            expr = new AST::expressions::binary_expression(lexer::token::div, expr, Primary());
             continue;
         }
         break;
     }
     return expr;
-}
-
-AST::expressions::expression *parser::Unary()
-{
-    if (Match(lexer::token::dif))
-    {
-        //std::cout << "Unary [-] ";
-        return new AST::expressions::unary_expression(lexer::token::dif, Primary());
-    }
-    else if (Match(lexer::token::sum))
-    {
-        //std::cout << "Unary [+] ";
-        return new AST::expressions::unary_expression(lexer::token::sum, Primary());
-    }
-    return Primary();
 }
 
 AST::expressions::expression *parser::Primary()
