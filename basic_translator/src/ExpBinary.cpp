@@ -121,3 +121,8 @@ void expressions::binary_expression::RegValues(library::addressTable *lib)
     expr1->RegValues(lib);
     expr2->RegValues(lib);
 }
+
+int *expressions::binary_expression::Requre(library::addressTable *lib)
+{
+    std::cout << "[ CRITICAL WARNING ] This code should never have been run [ binary_expression::Requre() ]" << std::endl;
+}

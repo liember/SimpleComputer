@@ -29,3 +29,8 @@ void expressions::number_expression::RegValues(library::addressTable *lib)
 {
     lib->Add(value);
 }
+
+int *expressions::number_expression::Requre(library::addressTable *lib)
+{
+    return lib->Query(value);
+}
