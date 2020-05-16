@@ -32,7 +32,7 @@ namespace library
             int Type();
 
             void SetAddr(int addr);
-            int GetAddr();
+            int *GetAddr();
 
             void Print();
         };
@@ -61,8 +61,8 @@ namespace library
 
         void Print();
 
-        int Query(int v);
-        int Query(char v);
+        int *Query(int v);
+        int *Query(char v);
     };
 
 } // namespace library
