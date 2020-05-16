@@ -80,3 +80,14 @@ int OutputStatement::GetId()
 {
     return address;
 }
+
+std::vector<asmword *> *OutputStatement::GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements)
+{
+    std::vector<asmword *> *ret = new std::vector<asmword *>;
+    int *input_variable_addr = expr->Requre(variables);
+
+    asmword *command = new asmword(&asm_address, "WRITE", input_variable_addr);
+    ret->push_back(command);
+
+    return ret;
+}
