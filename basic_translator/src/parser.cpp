@@ -163,11 +163,16 @@ AST::Statement *parser::Statement(bool addrcheck)
         break;
     case lexer::token::token_type::Let:
         pos++;
-        if (Match(lexer::token::token_type::Query))
+        if (Get(0).GetType() == lexer::token::token_type::Query)
+        {
+            AST::expressions::expression *first = Expression();
             if (Match(lexer::token::token_type::Set))
-                return new AST::LetStatement(address, Expression());
+            {
+                return new AST::LetStatement(address, first, Expression());
+            }
             else
                 std::cout << "[ WARNING ] Equal statement not found", exit(0);
+        }
         else
             std::cout << "[ WARNING ] Variable statement not found", exit(0);
         break;
