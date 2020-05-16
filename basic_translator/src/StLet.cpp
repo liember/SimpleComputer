@@ -2,42 +2,57 @@
 
 using namespace parsing::AST;
 
-LetStatement::LetStatement(int a, expressions::expression *e)
+LetStatement::LetStatement(int addr, expressions::expression *e1, expressions::expression *e2) : address(addr)
 {
-    address = a;
-    expr = e;
+    expr1 = e1;
+    expr2 = e2;
 }
 
 bool LetStatement::Analyze()
 {
+    const int var = expressions::types::MutableValue;
+
+    if (expr1->GetType() != var)
+    {
+        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ LET ] < IS NOT VARIABLE > [ = ] [ Expression ]" << std::endl;
+        std::cout << "\t\t Is it [";
+        expr1->Print();
+        std::cout << std::endl;
+        return false;
+    }
+
     return true;
 }
 
 LetStatement::~LetStatement()
 {
-    delete expr;
+    delete expr1;
+    delete expr2;
 }
 
 void LetStatement::RegValues(library::addressTable *lib)
 {
-    expr->RegValues(lib);
+    expr1->RegValues(lib);
+    expr2->RegValues(lib);
 }
 
 void LetStatement::Print()
 {
     std::cout << "[ " << address << " ] [ LET ] [ ";
-    expr->Print();
+    expr1->Print();
+    std::cout << "] [ = ] [";
+    expr2->Print();
     std::cout << "] " << std::endl;
 }
 
 void LetStatement::EvalExpression()
 {
-    if (expr->GetType() == expressions::types::ConstExpression)
+    if (expr2->GetType() == expressions::types::ConstExpression)
     {
-        const int ex_value = expr->Eval();
-        delete expr;
-        expr = new expressions::number_expression(ex_value);
+        const int ex_value = expr2->Eval();
+        delete expr2;
+        expr2 = new expressions::number_expression(ex_value);
     }
     else
-        expr->Eval();
+        expr2->Eval();
 }

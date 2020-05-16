@@ -2,9 +2,8 @@
 
 using namespace parsing::AST;
 
-InputStatement::InputStatement(int a, expressions::expression *e)
+InputStatement::InputStatement(int a, expressions::expression *e) : address(a)
 {
-    address = a;
     var = e;
 }
 

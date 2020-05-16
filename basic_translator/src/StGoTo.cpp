@@ -2,9 +2,8 @@
 
 using namespace parsing::AST;
 
-GoToStatement::GoToStatement(int a, expressions::expression *e)
+GoToStatement::GoToStatement(int a, expressions::expression *e) : address(a)
 {
-    address = a;
     expr = e;
 }
 

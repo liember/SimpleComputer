@@ -2,9 +2,8 @@
 
 using namespace parsing::AST;
 
-EndStatement::EndStatement(int a)
+EndStatement::EndStatement(int a) : address(a)
 {
-    address = a;
 }
 
 EndStatement::~EndStatement()

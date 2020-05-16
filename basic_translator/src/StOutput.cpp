@@ -2,9 +2,8 @@
 
 using namespace parsing::AST;
 
-OutputStatement::OutputStatement(int a, expressions::expression *e)
+OutputStatement::OutputStatement(int a, expressions::expression *e) : address(a)
 {
-    address = a;
     expr = e;
 }
 

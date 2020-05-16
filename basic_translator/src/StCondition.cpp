@@ -2,9 +2,8 @@
 
 using namespace parsing::AST;
 
-ConditionStatement::ConditionStatement(int addr, expressions::expression *e1, char cmp, expressions::expression *e2, Statement *st)
+ConditionStatement::ConditionStatement(int addr, expressions::expression *e1, char cmp, expressions::expression *e2, Statement *st) : address(addr)
 {
-    address = addr;
     comparator = cmp;
     expr1 = e1;
     expr2 = e2;
