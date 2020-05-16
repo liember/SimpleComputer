@@ -42,3 +42,13 @@ int SetStatement::GetId()
 {
     return address;
 }
+
+std::vector<asmword *> *SetStatement::GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements)
+{
+    std::vector<asmword *> *ret = new std::vector<asmword *>;
+
+    asmword *command = new asmword(&asm_address, "=", value);
+    ret->push_back(command);
+
+    return ret;
+}
