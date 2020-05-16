@@ -42,3 +42,13 @@ void GoToStatement::EvalExpression()
 void GoToStatement::RegValues(library::addressTable *lib)
 {
 }
+
+void GoToStatement::SetAddr(int a)
+{
+    asm_address = a;
+}
+
+int GoToStatement::GetAddr()
+{
+    return asm_address;
+}

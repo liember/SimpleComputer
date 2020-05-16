@@ -56,3 +56,13 @@ void LetStatement::EvalExpression()
     else
         expr2->Eval();
 }
+
+void LetStatement::SetAddr(int a)
+{
+    asm_address = a;
+}
+
+int LetStatement::GetAddr()
+{
+    return asm_address;
+}

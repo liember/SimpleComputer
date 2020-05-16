@@ -65,3 +65,13 @@ void OutputStatement::RegValues(library::addressTable *lib)
 {
     expr->RegValues(lib);
 }
+
+void OutputStatement::SetAddr(int a)
+{
+    asm_address = a;
+}
+
+int OutputStatement::GetAddr()
+{
+    return asm_address;
+}

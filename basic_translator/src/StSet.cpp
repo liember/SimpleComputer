@@ -27,3 +27,13 @@ void SetStatement::EvalExpression()
 void SetStatement::RegValues(library::addressTable *lib)
 {
 }
+
+void SetStatement::SetAddr(int a)
+{
+    asm_address = a;
+}
+
+int SetStatement::GetAddr()
+{
+    return asm_address;
+}

@@ -36,3 +36,13 @@ void InputStatement::RegValues(library::addressTable *lib)
 {
     var->RegValues(lib);
 }
+
+void InputStatement::SetAddr(int a)
+{
+    asm_address = a;
+}
+
+int InputStatement::GetAddr()
+{
+    return asm_address;
+}

@@ -58,3 +58,13 @@ void ConditionStatement::RegValues(library::addressTable *lib)
     expr1->RegValues(lib);
     expr2->RegValues(lib);
 }
+
+void ConditionStatement::SetAddr(int a)
+{
+    asm_address = a;
+}
+
+int ConditionStatement::GetAddr()
+{
+    return asm_address;
+}

@@ -97,30 +97,37 @@ namespace parsing
 
             virtual void RegValues(library::addressTable *lib) = 0;
             virtual bool Analyze() = 0;
+
+            virtual void SetAddr(int a) = 0;
+            virtual int GetAddr() = 0;
         };
 
         class InputStatement : public Statement
         {
         private:
             const int address;
-
+            int asm_address;
             expressions::expression *var;
 
         public:
             InputStatement(int a, expressions::expression *v);
             ~InputStatement() override;
-            void EvalExpression() override;
+
             void Print() override;
 
+            void EvalExpression() override;
             void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
+
+            void SetAddr(int a) override;
+            int GetAddr() override;
         };
 
         class OutputStatement : public Statement
         {
         private:
             const int address;
-
+            int asm_address;
             expressions::expression *expr;
 
         public:
@@ -131,13 +138,16 @@ namespace parsing
 
             void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
+
+            void SetAddr(int a) override;
+            int GetAddr() override;
         };
 
         class GoToStatement : public Statement
         {
         private:
             const int address;
-
+            int asm_address;
             expressions::expression *expr;
 
         public:
@@ -148,13 +158,15 @@ namespace parsing
 
             void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
+            void SetAddr(int a) override;
+            int GetAddr() override;
         };
 
         class ConditionStatement : public Statement
         {
         private:
             const int address;
-
+            int asm_address;
             char comparator;
 
             expressions::expression *expr1;
@@ -169,13 +181,16 @@ namespace parsing
 
             void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
+
+            void SetAddr(int a) override;
+            int GetAddr() override;
         };
 
         class LetStatement : public Statement
         {
         private:
             const int address;
-
+            int asm_address;
             expressions::expression *expr1;
             expressions::expression *expr2;
 
@@ -187,12 +202,16 @@ namespace parsing
 
             void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
+
+            void SetAddr(int a) override;
+            int GetAddr() override;
         };
 
         class EndStatement : public Statement
         {
         private:
             const int address;
+            int asm_address;
 
         public:
             EndStatement(int addr);
@@ -202,13 +221,16 @@ namespace parsing
 
             void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
+
+            void SetAddr(int a) override;
+            int GetAddr() override;
         };
 
         class SetStatement : public Statement
         {
         private:
             const int address;
-
+            int asm_address;
             int value;
 
         public:
@@ -219,6 +241,9 @@ namespace parsing
 
             void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
+
+            void SetAddr(int a) override;
+            int GetAddr() override;
         };
 
     } // namespace AST

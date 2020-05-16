@@ -27,3 +27,13 @@ void EndStatement::EvalExpression()
 void EndStatement::RegValues(library::addressTable *lib)
 {
 }
+
+void EndStatement::SetAddr(int a)
+{
+    asm_address = a;
+}
+
+int EndStatement::GetAddr()
+{
+    return asm_address;
+}
