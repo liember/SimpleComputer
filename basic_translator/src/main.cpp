@@ -34,11 +34,9 @@ int main(int argc, char **argv)
 
     configurator.CheckFails();
     configurator.Optimize();
-    configurator.GenerateVarCommands();
+    configurator.GenerateVar();
 
     std::cout << std::endl;
-    std::cout << std::endl;
-
     for (auto &&i : v)
         i->Print();
     std::cout << std::endl;
