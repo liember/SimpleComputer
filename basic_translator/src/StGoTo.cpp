@@ -48,7 +48,29 @@ void GoToStatement::SetAddr(int a)
     asm_address = a;
 }
 
-int GoToStatement::GetAddr()
+int *GoToStatement::GetAddr()
 {
-    return asm_address;
+    return &asm_address;
+}
+
+int GoToStatement::GetId()
+{
+    return address;
+}
+
+std::vector<asmword *> *GoToStatement::GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements)
+{
+    std::vector<asmword *> *ret = new std::vector<asmword *>;
+
+    const int required_id = expr->Eval();
+    int *jump_target;
+
+    for (auto &&i : *statements)
+    {
+        if (i->GetId() == required_id)
+            jump_target = i->GetAddr();
+    }
+    asmword *command = new asmword(&asm_address, "HALT", nullptr);
+    ret->push_back(command);
+    return ret;
 }
