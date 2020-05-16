@@ -9,6 +9,7 @@
 #include <sstream>
 
 #include "library.hpp"
+#include "asmword.hpp"
 
 namespace parsing
 {
@@ -27,7 +28,6 @@ namespace parsing
 
             class expression // interface
             {
-            private:
             public:
                 virtual void Print() = 0;
                 virtual int Eval() = 0;
@@ -35,6 +35,7 @@ namespace parsing
                 virtual ~expression() {}
 
                 virtual void RegValues(library::addressTable *lib) = 0;
+                virtual int *Requre(library::addressTable *lib) = 0;
             };
 
             class variable_expression : public expression
@@ -50,6 +51,7 @@ namespace parsing
                 int GetType() override;
 
                 void RegValues(library::addressTable *lib) override;
+                int *Requre(library::addressTable *lib) override;
             };
 
             class number_expression : public expression
@@ -65,6 +67,7 @@ namespace parsing
                 int GetType() override;
 
                 void RegValues(library::addressTable *lib) override;
+                int *Requre(library::addressTable *lib) override;
             };
 
             class binary_expression : public expression
@@ -84,6 +87,7 @@ namespace parsing
                 int GetType() override;
 
                 void RegValues(library::addressTable *lib) override;
+                int *Requre(library::addressTable *lib) override;
             };
         } // namespace expressions
 
@@ -99,7 +103,11 @@ namespace parsing
             virtual bool Analyze() = 0;
 
             virtual void SetAddr(int a) = 0;
-            virtual int GetAddr() = 0;
+            virtual int *GetAddr() = 0;
+
+            virtual int GetId() = 0;
+
+            virtual std::vector<asmword *> *GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements) = 0;
         };
 
         class InputStatement : public Statement
@@ -120,7 +128,11 @@ namespace parsing
             bool Analyze() override;
 
             void SetAddr(int a) override;
-            int GetAddr() override;
+            int *GetAddr() override;
+
+            int GetId() override;
+
+            std::vector<asmword *> *GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements) override;
         };
 
         class OutputStatement : public Statement
@@ -140,7 +152,11 @@ namespace parsing
             bool Analyze() override;
 
             void SetAddr(int a) override;
-            int GetAddr() override;
+            int *GetAddr() override;
+
+            int GetId() override;
+
+            std::vector<asmword *> *GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements) override;
         };
 
         class GoToStatement : public Statement
@@ -159,7 +175,11 @@ namespace parsing
             void RegValues(library::addressTable *lib) override;
             bool Analyze() override;
             void SetAddr(int a) override;
-            int GetAddr() override;
+            int *GetAddr() override;
+
+            int GetId() override;
+
+            std::vector<asmword *> *GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements) override;
         };
 
         class ConditionStatement : public Statement
@@ -183,7 +203,11 @@ namespace parsing
             bool Analyze() override;
 
             void SetAddr(int a) override;
-            int GetAddr() override;
+            int *GetAddr() override;
+
+            int GetId() override;
+
+            std::vector<asmword *> *GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements) override;
         };
 
         class LetStatement : public Statement
@@ -204,7 +228,11 @@ namespace parsing
             bool Analyze() override;
 
             void SetAddr(int a) override;
-            int GetAddr() override;
+            int *GetAddr() override;
+
+            int GetId() override;
+
+            std::vector<asmword *> *GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements) override;
         };
 
         class EndStatement : public Statement
@@ -223,7 +251,11 @@ namespace parsing
             bool Analyze() override;
 
             void SetAddr(int a) override;
-            int GetAddr() override;
+            int *GetAddr() override;
+
+            int GetId() override;
+
+            std::vector<asmword *> *GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements) override;
         };
 
         class SetStatement : public Statement
@@ -243,7 +275,11 @@ namespace parsing
             bool Analyze() override;
 
             void SetAddr(int a) override;
-            int GetAddr() override;
+            int *GetAddr() override;
+
+            int GetId() override;
+
+            std::vector<asmword *> *GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements) override;
         };
 
     } // namespace AST
