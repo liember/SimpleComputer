@@ -62,9 +62,9 @@ void LetStatement::SetAddr(int a)
     asm_address = a;
 }
 
-int LetStatement::GetAddr()
+int *LetStatement::GetAddr()
 {
-    return asm_address;
+    return &asm_address;
 }
 
 int LetStatement::GetId()
@@ -74,5 +74,5 @@ int LetStatement::GetId()
 
 std::vector<asmword *> *LetStatement::GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements)
 {
-    return ret;
+    return nullptr;
 }

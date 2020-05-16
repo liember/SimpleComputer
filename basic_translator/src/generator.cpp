@@ -12,6 +12,10 @@ Generator::~Generator()
     delete states;
 }
 
+void PreGenerate()
+{
+}
+
 void Generator::Generate(std::string output_file_name)
 {
     std::ofstream out(output_file_name);

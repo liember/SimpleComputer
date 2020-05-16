@@ -18,6 +18,7 @@ void SetStatement::Print()
 
 bool SetStatement::Analyze()
 {
+    return true;
 }
 
 void SetStatement::EvalExpression()
@@ -47,7 +48,7 @@ std::vector<asmword *> *SetStatement::GenerateAsm(library::addressTable *variabl
 {
     std::vector<asmword *> *ret = new std::vector<asmword *>;
 
-    asmword *command = new asmword(&asm_address, "=", value);
+    asmword *command = new asmword(&asm_address, "=", &value);
     ret->push_back(command);
 
     return ret;
