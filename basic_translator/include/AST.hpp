@@ -103,7 +103,7 @@ namespace parsing
         {
         private:
             const int address;
-            int asm_ddress;
+
             expressions::expression *var;
 
         public:
@@ -120,7 +120,7 @@ namespace parsing
         {
         private:
             const int address;
-            int asm_ddress;
+
             expressions::expression *expr;
 
         public:
@@ -137,7 +137,7 @@ namespace parsing
         {
         private:
             const int address;
-            int asm_ddress;
+
             expressions::expression *expr;
 
         public:
@@ -154,7 +154,7 @@ namespace parsing
         {
         private:
             const int address;
-            int asm_ddress;
+
             char comparator;
 
             expressions::expression *expr1;
@@ -175,7 +175,7 @@ namespace parsing
         {
         private:
             const int address;
-            int asm_ddress;
+
             expressions::expression *expr1;
             expressions::expression *expr2;
 
@@ -193,7 +193,6 @@ namespace parsing
         {
         private:
             const int address;
-            int asm_ddress;
 
         public:
             EndStatement(int addr);
@@ -209,7 +208,7 @@ namespace parsing
         {
         private:
             const int address;
-            int asm_ddress;
+
             int value;
 
         public:
