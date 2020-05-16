@@ -17,7 +17,7 @@ void expressions::variable_expression::Print()
 
 int expressions::variable_expression::Eval()
 {
-    return 0;
+    return value;
 }
 
 int expressions::variable_expression::GetType()
@@ -28,4 +28,9 @@ int expressions::variable_expression::GetType()
 void expressions::variable_expression::RegValues(library::addressTable *lib)
 {
     lib->Add(value);
+}
+
+int *expressions::variable_expression::Requre(library::addressTable *lib)
+{
+    return lib->Query(value);
 }

@@ -21,9 +21,9 @@ void value::SetAddr(int addr)
     address = addr;
 }
 
-int value::GetAddr()
+int *value::GetAddr()
 {
-    return address;
+    return &address;
 }
 
 void value::Print()
@@ -61,13 +61,13 @@ void addressTable::Print()
     std::cout << "\nMount registered values: " << values.size() << " values" << std::endl;
 }
 
-int addressTable::Query(int v)
+int *addressTable::Query(int v)
 {
     const std::string query_str = std::to_string(v);
     return values.find(query_str)->second->GetAddr();
 }
 
-int addressTable::Query(char v)
+int *addressTable::Query(char v)
 {
     const std::string query_str = std::string(v, 1);
     return values.find(query_str)->second->GetAddr();
