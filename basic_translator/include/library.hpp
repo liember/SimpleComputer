@@ -1,7 +1,9 @@
 #pragma once
 
-#include <vector>
+#include <map>
 #include <string>
+
+#include <iostream>
 
 namespace library
 {
@@ -17,13 +19,13 @@ namespace library
         class value
         {
         private:
+            int address;
+
+        public:
             const std::string name;
             const int val;
             const int type;
 
-            int address;
-
-        public:
             value(std::string n, int v, int type);
 
             bool IsIt(std::string val);
@@ -31,12 +33,14 @@ namespace library
 
             void SetAddr(int addr);
             int GetAddr();
+
+            void Print();
         };
 
         class constantValue final : public value
         {
         public:
-            constantValue(std::string name);
+            constantValue(int name);
         };
 
         class mutableValue final : public value
@@ -48,12 +52,17 @@ namespace library
 
     class addressTable
     {
-    private:
-        std::vector<value *> values;
 
     public:
-        bool Add(std::string v); // false if value already exists
-        bool Add(char v);        // false if value already exists
+        std::map<std::string, value *> values;
+
+        bool Add(int v);  // false if value already exists
+        bool Add(char v); // false if value already exists
+
+        void Print();
+
+        int Query(int v);
+        int Query(char v);
     };
 
 } // namespace library

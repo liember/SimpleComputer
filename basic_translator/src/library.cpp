@@ -26,62 +26,49 @@ int value::GetAddr()
     return address;
 }
 
-constantValue::constantValue(std::string name) : value(name, std::atoi(name.c_str()), types::ConstantValue) {}
-mutableValue::mutableValue(const char name) : value(std::string(1, name), 0, types::VariableValue) {}
-
-bool addressTable::Add(std::string v)
+void value::Print()
 {
-    bool found = false;
+    std::cout << "Registered " << (type == types::ConstantValue ? " constant " : " mutable ") << " value: " << name << " - " << val << std::endl;
+}
 
-    // for (auto &&i : values)
-    // {
-    //     if (i->IsIt(v))
-    //     {
-    //         found == true;
-    //         break;
-    //     }
-    // }
+constantValue::constantValue(int name) : value(std::to_string(name), name, types::ConstantValue)
+{
+}
 
-    // if (!found)
-    // {
-    //     constantValue *new_value = new constantValue(v);
-    //     values.push_back(new_value);
-    // }
-    // else
-    // {
-    //     return true;
-    // }
+mutableValue::mutableValue(const char name) : value(std::string(1, name), 0, types::VariableValue)
+{
+}
 
-    return false;
-
+bool addressTable::Add(int v)
+{
+    constantValue *new_value = new constantValue(v);
+    values.insert({std::to_string(v), new_value});
+    return true;
 } // false if value already exists
 
 bool addressTable::Add(char v)
 {
-
-    const std::string desired = std::string(1, v);
-
-    bool found = false;
-
-    // for (auto &&i : values)
-    // {
-    //     if (i->IsIt(desired))
-    //     {
-    //         found == true;
-    //         break;
-    //     }
-    // }
-
-    // if (!found)
-    // {
-    //     mutableValue *new_value = new mutableValue(v);
-    //     values.push_back(new_value);
-    // }
-    // else
-    // {
-    //     return true;
-    // }
-
-    return false;
-
+    const std::string tostring(v, 1);
+    mutableValue *new_value = new mutableValue(v);
+    values.insert({tostring, new_value});
+    return true;
 } // false if value already exists
+
+void addressTable::Print()
+{
+    for (auto &&i : values)
+        i.second->Print();
+    std::cout << "\nMount registered values: " << values.size() << " values" << std::endl;
+}
+
+int addressTable::Query(int v)
+{
+    const std::string query_str = std::to_string(v);
+    return values.find(query_str)->second->GetAddr();
+}
+
+int addressTable::Query(char v)
+{
+    const std::string query_str = std::string(v, 1);
+    return values.find(query_str)->second->GetAddr();
+}
