@@ -71,3 +71,8 @@ int LetStatement::GetId()
 {
     return address;
 }
+
+std::vector<asmword *> *LetStatement::GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements)
+{
+    return ret;
+}

@@ -73,3 +73,48 @@ int ConditionStatement::GetId()
 {
     return address;
 }
+
+// TO DO MAKE IF STATEMNT WITH GO TO ONLY
+std::vector<asmword *> *ConditionStatement::GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements)
+{
+    std::vector<asmword *> *ret = new std::vector<asmword *>;
+
+    asmword *prepare_command_load = new asmword(&asm_address, "LOAD", nullptr);
+    asmword *prepare_command_sub = new asmword(&asm_address, "SUB", nullptr);
+    asmword *compare_command = new asmword(&asm_address, "", nullptr);
+
+    int *first_value_address = expr1->Requre(variables);
+    int *second_value_address = expr2->Requre(variables);
+
+    switch (comparator)
+    {
+    case '>':
+        prepare_command_load->operand = first_value_address;
+        prepare_command_sub->operand = second_value_address;
+        compare_command->name = "JNEG";
+        break;
+
+    case '<':
+        prepare_command_load->operand = second_value_address;
+        prepare_command_sub->operand = first_value_address;
+        compare_command->name = "JNEG";
+        break;
+
+    case '=':
+        prepare_command_load->operand = first_value_address;
+        prepare_command_sub->operand = second_value_address;
+        compare_command->name = "JZ";
+        //compare_command->operand =
+        break;
+
+    default:
+        std::cout << "[ WARNING ] Undefined comparator in [ " << address << " ] IF [ expr ] <" << comparator << "> ...." << std::endl;
+        break;
+    }
+
+    ret->push_back(prepare_command_load);
+    ret->push_back(prepare_command_sub);
+    ret->push_back(compare_command);
+
+    return ret;
+}
