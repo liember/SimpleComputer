@@ -33,7 +33,12 @@ void SetStatement::SetAddr(int a)
     asm_address = a;
 }
 
-int SetStatement::GetAddr()
+int *SetStatement::GetAddr()
 {
-    return asm_address;
+    return &asm_address;
+}
+
+int SetStatement::GetId()
+{
+    return address;
 }

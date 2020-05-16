@@ -66,3 +66,8 @@ int LetStatement::GetAddr()
 {
     return asm_address;
 }
+
+int LetStatement::GetId()
+{
+    return address;
+}

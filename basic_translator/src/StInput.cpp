@@ -42,7 +42,23 @@ void InputStatement::SetAddr(int a)
     asm_address = a;
 }
 
-int InputStatement::GetAddr()
+int *InputStatement::GetAddr()
 {
-    return asm_address;
+    return &asm_address;
+}
+
+int InputStatement::GetId()
+{
+    return address;
+}
+
+std::vector<asmword *> *GoToStatement::GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements)
+{
+    std::vector<asmword *> *ret = new std::vector<asmword *>;
+    int *input_variable_addr = expr->Requre(variables);
+
+    asmword *command = new asmword(&asm_address, "READ", input_variable_addr);
+    ret->push_back(command);
+
+    return ret;
 }

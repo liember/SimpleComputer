@@ -64,7 +64,12 @@ void ConditionStatement::SetAddr(int a)
     asm_address = a;
 }
 
-int ConditionStatement::GetAddr()
+int *ConditionStatement::GetAddr()
 {
-    return asm_address;
+    return &asm_address;
+}
+
+int ConditionStatement::GetId()
+{
+    return address;
 }

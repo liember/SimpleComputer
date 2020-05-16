@@ -71,7 +71,12 @@ void OutputStatement::SetAddr(int a)
     asm_address = a;
 }
 
-int OutputStatement::GetAddr()
+int *OutputStatement::GetAddr()
 {
-    return asm_address;
+    return &asm_address;
+}
+
+int OutputStatement::GetId()
+{
+    return address;
 }
