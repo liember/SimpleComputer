@@ -262,11 +262,11 @@ namespace parsing
         {
         private:
             const int address;
-            int asm_address;
+            int *asm_address;
             int value;
 
         public:
-            SetStatement(int addr, int val);
+            SetStatement(int addr, int val, int *asm_adr);
             ~SetStatement() override;
             void EvalExpression() override;
             void Print() override;

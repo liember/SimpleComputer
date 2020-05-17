@@ -5,6 +5,7 @@ Generator::Generator(variables *v, statements *s)
 {
     vars = v;
     states = s;
+    current_asm_addr = 0;
 }
 
 Generator::~Generator()
@@ -18,6 +19,7 @@ void Generator::PreGenerate()
         std::vector<asmword *> *vec = i->GenerateAsm(vars, states);
         for (auto &&i : *vec)
         {
+            *i->addr = current_asm_addr;
             command_list.push_back(i);
             current_asm_addr++;
         }

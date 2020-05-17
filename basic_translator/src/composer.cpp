@@ -39,5 +39,5 @@ void composer::GenerateVar()
 command *composer::ValueToCmd(library::value *val)
 {
     const int unused_addres = INT32_MAX;
-    return new parsing::AST::SetStatement(unused_addres, val->val);
+    return new parsing::AST::SetStatement(unused_addres, val->val, val->GetAddr());
 }

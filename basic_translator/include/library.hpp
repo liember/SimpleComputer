@@ -14,41 +14,38 @@ namespace library
         VariableValue
     };
 
-    namespace
+    class value
     {
-        class value
-        {
-        private:
-            int address;
+    private:
+        int address;
 
-        public:
-            const std::string name;
-            const int val;
-            const int type;
+    public:
+        const std::string name;
+        const int val;
+        const int type;
 
-            value(std::string n, int v, int type);
+        value(std::string n, int v, int type);
 
-            bool IsIt(std::string val);
-            int Type();
+        bool IsIt(std::string val);
+        int Type();
 
-            void SetAddr(int addr);
-            int *GetAddr();
+        void SetAddr(int addr);
+        int *GetAddr();
 
-            void Print();
-        };
+        void Print();
+    };
 
-        class constantValue final : public value
-        {
-        public:
-            constantValue(int name);
-        };
+    class constantValue final : public value
+    {
+    public:
+        constantValue(int name);
+    };
 
-        class mutableValue final : public value
-        {
-        public:
-            mutableValue(char name);
-        };
-    } // namespace
+    class mutableValue final : public value
+    {
+    public:
+        mutableValue(char name);
+    };
 
     class addressTable
     {

@@ -2,9 +2,10 @@
 
 using namespace parsing::AST;
 
-SetStatement::SetStatement(int addr, int val) : address(addr)
+SetStatement::SetStatement(int addr, int val, int *asm_adr) : address(addr)
 {
     value = val;
+    asm_address = asm_adr;
 }
 
 SetStatement::~SetStatement()
@@ -31,12 +32,12 @@ void SetStatement::RegValues(library::addressTable *lib)
 
 void SetStatement::SetAddr(int a)
 {
-    asm_address = a;
+    *asm_address = a;
 }
 
 int *SetStatement::GetAddr()
 {
-    return &asm_address;
+    return asm_address;
 }
 
 int SetStatement::GetId()
@@ -48,7 +49,7 @@ std::vector<asmword *> *SetStatement::GenerateAsm(library::addressTable *variabl
 {
     std::vector<asmword *> *ret = new std::vector<asmword *>;
 
-    asmword *command = new asmword(&asm_address, "=", &value);
+    asmword *command = new asmword(asm_address, "=", &value);
     ret->push_back(command);
 
     return ret;
