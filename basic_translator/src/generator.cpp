@@ -17,10 +17,10 @@ void Generator::PreGenerate()
     for (auto &&i : *states)
     {
         std::vector<asmword *> *vec = i->GenerateAsm(vars, states);
-        for (auto &&i : *vec)
+        for (auto &&b : *vec)
         {
-            *i->addr = current_asm_addr;
-            command_list.push_back(i);
+            *b->addr = current_asm_addr;
+            command_list.push_back(b);
             current_asm_addr++;
         }
     }

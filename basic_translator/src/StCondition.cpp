@@ -81,20 +81,22 @@ std::vector<asmword *> *ConditionStatement::GenerateAsm(library::addressTable *v
 
     asmword *prepare_command_load = new asmword(&asm_address, "LOAD", nullptr);
     asmword *prepare_command_sub = new asmword(&asm_address, "SUB", nullptr);
-    asmword *compare_command = new asmword(&asm_address, "", nullptr);
+    asmword *compare_command = new asmword(&asm_address, "", statement->GetAddr());
 
     int *first_value_address = expr1->Requre(variables);
     int *second_value_address = expr2->Requre(variables);
 
+    int *else_target = 0;
+
     switch (comparator)
     {
-    case '>':
+    case '<':
         prepare_command_load->operand = first_value_address;
         prepare_command_sub->operand = second_value_address;
         compare_command->name = "JNEG";
         break;
 
-    case '<':
+    case '>':
         prepare_command_load->operand = second_value_address;
         prepare_command_sub->operand = first_value_address;
         compare_command->name = "JNEG";
@@ -104,7 +106,6 @@ std::vector<asmword *> *ConditionStatement::GenerateAsm(library::addressTable *v
         prepare_command_load->operand = first_value_address;
         prepare_command_sub->operand = second_value_address;
         compare_command->name = "JZ";
-        //compare_command->operand =
         break;
 
     default:
@@ -115,6 +116,13 @@ std::vector<asmword *> *ConditionStatement::GenerateAsm(library::addressTable *v
     ret->push_back(prepare_command_load);
     ret->push_back(prepare_command_sub);
     ret->push_back(compare_command);
+
+    std::vector<asmword *> *then_statement = statement->GenerateAsm(variables, statements);
+
+    for (auto &&i : *then_statement)
+    {
+        ret->push_back(i);
+    }
 
     return ret;
 }
