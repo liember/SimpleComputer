@@ -70,7 +70,7 @@ std::vector<asmword *> *GoToStatement::GenerateAsm(library::addressTable *variab
         if (i->GetId() == required_id)
             jump_target = i->GetAddr();
     }
-    asmword *command = new asmword(&asm_address, "HALT", nullptr);
+    asmword *command = new asmword(&asm_address, "JUMP", jump_target);
     ret->push_back(command);
     return ret;
 }
