@@ -1,4 +1,5 @@
 #include "Generator.hpp"
+#include <vector>
 
 Generator::Generator(variables *v, statements *s)
 {
@@ -8,12 +9,19 @@ Generator::Generator(variables *v, statements *s)
 
 Generator::~Generator()
 {
-    delete vars;
-    delete states;
 }
 
-void PreGenerate()
+void Generator::PreGenerate()
 {
+    for (auto &&i : *states)
+    {
+        std::vector<asmword *> *vec = i->GenerateAsm(vars, states);
+        for (auto &&i : *vec)
+        {
+            command_list.push_back(i);
+            current_asm_addr++;
+        }
+    }
 }
 
 void Generator::Generate(std::string output_file_name)

@@ -14,8 +14,9 @@ private:
     variables *vars;
     statements *states;
 
+    std::vector<asmword *> command_list;
+
     int current_asm_addr;
-    int asm_code_size;
 
 public:
     Generator(variables *v, statements *s);

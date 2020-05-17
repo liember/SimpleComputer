@@ -5,6 +5,7 @@
 #include "lexer.hpp"
 #include "parser.hpp"
 #include "composer.hpp"
+#include "Generator.hpp"
 
 using namespace std;
 
@@ -40,6 +41,9 @@ int main(int argc, char **argv)
     for (auto &&i : v)
         i->Print();
     std::cout << std::endl;
+
+    Generator code_gen(configurator.lib, &v);
+    code_gen.PreGenerate();
 
     return 0;
 }

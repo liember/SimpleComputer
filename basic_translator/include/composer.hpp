@@ -9,12 +9,12 @@ typedef parsing::AST::Statement command;
 class composer
 {
 private:
-    library::addressTable *lib;
     std::vector<command *> *commands;
-
     command *ValueToCmd(library::value *val);
 
 public:
+    library::addressTable *lib;
+
     explicit composer(std::vector<command *> *v);
 
     void CheckFails();
