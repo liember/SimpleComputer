@@ -14,7 +14,14 @@ asmword::~asmword()
 void asmword::Print()
 {
     std::cout << "[ "
-              << (addr == nullptr ? 0 : *addr) << " ]"
-              << name << " [" << (operand == nullptr ? 0 : *operand)
-              << " ]" << std::endl;
+              << (addr == nullptr ? 0 : *addr) << " ] "
+              << name;
+    if (operand == nullptr)
+    {
+        std::cout << std::endl;
+    }
+    else
+    {
+        std::cout << " [ " << *operand << " ]" << std::endl;
+    }
 }
