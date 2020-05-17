@@ -44,6 +44,7 @@ int main(int argc, char **argv)
 
     Generator code_gen(configurator.lib, &v);
     code_gen.PreGenerate();
+    code_gen.Preview();
 
     return 0;
 }

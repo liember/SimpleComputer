@@ -28,3 +28,13 @@ void Generator::Generate(std::string output_file_name)
 {
     std::ofstream out(output_file_name);
 }
+
+void Generator::Preview()
+{
+
+    for (auto &&i : command_list)
+        i->Print();
+    std::cout << std::endl;
+    std::cout << "[ INFO ] Summary code size [" << command_list.size()
+              << " ]" << std::endl;
+}

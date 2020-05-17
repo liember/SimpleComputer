@@ -22,6 +22,8 @@ public:
     Generator(variables *v, statements *s);
     ~Generator();
 
+    void Preview();
+
     void PreGenerate();
     void Generate(std::string output_file_name);
 };

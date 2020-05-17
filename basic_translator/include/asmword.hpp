@@ -11,4 +11,6 @@ public:
 
     asmword(int *a, std::string name, int *o);
     ~asmword();
+
+    void Print();
 };
