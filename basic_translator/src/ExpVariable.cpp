@@ -34,3 +34,9 @@ int *expressions::variable_expression::Requre(library::addressTable *lib)
 {
     return lib->Query(value);
 }
+
+std::vector<asmword *> *expressions::variable_expression::GenerateAsm(library::addressTable *variables, library::value_heap *heap)
+{
+    std::cout << "[ CRITICAL WARNING ] This code should never have been run [ variable_expression::GenerateAsm() ]" << std::endl;
+    return nullptr;
+}

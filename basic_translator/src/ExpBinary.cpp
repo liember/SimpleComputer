@@ -127,3 +127,73 @@ int *expressions::binary_expression::Requre(library::addressTable *lib)
     std::cout << "[ CRITICAL WARNING ] This code should never have been run [ binary_expression::Requre() ]" << std::endl;
     return nullptr;
 }
+
+std::vector<asmword *> *expressions::binary_expression::GenerateAsm(library::addressTable *variables, library::value_heap *heap)
+{
+    std::vector<asmword *> *code = new std::vector<asmword *>;
+
+    int *arg1_address, *arg2_address;
+
+    if (expr1->GetType() == types::ConstExpression || expr1->GetType() == types::VariableExpression)
+    {
+        std::vector<asmword *> *sub_code;
+        sub_code = expr1->GenerateAsm(variables, heap);
+
+        for (auto &&i : *sub_code)
+            code->push_back(i);
+    }
+    else
+    {
+        arg1_address = expr1->Requre(variables);
+    }
+
+    if (expr2->GetType() == types::ConstExpression || expr2->GetType() == types::VariableExpression)
+    {
+        std::vector<asmword *> *sub_code;
+        sub_code = expr2->GenerateAsm(variables, heap);
+
+        for (auto &&i : *sub_code)
+            code->push_back(i);
+    }
+    else
+    {
+        arg2_address = expr2->Requre(variables);
+    }
+
+    if (expr2->GetType() == types::ConstExpression || expr2->GetType() == types::VariableExpression)
+    {
+        arg2_address = heap->Query();
+    }
+    if (expr1->GetType() == types::ConstExpression || expr1->GetType() == types::VariableExpression)
+    {
+        arg1_address = heap->Query();
+    }
+
+    asmword *load_cmd = new asmword(nullptr, "LOAD", arg1_address);
+    asmword *operation_cmd = new asmword(nullptr, "", arg2_address);
+    asmword *store_cmd = new asmword(nullptr, "STORE", heap->Push());
+
+    code->push_back(load_cmd);
+    code->push_back(operation_cmd);
+    code->push_back(store_cmd);
+
+    switch (operation)
+    {
+    case lexer::token::mul:
+        operation_cmd->name = "MUL";
+        break;
+    case lexer::token::dif:
+        operation_cmd->name = "SUB";
+        break;
+    case lexer::token::div:
+        operation_cmd->name = "DIVIDE";
+        break;
+    case lexer::token::sum:
+        operation_cmd->name = "ADD";
+        break;
+    default:
+        break;
+    }
+
+    return code;
+}
