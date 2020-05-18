@@ -46,7 +46,15 @@ bool ConditionStatement::Analyze()
         return false;
     }
 
-    return true;
+    bool verdict = statement->Analyze();
+
+    if (verdict == false)
+    {
+        std::cout << "[ ADDITIONAL WARNING INFO ] This error are generated from [ THEN ] [ STATEMENT ] of [ IF STATEMENT ]\n";
+        std::cout << "[ ADDITIONAL WARNING INFO ] [ Address: " << address << "] [ IF ] [ VALUE ] [ CMP ] [ VALUE ] < INCORRECT OPERATION >\n";
+    }
+
+    return verdict;
 }
 
 void ConditionStatement::EvalExpression()
