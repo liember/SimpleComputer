@@ -74,5 +74,19 @@ int LetStatement::GetId()
 
 std::vector<asmword *> *LetStatement::GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements)
 {
-    return nullptr;
+    std::vector<asmword *> *ret = expr2->GenerateAsm(variables, &variables->heap);
+
+    asmword *set1_cmd = new asmword(nullptr, "LOAD", variables->heap.Query());
+
+    if (!variables->heap.isEnd())
+    {
+        std::cout << "[ CRITICAL WARNING ] No void heap" << std::endl;
+    }
+
+    ret->push_back(set1_cmd);
+
+    asmword *set2_cmd = new asmword(nullptr, "STORE", expr1->Requre(variables));
+    ret->push_back(set2_cmd);
+
+    return ret;
 }
