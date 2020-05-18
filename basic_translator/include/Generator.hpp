@@ -26,4 +26,6 @@ public:
 
     void PreGenerate();
     void Generate(std::string output_file_name);
+
+    void WriteToFile(std::string filename);
 };

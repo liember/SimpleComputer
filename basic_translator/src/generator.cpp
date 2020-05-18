@@ -1,5 +1,6 @@
 #include "Generator.hpp"
 #include <vector>
+#include <fstream>
 
 Generator::Generator(variables *v, statements *s)
 {
@@ -42,4 +43,15 @@ void Generator::Preview()
     std::cout << std::endl;
     std::cout << "[ INFO ] Summary code size [" << command_list.size()
               << " ]" << std::endl;
+}
+
+void Generator::WriteToFile(std::string filename)
+{
+    std::ofstream file(filename);
+
+    if (file.is_open())
+        for (auto &&i : command_list)
+            file << i->GenerateCodeString() + "\n";
+
+    file.close();
 }
