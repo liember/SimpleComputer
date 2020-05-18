@@ -148,7 +148,7 @@ int main(int argc, char **argv)
         cout << "[?] Start translation:" << endl
              << "#####################" << endl;
 
-        while (in >> addres >> comand >> operand)
+        while (in >> addres >> comand >> std::hex >> operand)
         {
             if (addres < max_mem)
             {
