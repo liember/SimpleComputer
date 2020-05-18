@@ -30,8 +30,6 @@ void composer::GenerateVar()
 {
     for (auto &&i : *commands)
         i->RegValues(lib);
-    lib->Print();
-
     for (auto &&i : lib->values)
         commands->insert(commands->begin(), ValueToCmd(i.second));
 }
@@ -40,4 +38,9 @@ command *composer::ValueToCmd(library::value *val)
 {
     const int unused_addres = INT32_MAX;
     return new parsing::AST::SetStatement(unused_addres, val->val, val->GetAddr());
+}
+
+void composer::PrintVariablesInfo()
+{
+    lib->Print();
 }

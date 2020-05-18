@@ -22,5 +22,7 @@ public:
 
     void GenerateVar();
 
+    void PrintVariablesInfo();
+
     ~composer();
 };
