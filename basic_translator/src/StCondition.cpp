@@ -86,8 +86,6 @@ std::vector<asmword *> *ConditionStatement::GenerateAsm(library::addressTable *v
     int *first_value_address = expr1->Requre(variables);
     int *second_value_address = expr2->Requre(variables);
 
-    int *else_target = 0;
-
     switch (comparator)
     {
     case '<':
