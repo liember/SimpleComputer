@@ -25,3 +25,19 @@ void asmword::Print()
         std::cout << " [ " << *operand << " ]" << std::endl;
     }
 }
+
+std::string asmword::GenerateCodeString()
+{
+    std::string result;
+
+    result += std::to_string(*addr) + " " + name;
+
+    if (operand == nullptr)
+    {
+        return result;
+    }
+
+    result += " " + std::to_string(*operand);
+
+    return result;
+}

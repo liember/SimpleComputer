@@ -13,4 +13,5 @@ public:
     ~asmword();
 
     void Print();
+    std::string GenerateCodeString();
 };
