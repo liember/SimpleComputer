@@ -182,9 +182,27 @@ AST::Statement *parser::Statement(bool addrcheck)
 std::vector<AST::Statement *> parser::Parse()
 {
     std::vector<AST::Statement *> result;
+
+    int previous_id = -1;
+
     while (!Match(lexer::token::token_type::Eof))
     {
-        result.push_back(Statement(true));
+        AST::Statement *current_statement = Statement(true);
+
+        int current_id = current_statement->GetId();
+
+        if (current_id <= previous_id)
+        {
+            std::cout << "[ WARNING ] Wrong addresation\n";
+            std::cout << "[ ADDITIONAL WARNING INFO ] Previous: ";
+            result[result.size() - 1]->Print();
+            std::cout << "[ ADDITIONAL WARNING INFO ] Incorrect: ";
+            current_statement->Print();
+            exit(0);
+        }
+
+        result.push_back(current_statement);
+        previous_id = current_id;
     }
     return result;
 }
