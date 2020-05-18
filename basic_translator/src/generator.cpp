@@ -20,7 +20,6 @@ void Generator::PreGenerate()
         for (auto &&b : *vec)
         {
             if (b->addr == nullptr)
-
                 b->addr = new int(current_asm_addr);
             else
                 *b->addr = current_asm_addr;

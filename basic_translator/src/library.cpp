@@ -77,22 +77,19 @@ int *addressTable::Query(char v)
 int *value_heap::Query()
 {
     int *result = heap.top();
-    current_address--;
+    current_address++;
     heap.pop();
     return result;
 }
 
 int *value_heap::Push()
 {
-    value_storage.push(current_address);
-
-    int *address = &value_storage.top();
-
+    int *address = new int(current_address);
+    value_storage.insert(value_storage.begin(), address);
     heap.push(address);
-    int *result = heap.top();
     max_heap_size = std::max(max_heap_size, (int)heap.size());
-    current_address++;
-    return result;
+    current_address--;
+    return address;
 }
 
 bool value_heap::isEnd()
@@ -104,4 +101,4 @@ bool value_heap::isEnd()
     return false;
 }
 
-value_heap::value_heap() : current_address(0), max_heap_size(0) {}
+value_heap::value_heap() : current_address(99), max_heap_size(0) {}

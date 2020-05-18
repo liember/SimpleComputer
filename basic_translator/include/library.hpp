@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <stack>
+#include <vector>
 
 namespace library
 {
@@ -52,10 +53,11 @@ namespace library
     {
     private:
         std::stack<int *> heap;
-        std::stack<int> value_storage;
         int current_address;
 
     public:
+        std::vector<int *> value_storage;
+
         int max_heap_size;
         value_heap();
 
