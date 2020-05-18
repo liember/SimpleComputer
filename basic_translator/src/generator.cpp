@@ -19,7 +19,11 @@ void Generator::PreGenerate()
         std::vector<asmword *> *vec = i->GenerateAsm(vars, states);
         for (auto &&b : *vec)
         {
-            *b->addr = current_asm_addr;
+            if (b->addr == nullptr)
+
+                b->addr = new int(current_asm_addr);
+            else
+                *b->addr = current_asm_addr;
             command_list.push_back(b);
             current_asm_addr++;
         }
