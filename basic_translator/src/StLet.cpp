@@ -74,6 +74,22 @@ int LetStatement::GetId()
 
 std::vector<asmword *> *LetStatement::GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements)
 {
+    const int var = expressions::types::MutableValue;
+    const int constant = expressions::types::ConstValue;
+
+    if (expr2->GetType() == var || expr2->GetType() == constant)
+    {
+        std::vector<asmword *> *ret = new std::vector<asmword *>;
+
+        asmword *load_cmd = new asmword(nullptr, "LOAD", expr2->Requre(variables));
+        asmword *store_cmd = new asmword(nullptr, "STORE", expr1->Requre(variables));
+
+        ret->push_back(load_cmd);
+        ret->push_back(store_cmd);
+
+        return ret;
+    }
+
     std::vector<asmword *> *ret = expr2->GenerateAsm(variables, &variables->heap);
 
     asmword *set1_cmd = new asmword(nullptr, "LOAD", variables->heap.Query());
