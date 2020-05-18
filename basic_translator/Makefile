@@ -13,7 +13,7 @@ SRCDIR = src/
 SRC_FILES := $(wildcard $(SRCDIR)*.cpp)
 OBJ_FILES := $(patsubst $(SRCDIR)%.cpp,$(OBJDIR)%.o,$(SRC_FILES))
 DEP_FILES := $(wildcard $(DEPDIR)*.d)
-EXECUTABLE = $(BINDIR)main
+EXECUTABLE = $(BINDIR)sbt
 
 all: dirs $(EXECUTABLE)
  
