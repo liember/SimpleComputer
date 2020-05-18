@@ -25,7 +25,7 @@ bool GoToStatement::Analyze()
 
     if (expr->GetType() != number_expr && expr->GetType() != number_type)
     {
-        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ GOTO ] > IS NOT CONSTANT EXPRESSION <" << std::endl;
+        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ GOTO ] < IS NOT CONSTANT EXPRESSION >" << std::endl;
         return false;
     }
 
