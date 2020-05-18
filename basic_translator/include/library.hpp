@@ -4,6 +4,7 @@
 #include <string>
 
 #include <iostream>
+#include <stack>
 
 namespace library
 {
@@ -45,6 +46,20 @@ namespace library
     {
     public:
         mutableValue(char name);
+    };
+
+    class value_heap
+    {
+    private:
+        std::stack<int> heap;
+        int current_address;
+
+    public:
+        int max_heap_size;
+        value_heap();
+
+        int *Query();
+        int *Push();
     };
 
     class addressTable

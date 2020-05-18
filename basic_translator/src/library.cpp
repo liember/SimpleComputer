@@ -1,4 +1,5 @@
 #include "library.hpp"
+#include <algorithm>
 
 using namespace library;
 
@@ -72,3 +73,22 @@ int *addressTable::Query(char v)
     const std::string query_str = std::string(v, 1);
     return values.find(query_str)->second->GetAddr();
 }
+
+int *value_heap::Query()
+{
+    int *result = &heap.top();
+    current_address--;
+    heap.pop();
+    return result;
+}
+
+int *value_heap::Push()
+{
+    heap.push(current_address);
+    int *result = &heap.top();
+    max_heap_size = std::max(max_heap_size, (int)heap.size());
+    current_address++;
+    return result;
+}
+
+value_heap::value_heap() : current_address(0), max_heap_size(0) {}
