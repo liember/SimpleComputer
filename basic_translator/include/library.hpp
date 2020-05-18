@@ -59,6 +59,8 @@ namespace library
         int max_heap_size;
         value_heap();
 
+        bool isEnd();
+
         int *Query();
         int *Push();
     };
@@ -68,6 +70,7 @@ namespace library
 
     public:
         std::map<std::string, value *> values;
+        value_heap heap;
 
         bool Add(int v);  // false if value already exists
         bool Add(char v); // false if value already exists

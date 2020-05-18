@@ -95,4 +95,13 @@ int *value_heap::Push()
     return result;
 }
 
+bool value_heap::isEnd()
+{
+    if (heap.size() == 0)
+    {
+        return true;
+    }
+    return false;
+}
+
 value_heap::value_heap() : current_address(0), max_heap_size(0) {}
