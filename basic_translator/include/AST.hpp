@@ -36,6 +36,8 @@ namespace parsing
 
                 virtual void RegValues(library::addressTable *lib) = 0;
                 virtual int *Requre(library::addressTable *lib) = 0;
+
+                virtual std::vector<asmword *> *GenerateAsm(library::addressTable *variables, library::value_heap *heap) = 0;
             };
 
             class variable_expression : public expression
@@ -52,6 +54,8 @@ namespace parsing
 
                 void RegValues(library::addressTable *lib) override;
                 int *Requre(library::addressTable *lib) override;
+
+                std::vector<asmword *> *GenerateAsm(library::addressTable *variables, library::value_heap *heap) override;
             };
 
             class number_expression : public expression
@@ -68,6 +72,8 @@ namespace parsing
 
                 void RegValues(library::addressTable *lib) override;
                 int *Requre(library::addressTable *lib) override;
+
+                std::vector<asmword *> *GenerateAsm(library::addressTable *variables, library::value_heap *heap) override;
             };
 
             class binary_expression : public expression
@@ -88,6 +94,8 @@ namespace parsing
 
                 void RegValues(library::addressTable *lib) override;
                 int *Requre(library::addressTable *lib) override;
+
+                std::vector<asmword *> *GenerateAsm(library::addressTable *variables, library::value_heap *heap) override;
             };
         } // namespace expressions
 
