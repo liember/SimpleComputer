@@ -51,18 +51,9 @@ int main(int argc, char **argv)
     std::string inp_filename(argv[1]);
     std::string out_filename;
 
-    if (argv[2] == nullptr)
-    {
-        std::cout << "[ ATTENTION ] You dont input [ outputfile ]\n[ INFO ] The name will be generated automaticly\n";
-        out_filename = inp_filename;
-        auto mPos = out_filename.find('.');
-        out_filename.replace(out_filename.begin() + mPos, out_filename.end(), ".sasm");
-        std::cout << "[ INFO ] Has been generated output file name: [ " << out_filename << " ] \n\n";
-    }
-    else
-    {
-        out_filename = argv[2];
-    }
+    out_filename = inp_filename;
+    auto mPos = out_filename.find('.');
+    out_filename.replace(out_filename.begin() + mPos, out_filename.end(), ".sasm");
 
     if (inp_filename.substr(inp_filename.find_last_of(".") + 1) != "sbas")
     {
@@ -118,6 +109,7 @@ int main(int argc, char **argv)
         code_gen.Preview();
 
     code_gen.WriteToFile(out_filename);
+    std::cout << "[ INFO ] Has been generated file: [ " << out_filename << " ] \n";
 
     return 0;
 }
