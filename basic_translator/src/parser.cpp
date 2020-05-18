@@ -25,8 +25,6 @@ bool parser::Match(lexer::token::token_type type)
 
 AST::expressions::expression *parser::Expression()
 {
-    // std::cout << std::endl
-    //           << "[ INFO ] Start building expression: ";
     return Additive();
     std::cout << std::endl;
 }
@@ -38,13 +36,11 @@ AST::expressions::expression *parser::Additive()
     {
         if (Match(lexer::token::sum))
         {
-            //std::cout << "Binary [+] ";
             expr = new AST::expressions::binary_expression(lexer::token::sum, expr, Multyplicative());
             continue;
         }
         if (Match(lexer::token::dif))
         {
-            //std::cout << "Binary [-] ";
             expr = new AST::expressions::binary_expression(lexer::token::dif, expr, Multyplicative());
             continue;
         }
@@ -60,13 +56,11 @@ AST::expressions::expression *parser::Multyplicative()
     {
         if (Match(lexer::token::mul))
         {
-            //std::cout << "Binary [*] ";
             expr = new AST::expressions::binary_expression(lexer::token::mul, expr, Primary());
             continue;
         }
         if (Match(lexer::token::div))
         {
-            //std::cout << "Binary [/] ";
             expr = new AST::expressions::binary_expression(lexer::token::div, expr, Primary());
             continue;
         }
@@ -80,16 +74,13 @@ AST::expressions::expression *parser::Primary()
     lexer::token::token cur_tok = Get(0);
     if (Match(lexer::token::token_type::Number))
     {
-        //std::cout << "Const [" << cur_tok.GetValue() << "] ";
         return new AST::expressions::number_expression(std::stoi(cur_tok.GetValue()));
     }
     else if (Match(lexer::token::token_type::Exp_sta))
     {
-        //std::cout << "[ INFO ] Find the custom priority expression ";
         AST::expressions::expression *result = Expression();
         if (Match(lexer::token::token_type::Exp_end))
         {
-            //std::cout << "[ INFO ] End of custom priority expression ";
             return result;
         }
         else
@@ -100,7 +91,6 @@ AST::expressions::expression *parser::Primary()
     }
     else if (Match(lexer::token::Query))
     {
-        // std::cout << "Variable [" << cur_tok.GetValue() << "] ";
         return new AST::expressions::variable_expression(*cur_tok.GetValue().c_str());
     }
     else
