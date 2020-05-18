@@ -51,7 +51,8 @@ namespace library
     class value_heap
     {
     private:
-        std::stack<int> heap;
+        std::stack<int *> heap;
+        std::stack<int> value_storage;
         int current_address;
 
     public:
