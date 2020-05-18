@@ -46,7 +46,7 @@ bool OutputStatement::Analyze()
     if (expr->GetType() == number_expr || expr->GetType() == number_type)
     {
         std::cout << "[ ATTENTION ] Suspicious expression: " << std::endl;
-        std::cout << "\t\t [Address:" << address << "][OUTPUT]<IMUTABLE EXPRESSION> " << std::endl;
+        std::cout << "\t\t [ Address:" << address << " ] [ OUTPUT ] <IMUTABLE EXPRESSION> " << std::endl;
         std::cout << "\t\t ";
         expr->Print();
         return true;
@@ -83,6 +83,18 @@ int OutputStatement::GetId()
 
 std::vector<asmword *> *OutputStatement::GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements)
 {
+    const int number_expr = expressions::types::ConstExpression;
+    if (expr->GetType() == number_expr)
+    {
+        std::cout << "[ WARNING ] Incorrect expression: \n[ Address: " << address << "] [ OUTPUT ] < NO SINGLE VALUE >" << std::endl;
+        std::cout << "[ ADDITIONAL WARNING INFO ] You may try to use optimization flag [ flag: O ] or calculate expression by yourself. " << std::endl;
+        std::cout << "[ ADDITIONAL WARNING INFO ] Expression: [ ";
+
+        expr->Print();
+        std::cout << " ]\n";
+        exit(0);
+    }
+
     std::vector<asmword *> *ret = new std::vector<asmword *>;
     int *input_variable_addr = expr->Requre(variables);
 
