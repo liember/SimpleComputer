@@ -11,7 +11,6 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-
     // CONFIGURATION
 
     bool parsing_result_view = false;
@@ -19,9 +18,19 @@ int main(int argc, char **argv)
     bool assembly_preview = false;
     bool values_info = false;
 
-    if (argv[3] != nullptr)
+    int check_pos = 2;
+
+    if (argv[2] != nullptr && argv[3] == nullptr)
     {
-        std::string str(argv[3]);
+    }
+    else
+    {
+        check_pos = 3;
+    }
+
+    if (argv[check_pos] != nullptr)
+    {
+        std::string str(argv[check_pos]);
 
         if (str.find('P') != std::string::npos)
             parsing_result_view = true;
