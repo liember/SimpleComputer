@@ -25,3 +25,5 @@ bin/
 asm_trranslator/test
 
 *.sasm
+
+*.sbas
