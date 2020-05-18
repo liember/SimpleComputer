@@ -19,6 +19,11 @@ void SetStatement::Print()
 
 bool SetStatement::Analyze()
 {
+    static int EndCounter = 0;
+    EndCounter++;
+    if (EndCounter != 0)
+        return false;
+
     return true;
 }
 
