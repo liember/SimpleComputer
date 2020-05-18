@@ -27,6 +27,11 @@ int expressions::variable_expression::GetType()
 
 void expressions::variable_expression::RegValues(library::addressTable *lib)
 {
+    if (value < 'A' || value > 'Z')
+    {
+        std::cout << "[ WARNING ] Incorrect variable name: [ " << value << " ] \n";
+        exit(0);
+    }
     lib->Add(value);
 }
 
