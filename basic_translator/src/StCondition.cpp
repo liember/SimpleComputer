@@ -86,38 +86,43 @@ int ConditionStatement::GetId()
 std::vector<asmword *> *ConditionStatement::GenerateAsm(library::addressTable *variables, std::vector<parsing::AST::Statement *> *statements)
 {
 
-    int *next_state = nullptr;
+    int *else_state = nullptr;
 
     bool finded = false;
     for (auto &&i : *statements)
     {
-        if (i->GetId() == address)
-            finded = true;
         if (finded)
         {
-            next_state = i->GetAddr();
+            else_state = i->GetAddr();
             break;
         }
+        if (i->GetId() == address)
+            finded = true;
     }
+
+    int *then_state = statement->GetAddr();
 
     std::vector<asmword *> *ret = new std::vector<asmword *>;
 
     asmword *prepare_command_load = new asmword(&asm_address, "LOAD", nullptr);
     asmword *prepare_command_sub = new asmword(nullptr, "SUB", nullptr);
-    asmword *compare_command = new asmword(nullptr, "", next_state);
+
+    asmword *compare_command = new asmword(nullptr, "", statement->GetAddr());
+
+    asmword *else_jump = new asmword(nullptr, "JUMP", else_state);
 
     int *first_value_address = expr1->Requre(variables);
     int *second_value_address = expr2->Requre(variables);
 
     switch (comparator)
     {
-    case '>':
+    case '<':
         prepare_command_load->operand = first_value_address;
         prepare_command_sub->operand = second_value_address;
         compare_command->name = "JNEG";
         break;
 
-    case '<':
+    case '>':
         prepare_command_load->operand = second_value_address;
         prepare_command_sub->operand = first_value_address;
         compare_command->name = "JNEG";
@@ -137,6 +142,7 @@ std::vector<asmword *> *ConditionStatement::GenerateAsm(library::addressTable *v
     ret->push_back(prepare_command_load);
     ret->push_back(prepare_command_sub);
     ret->push_back(compare_command);
+    ret->push_back(else_jump);
 
     std::vector<asmword *> *then_statement = statement->GenerateAsm(variables, statements);
 
