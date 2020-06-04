@@ -135,13 +135,27 @@ int ALU::Interface::Step()
 
     if (translateor.Decode(value, &comand, &operand) == 0)
     {
-        if (operand <= 100)
+        if (operand < 100)
         {
+            int calc_result;
             int16_t &operand_value = external_memory.ram.memory[operand];
-            switch (maker.Calculate(comand,
-                                    operand_value,
-                                    internal_memory.accamulator.cell,
-                                    internal_memory.instruction_count.cell))
+            if (comand >= ALU::comands::jump)
+            {
+                int16_t target = (int16_t)operand;
+                calc_result = maker.Calculate(comand,
+                                              target,
+                                              internal_memory.accamulator.cell,
+                                              internal_memory.instruction_count.cell);
+            }
+            else
+            {
+                calc_result = maker.Calculate(comand,
+                                              operand_value,
+                                              internal_memory.accamulator.cell,
+                                              internal_memory.instruction_count.cell);
+            }
+
+            switch (calc_result)
             {
             case ALU::errors::execution::overflow:
                 internal_memory.registers.Set(internal_memory::flags::interrupt, true);
@@ -154,7 +168,6 @@ int ALU::Interface::Step()
                 break;
 
             case ALU::errors::execution::endprogram:
-                internal_memory.instruction_count.Set(operand);
                 internal_memory.registers.Set(internal_memory::flags::interrupt, true);
             default:
                 return 0;

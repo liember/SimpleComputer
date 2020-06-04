@@ -53,20 +53,20 @@ int Executor::Calculate(uint8_t command, int16_t &operand, int16_t &accum, int16
         break;
 
     case comands::jump:
-        counter = operand;
+        counter = operand - 1;
         break;
 
     case comands::jneg:
         if (accum < 0)
         {
-            counter = operand;
+            counter = operand - 1;
         }
         break;
 
     case comands::jz:
         if (accum == 0)
         {
-            counter = operand;
+            counter = operand - 1;
         }
         break;
 
@@ -81,7 +81,7 @@ int Executor::Calculate(uint8_t command, int16_t &operand, int16_t &accum, int16
     case comands::Read:
         int val;
         std::cin >> val;
-        if (val <= 0x3fff)
+        if (abs(val) <= 0x3fff)
         {
             operand = val;
         }
@@ -92,7 +92,7 @@ int Executor::Calculate(uint8_t command, int16_t &operand, int16_t &accum, int16
         break;
 
     case comands::Write:
-        std::cout << operand << std::endl;
+        std::cout << "OUT >>" << operand << std::endl;
         break;
 
     case comands::halt:
