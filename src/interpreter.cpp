@@ -41,7 +41,7 @@ int Interpreter::Encode(uint8_t command, uint8_t operand, int16_t *value)
 {
     if (operand > 127)
     {
-        throw errors::translation::long_operand;
+        return errors::translation::long_operand;
     }
 
     bool command_is_defined = true;
@@ -54,7 +54,7 @@ int Interpreter::Encode(uint8_t command, uint8_t operand, int16_t *value)
     }
     if (!command_is_defined)
     {
-        throw errors::translation::undef_comand;
+        return errors::translation::undef_comand;
     }
     *value = 0;
     *value = (command << 7) | operand;
