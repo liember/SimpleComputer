@@ -20,9 +20,10 @@ namespace mySimpleComputer
         user_interaction::Interface system_io;
         ALU::Interface processor;
 
-    private:
     public:
         SimpleComputer();
+
+        bool SelfTest();
 
         bool run_status;
         void Init();

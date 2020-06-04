@@ -18,14 +18,16 @@ int main()
   signal(SIGALRM, RunProgram);
   signal(SIGUSR1, RunProgram);
   mySimpleComputer::SimpleComputer Computer;
-  pc = &Computer;
-  Computer.Init();
 
-  while (Computer.run_status)
+  if (!Computer.SelfTest())
   {
-    Computer.Process();
+    return 1;
   }
 
+  pc = &Computer;
+  Computer.Init();
+  while (Computer.run_status)
+    Computer.Process();
   Computer.End();
 
   return 0;
