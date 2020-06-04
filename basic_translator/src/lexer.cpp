@@ -44,22 +44,22 @@ void Tokinizer::Tokenize(std::string line)
             token_line.pop_back();
             break;
 
-            ss_case(Input) : AddToken(token::Input);
+            ss_case(Input) : AddToken(token::Input, word);
             break;
 
-            ss_case(Output) : AddToken(token::Output);
+            ss_case(Output) : AddToken(token::Output, word);
             break;
 
-            ss_case(GoTo) : AddToken(token::Goto);
+            ss_case(GoTo) : AddToken(token::Goto, word);
             break;
 
-            ss_case(If) : AddToken(token::If);
+            ss_case(If) : AddToken(token::If, word);
             break;
 
-            ss_case(Let) : AddToken(token::Let);
+            ss_case(Let) : AddToken(token::Let, word);
             break;
 
-            ss_case(End) : AddToken(token::End);
+            ss_case(End) : AddToken(token::End, word);
             break;
 
             ss_case(Sum) : AddToken(token::sum, word);
@@ -83,13 +83,13 @@ void Tokinizer::Tokenize(std::string line)
             ss_case(Equal) : AddToken(token::Compare, word);
             break;
 
-            ss_case(Set) : AddToken(token::Set);
+            ss_case(Set) : AddToken(token::Set, word);
             break;
 
-            ss_case(ExpEnd) : AddToken(token::Exp_end);
+            ss_case(ExpEnd) : AddToken(token::Exp_end, word);
             break;
 
-            ss_case(ExpStart) : AddToken(token::Exp_sta);
+            ss_case(ExpStart) : AddToken(token::Exp_sta, word);
             break;
 
         ss_default:
