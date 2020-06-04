@@ -64,12 +64,23 @@ std::vector<asmword *> *GoToStatement::GenerateAsm(library::addressTable *variab
 
     const int required_id = expr->Eval();
     int *jump_target;
+    bool sucscess = false;
 
     for (auto &&i : *statements)
     {
         if (i->GetId() == required_id)
+        {
             jump_target = i->GetAddr();
+            sucscess = true;
+        }
     }
+
+    if (!sucscess)
+    {
+        std::cout << "[ WARNING ] Undefined target address in [ GOTO ] [ " << address << " ] " << std::endl;
+        exit(0);
+    }
+
     asmword *command = new asmword(&asm_address, "JUMP", jump_target);
     ret->push_back(command);
     return ret;
