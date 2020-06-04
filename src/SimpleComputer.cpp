@@ -12,18 +12,23 @@ SimpleComputer::SimpleComputer() : internal_mem(100),
 void SimpleComputer::Init()
 {
     run_status = true;
+
+    external_mem.ram.Init();
+    internal_mem.Init();
+
     system_io.ClearScreen();
 
-    // test block
-    external_mem.ram.memory[0] = (uint16_t)2;
-    external_mem.ram.memory[1] = (uint16_t)6;
-    processor.translateor.Encode(ALU::comands::load, 0, &external_mem.ram.memory[2]);
-    processor.translateor.Encode(ALU::comands::mul, 0, &external_mem.ram.memory[3]);
-    processor.translateor.Encode(ALU::comands::add, 0, &external_mem.ram.memory[4]);
-    processor.translateor.Encode(ALU::comands::add, 1, &external_mem.ram.memory[5]);
-    processor.translateor.Encode(ALU::comands::store, 8, &external_mem.ram.memory[6]);
-    processor.translateor.Encode(ALU::comands::halt, 0, &external_mem.ram.memory[7]);
-    // end test block
+    processor.translateor.Encode(ALU::comands::Read, 9, &external_mem.ram.memory[0]);
+    processor.translateor.Encode(ALU::comands::Read, 10, &external_mem.ram.memory[1]);
+    processor.translateor.Encode(ALU::comands::load, 9, &external_mem.ram.memory[2]);
+    processor.translateor.Encode(ALU::comands::sub, 10, &external_mem.ram.memory[3]);
+    processor.translateor.Encode(ALU::comands::jneg, 7, &external_mem.ram.memory[4]);
+    processor.translateor.Encode(ALU::comands::Write, 9, &external_mem.ram.memory[5]);
+    processor.translateor.Encode(ALU::comands::halt, 0, &external_mem.ram.memory[6]);
+    processor.translateor.Encode(ALU::comands::Write, 10, &external_mem.ram.memory[7]);
+    processor.translateor.Encode(ALU::comands::halt, 0, &external_mem.ram.memory[8]);
+    external_mem.ram.memory[9] = 0;
+    external_mem.ram.memory[10] = 9999;
 
     internal_mem.registers.Set(internal_memory::flags::interrupt, true);
     system_io.DrawInterface();
