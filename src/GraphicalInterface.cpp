@@ -7,6 +7,8 @@
 
 using namespace user_interaction;
 
+int16_t GraphicalInterface::output_buf = 00;
+
 GraphicalInterface::GraphicalInterface() : box_memory(61, 11, 1, 1, "Memory"),
                                            box_accamulator(25, 2, 63, 1, "Accumulator"),
                                            box_instruction_counter(25, 2, 63, 4, "Instruction Counter"),
@@ -149,5 +151,5 @@ void GraphicalInterface::PrintInfo(int registers, int acc, int inst_count, int16
     print_flags(62, 11, registers);
 
     sys_draw.output.term.GotoXY(1, 23);
-    std::cout << "Input/Output: " << std::endl;
+    std::cout << "Input/Output: " << output_buf << std::endl;
 }
