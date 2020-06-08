@@ -1,4 +1,5 @@
 #include "Executor.hpp"
+#include "user_interaction.hpp"
 
 using namespace ALU;
 
@@ -92,7 +93,7 @@ int Executor::Calculate(uint8_t command, int16_t &operand, int16_t &accum, int16
         break;
 
     case comands::Write:
-        std::cout << "OUT >>" << operand << std::endl;
+        user_interaction::GraphicalInterface::output_buf = operand;
         break;
 
     case comands::halt:
