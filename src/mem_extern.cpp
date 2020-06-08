@@ -19,8 +19,8 @@ RandomAcsessMemory::~RandomAcsessMemory()
 
 int16_t RandomAcsessMemory::Get(unsigned int index)
 {
-    if (index >= 100)
-        throw OVER_THE_BORDER;
+    if (index >= standart_memory_size)
+        return memory[standart_memory_size - 1];
     return memory[index];
 }
 
@@ -35,26 +35,24 @@ void RandomAcsessMemory::Init()
 void RandomAcsessMemory::Load(const char *filename)
 {
     FILE *fp;
-    if ((fp = fopen(filename, "rb")) == nullptr)
+    if ((fp = fopen(filename, "rb")) != nullptr)
     {
-        throw FILE_FAIL;
+        fread(memory, sizeof(uint16_t), size, fp);
+        fclose(fp);
     }
-    fread(memory, sizeof(uint16_t), size, fp);
-    fclose(fp);
 }
 
 void RandomAcsessMemory::Save(const char *filename)
 {
     FILE *fp;
-    if ((fp = fopen(filename, "wb")) == nullptr)
+    if ((fp = fopen(filename, "wb")) != nullptr)
     {
-        throw FILE_FAIL;
+        for (int i = 0; i < size; i++)
+        {
+            fwrite(&memory[i], sizeof(uint16_t), 1, fp);
+        }
+        fclose(fp);
     }
-    for (int i = 0; i < size; i++)
-    {
-        fwrite(&memory[i], sizeof(uint16_t), 1, fp);
-    }
-    fclose(fp);
 }
 
 void RandomAcsessMemory::Set(int adress, uint16_t value)
