@@ -1,7 +1,7 @@
 .PHONY: clean
 .PHONY: all
 
-CC = clang++
+CC = g++
 CFLAGS = -Wall -std=c++17 -g -I include
 DEPFLAGS = -MP -MMD 
 DEPDIR = dep/
