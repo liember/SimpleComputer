@@ -92,7 +92,9 @@ std::vector<asmword *> *LetStatement::GenerateAsm(library::addressTable *variabl
 
     std::vector<asmword *> *ret = expr2->GenerateAsm(variables, &variables->heap);
 
-    asmword *set1_cmd = new asmword(&asm_address, "LOAD", variables->heap.Query());
+    ret->front()->addr = &asm_address;
+
+    asmword *set1_cmd = new asmword(nullptr, "LOAD", variables->heap.Query());
 
     if (!variables->heap.isEnd())
     {
