@@ -16,6 +16,7 @@ internal_memory::Interface::Interface(int memsize) : accamulator(), instruction_
 void internal_memory::Interface::Init()
 {
     registers.Init();
+    registers.Set(internal_memory::flags::interrupt, true);
     accamulator.Set(0);
     instruction_count.Set(0);
 }
