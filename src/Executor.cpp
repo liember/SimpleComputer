@@ -79,6 +79,10 @@ int Executor::Calculate(uint8_t command, int16_t &operand, int16_t &accum, int16
         operand = accum;
         break;
 
+     case comands::And:
+        accum = accum & operand;
+        break;
+
     case comands::Read:
         int val;
         std::cin >> val;
