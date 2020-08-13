@@ -4,85 +4,77 @@
 #include <stdio.h>
 #include <unistd.h>
 
-inline constexpr char BOXCHAR_REC = 'a';
-inline constexpr char *const BOXCHAR_BR = (char *)"j";
-inline constexpr char *const BOXCHAR_BL = (char *)"m";
-inline constexpr char *const BOXCHAR_TR = (char *)"k";
-inline constexpr char *const BOXCHAR_TL = (char *)"l";
-inline constexpr char *const BOXCHAR_VERT = (char *)"x";
-inline constexpr char *const BOXCHAR_HOR = (char *)"q";
-
 namespace terminal
 {
+    namespace
+    {
+        inline constexpr char BOXCHAR_REC = 'a';
+        inline constexpr char *const BOXCHAR_BR = (char *)"j";
+        inline constexpr char *const BOXCHAR_BL = (char *)"m";
+        inline constexpr char *const BOXCHAR_TR = (char *)"k";
+        inline constexpr char *const BOXCHAR_TL = (char *)"l";
+        inline constexpr char *const BOXCHAR_VERT = (char *)"x";
+        inline constexpr char *const BOXCHAR_HOR = (char *)"q";
+    } // namespace
 
-enum colors
-{
-    black,
-    red,
-    green,
-    brown,
-    blue,
-    magenta,
-    cyan,
-    light_blue,
-    defaul = 9
-};
+    enum colors
+    {
+        black,
+        red,
+        green,
+        brown,
+        blue,
+        magenta,
+        cyan,
+        light_blue,
+        defaul = 9
+    };
 
-class myTerm
-{
-public:
-    int rows;
-    int cols;
+    namespace comands
+    {
+        // returns size of termmianl frame
+        int GetScreenSize(int &w, int &h);
 
-public:
-    int GetScreenSize();
-    // sets custom terminal size
-    void SetScreenSize(int r, int c);
+        void ClrScreen();
 
-    int ClrScreen();
-    int GotoXY(int x, int y);
-    int SetFgColor(enum colors color);
-    int SetBgColor(enum colors color);
+        // unsafe move
+        void GotoXY(int x, int y);
 
-    int GetScreenSizeX();
-    int GetScreenSizeY();
-    myTerm();
-};
+        // colors
+        void SetFgColor(enum colors color);
+        void SetBgColor(enum colors color);
 
-class myBigChars : public myTerm
-{
-private:
-    // prints string using additional code table
-    int PrintA(char *str);
+        // prints string using additional code table
+        void PrintExtended(char *str);
+    } // namespace comands
 
-    int SetBigCharPos(int *big, int x, int y, int value);
-    int GetBigCharPos(int *big, int x, int y, int *value);
+    class BigChar
+    {
+    private:
+        int SetBigCharPos(int *big, int x, int y, int value);
+        int GetBigCharPos(int *big, int x, int y, int *value);
 
-public:
-    // prints box, just box ;)
-    int PrintBox(int x1, int y1, int x2, int y2);
+        int *big;
 
-    // prints big char 8x8
-    int PrintBigChar(int *big, int x, int y, enum colors fg, enum colors bg);
+    public:
+        int _x;
+        int _y;
 
-    //write 'count' bigchars 'big' into 'fd'
-    int Write(int fd, int *big, int count);
-    // read bigchar from file
-    int Read(int fd, int *big, int need_count, int *count);
+        BigChar(int x_pos, int y_pos);
+        // prints big char 8x8
+        int PrintBigChar(enum colors fg, enum colors bg);
+        // specific func for transform matrix into big char
+        // char bigchar_array[64] = {}
+        void ArrToBig(const char *arr);
+    };
 
-    // specific func for transform array into big char
-    // char bigchar_array[64] = {}
-    int *ArrToBig(const char *arr);
-};
-
-//Adapter for myTerm and myBigChars modules
-class Interface // visual output system
-{
-public:
-    myBigChars term;
-    void GoToLastRow();
-
-    Interface() : term() {}
-};
+    class Box
+    {
+    public:
+        int x1, y1, x2, y2;
+        Box(int x_pos1, int y_pos1, int x_pos2, int y_pos2);
+        // prints box, just box ;)
+        void Print();
+    };
 
 } // namespace terminal
