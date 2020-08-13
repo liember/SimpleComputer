@@ -4,26 +4,30 @@ using namespace ALM;
 
 int Executor::Tik(Memory::RandomAcsessMemory &data, Memory::RandomAcsessMemory &commands)
 {
-    auto value = commands.Read(instruction_counter.Read());
-    try
+    if (!state.Read(Flags::interrupt))
     {
-        Decode(value);
-        Calculate(data);
+        auto value = commands.Read(instruction_counter.Read());
+        try
+        {
+            Decode(value);
+            Calculate(data);
+        }
+        catch (const std::exception &e)
+        {
+            state.Set(Flags::interrupt, true);
+            std::cerr << e.what() << '\n';
+        }
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-
     return 0;
 }
 
 void Executor::Calculate(Memory::RandomAcsessMemory &data)
 {
+    int result = INT32_MAX;
     switch (command)
     {
     case comands::add:
-        const int result = accamulator.Read() + data.Read(operand);
+        result = accamulator.Read() + data.Read(operand);
         if (result < max_possible_value)
         {
             accamulator.Set(result);
@@ -35,7 +39,7 @@ void Executor::Calculate(Memory::RandomAcsessMemory &data)
         break;
 
     case comands::sub:
-        const int result = accamulator.Read() - data.Read(operand);
+        result = accamulator.Read() - data.Read(operand);
         if (result > -max_possible_value)
         {
             accamulator.Set(result);
@@ -47,7 +51,7 @@ void Executor::Calculate(Memory::RandomAcsessMemory &data)
         break;
 
     case comands::mul:
-        const int result = accamulator.Read() * data.Read(operand);
+        result = accamulator.Read() * data.Read(operand);
         if (result < max_possible_value)
         {
             accamulator.Set(result);
@@ -61,7 +65,7 @@ void Executor::Calculate(Memory::RandomAcsessMemory &data)
     case comands::divide:
         if (data.Read(operand) != 0)
         {
-            const int result = accamulator.Read() / data.Read(operand);
+            result = accamulator.Read() / data.Read(operand);
             accamulator.Set(result);
         }
         else
@@ -134,7 +138,7 @@ void Executor::Decode(const int16_t value)
     }
     else
     {
-        throw StringException("Undefined comand");
+        throw Errors::UndefinedCommand(value);
     }
 }
 
