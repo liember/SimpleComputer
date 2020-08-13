@@ -1,13 +1,7 @@
 #pragma once
 
-#include "mem_extern.hpp"
-#include "mem_intern.hpp"
-#include "user_interaction.hpp"
-#include "Executor.hpp"
-
-//TO DO INTERRUPT MANAGER
-
-#include <csignal>
+#include "memory.hpp"
+#include "execution.hpp"
 
 namespace mySimpleComputer
 {
@@ -15,21 +9,24 @@ namespace mySimpleComputer
     class SimpleComputer
     {
     private:
-        internal_memory::Interface internal_mem;
-        external_memory::Interface external_mem;
-        user_interaction::Interface system_io;
-        ALU::Interface processor;
+        Memory::RandomAcsessMemory data;
+        Memory::RandomAcsessMemory commands;
+
+        ALM::Executor core;
+
+        bool run_status;
+        bool gui_status;
 
     public:
         SimpleComputer();
 
         bool SelfTest();
 
-        bool run_status;
-        void Init();
+        bool isRun();
+        void Init(bool gui);
         void Process();
-        void Run(int sig);
-        void Reset(int sig);
+        void Display();
+        void Restart();
         void End();
     };
 
