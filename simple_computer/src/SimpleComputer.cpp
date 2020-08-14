@@ -40,7 +40,7 @@ void SimpleComputer::Display()
 {
     if (gui_status)
     {
-        // TO DO gui mode
+        interface.Draw();
     }
 
     else

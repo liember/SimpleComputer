@@ -3,9 +3,12 @@
 int main()
 {
   mySimpleComputer::SimpleComputer Computer;
-  Computer.Init(false);
+  Computer.Init(true);
   while (Computer.isRun())
+  {
+    Computer.Display();
     Computer.Process();
+  }
   Computer.End();
 
   return 0;

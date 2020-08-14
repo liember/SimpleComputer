@@ -2,6 +2,7 @@
 
 #include "memory.hpp"
 #include "execution.hpp"
+#include "SimpleView.hpp"
 
 namespace mySimpleComputer
 {
@@ -13,6 +14,8 @@ namespace mySimpleComputer
         Memory::RandomAcsessMemory commands;
 
         ALM::Executor core;
+
+        View interface;
 
         bool run_status;
         bool gui_status;
