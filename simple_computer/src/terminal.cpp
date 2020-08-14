@@ -116,6 +116,14 @@ int BigChar::PrintBigChar(enum colors fg, enum colors bg)
 	return 0;
 }
 
+Box::Box(int x_pos1, int y_pos1, int x_pos2, int y_pos2)
+{
+	x1 = x_pos1;
+	x2 = x_pos2;
+	y1 = y_pos1;
+	y2 = y_pos2;
+}
+
 void Box::Print()
 {
 	if (x1 > x2)
@@ -143,4 +151,40 @@ void Box::Print()
 	for (int i = x1 + 1; i < x2; i++)
 		comands::PrintExtended(BOXCHAR_HOR);
 	comands::PrintExtended(BOXCHAR_BR);
+}
+
+TitledBox::TitledBox(int x_pos1, int y_pos1, int x_pos2, int y_pos2, std::string box_title) : Box(x_pos1, y_pos1, x_pos2, y_pos2)
+{
+	title = box_title;
+}
+
+void TitledBox::Print()
+{
+	if (x1 > x2)
+	{
+		std::swap(x1, x2);
+	}
+	if (y1 > y2)
+	{
+		std::swap(x1, x2);
+	}
+	comands::GotoXY(x1, y1);
+	comands::PrintExtended(BOXCHAR_TL);
+	for (int i = x1 + 1; i < x2; i++)
+		comands::PrintExtended(BOXCHAR_HOR);
+	comands::PrintExtended(BOXCHAR_TR);
+	for (int i = y1 + 1; i < y2; i++)
+	{
+		comands::GotoXY(x1, i);
+		comands::PrintExtended(BOXCHAR_VERT);
+		comands::GotoXY(x2, i);
+		comands::PrintExtended(BOXCHAR_VERT);
+	}
+	comands::GotoXY(x1, y2);
+	comands::PrintExtended(BOXCHAR_BL);
+	for (int i = x1 + 1; i < x2; i++)
+		comands::PrintExtended(BOXCHAR_HOR);
+	comands::PrintExtended(BOXCHAR_BR);
+	comands::GotoXY(x1, y1);
+	std::cout << title;
 }

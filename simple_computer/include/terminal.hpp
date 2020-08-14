@@ -3,6 +3,7 @@
 #include <sys/ioctl.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string>
 
 namespace terminal
 {
@@ -74,7 +75,15 @@ namespace terminal
         int x1, y1, x2, y2;
         Box(int x_pos1, int y_pos1, int x_pos2, int y_pos2);
         // prints box, just box ;)
-        void Print();
+        virtual void Print();
+    };
+
+    class TitledBox : public Box
+    {
+    public:
+        TitledBox(int x_pos1, int y_pos1, int x_pos2, int y_pos2, std::string box_title);
+        std::string title;
+        void Print() override;
     };
 
 } // namespace terminal
