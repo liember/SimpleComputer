@@ -69,7 +69,8 @@ namespace Memory
         void Init();
 
         void Set(int, uint16_t);
-        int16_t Read(unsigned int);
+        int16_t Read(unsigned int) const;
+        int GetErr() const { return err_info; }
 
         void Save(const char *);
         void Load(const char *);
@@ -85,14 +86,9 @@ namespace Memory
 
     public:
         ValRegister();
-        bool isModified()
-        {
-            bool mo = modified;
-            modified = false;
-            return mo;
-        }
+        bool isModified() const { return modified; }
         void Set(int16_t v);
-        int16_t Read();
+        int16_t Read() const;
     };
 
     // may contain up to 8 flags
@@ -105,13 +101,8 @@ namespace Memory
 
     public:
         void Init();
-        bool isModified()
-        {
-            bool mo = modified;
-            modified = false;
-            return mo;
-        }
-        int Read(uint8_t regist);
+        bool isModified() const { return modified; }
+        int Read(uint8_t regist) const;
         void Set(uint8_t regist, bool value);
     };
 

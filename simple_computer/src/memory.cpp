@@ -31,11 +31,10 @@ RandomAcsessMemory::~RandomAcsessMemory()
     memory.reset();
 }
 
-int16_t RandomAcsessMemory::Read(unsigned int index)
+int16_t RandomAcsessMemory::Read(unsigned int index) const
 {
     if (index >= size)
     {
-        err_info++;
         throw Errors::UndefIndex(index);
     }
     return memory[index];
@@ -70,7 +69,7 @@ void RandomAcsessMemory::Set(int index, uint16_t value)
     memory[index] = value;
 }
 
-int FlagRegisters::Read(uint8_t regist)
+int FlagRegisters::Read(uint8_t regist) const
 {
     if ((regist >= 0) && (regist <= 7))
     {
@@ -110,7 +109,7 @@ void ValRegister::Set(int16_t v)
     modified = true;
     cell = v;
 }
-int16_t ValRegister::Read()
+int16_t ValRegister::Read() const
 {
     return cell;
 }
