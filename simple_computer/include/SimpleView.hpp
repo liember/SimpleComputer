@@ -29,11 +29,10 @@ namespace mySimpleComputer
         terminal::TitledBox command;
 
         // core
-        terminal::TitledBox accamulator;
-        terminal::TitledBox state;
-        terminal::TitledBox instruction;
+        terminal::TitledBox CoreInfo;
 
         terminal::TitledBox output;
+        terminal::TitledBox input;
 
         // some ui elements drawing
         void print_flags(int x, int y, int registers);

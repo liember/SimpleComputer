@@ -7,12 +7,11 @@
 
 using namespace mySimpleComputer;
 
-View::View() : data(0, 0, 10, 10, "Data"),
-               command(11, 0, 21, 10, "Commands"),
-               accamulator(25, 2, 63, 7, "Accamulator"),
-               state(25, 2, 63, 10, "Flags"),
-               instruction(25, 2, 63, 4, "Instruction"),
-               output(25, 2, 65, 10, "Out")
+View::View() : data(71, 1, 100, 7, "Data Memory"),
+               command(71, 8, 100, 14, "Command Memory"),
+               CoreInfo(1, 1, 70, 14, "Core"),
+               output(51, 15, 100, 17, "Out"),
+               input(1, 15, 50, 17, "Input")
 {
 }
 
@@ -21,9 +20,14 @@ int View::Draw()
     terminal::comands::ClrScreen();
     data.Print();
     command.Print();
-    accamulator.Print();
-    instruction.Print();
-    state.Print();
+    CoreInfo.Print();
     output.Print();
+    input.Print();
+
+    terminal::comands::GotoXY(2, 16);
+
+    int i;
+    std::cin >> i;
+
     return 0;
 }
