@@ -1,7 +1,7 @@
 #pragma once
 
 #include "memory.hpp"
-#include "execution.hpp"
+#include "core.hpp"
 
 namespace mySimpleComputer
 {

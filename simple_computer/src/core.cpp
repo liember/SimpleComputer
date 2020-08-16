@@ -1,4 +1,4 @@
-#include "execution.hpp"
+#include "core.hpp"
 
 using namespace ALM;
 
@@ -10,12 +10,32 @@ int Executor::Tik(Memory::RandomAcsessMemory &data, Memory::RandomAcsessMemory &
         try
         {
             Decode(value);
+        }
+        catch (Errors::UndefinedCommand &e)
+        {
+            std::cerr << "Undef cmd: " << e.GetVal() << '\n';
+            exit(1);
+        }
+
+        // TO DO fully err log (vall addr, oerands, instruction counter)
+        try
+        {
             Calculate(data);
         }
-        catch (const std::exception &e)
+        catch (const Memory::Errors::UndefIndex &e)
         {
-            state.Set(Flags::interrupt, true);
-            std::cerr << e.what() << '\n';
+            state.Set(Flags::error, true);
+            err_msg = "Misstake query RAM index: " + std::to_string(e.GetVal()) + '\n';
+        }
+        catch (const Errors::Overflow &e)
+        {
+            state.Set(Flags::error, true);
+            err_msg = "Calculation value overflow: " + std::to_string(e.GetVal()) + '\n';
+        }
+        catch (const Errors::ZeroDivizion &e)
+        {
+            state.Set(Flags::error, true);
+            err_msg = "Calculation error (zero division): " + std::to_string(e.GetVal()) + '\n';
         }
     }
     return 0;
@@ -26,9 +46,11 @@ void Executor::Calculate(Memory::RandomAcsessMemory &data)
     int result = INT32_MAX;
     switch (command)
     {
+
     case comands::add:
+
         result = accamulator.Read() + data.Read(operand);
-        if (result < max_possible_value)
+        if (std::abs(result) < max_possible_value)
         {
             accamulator.Set(result);
         }
@@ -40,7 +62,7 @@ void Executor::Calculate(Memory::RandomAcsessMemory &data)
 
     case comands::sub:
         result = accamulator.Read() - data.Read(operand);
-        if (result > -max_possible_value)
+        if (std::abs(result) < max_possible_value)
         {
             accamulator.Set(result);
         }
@@ -52,7 +74,7 @@ void Executor::Calculate(Memory::RandomAcsessMemory &data)
 
     case comands::mul:
         result = accamulator.Read() * data.Read(operand);
-        if (result < max_possible_value)
+        if (std::abs(result) < max_possible_value)
         {
             accamulator.Set(result);
         }
@@ -166,4 +188,9 @@ void Executor::Restart()
 {
     instruction_counter.Set(0);
     accamulator.Set(0);
+}
+
+std::string const Executor::GetErr()
+{
+    return err_msg;
 }

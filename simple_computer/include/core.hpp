@@ -1,7 +1,6 @@
 #pragma once
 
 #include "memory.hpp"
-#include "exceptions.hpp"
 
 #include <algorithm>
 #include <exception>
@@ -12,7 +11,8 @@ namespace ALM
 {
     enum Flags
     {
-        interrupt = 0,
+        interrupt,
+        error,
     };
 
     enum comands
@@ -71,7 +71,7 @@ namespace ALM
             }
             virtual ~ZeroDivizion() throw() {}
 
-            int GetVal()
+            const int GetVal() const throw()
             {
                 return divided;
             }
@@ -89,7 +89,7 @@ namespace ALM
             }
             virtual ~UndefinedCommand() throw() {}
 
-            int GetVal()
+            const int GetVal() const throw()
             {
                 return cmd;
             }
@@ -107,7 +107,7 @@ namespace ALM
             }
             virtual ~Overflow() throw() {}
 
-            int GetVal()
+            const int GetVal() const throw()
             {
                 return overlowed_val;
             }
@@ -117,6 +117,10 @@ namespace ALM
     class Executor
     {
     private:
+        // error msg contains here
+        std::string err_msg;
+
+        // max val which can be calculated
         static constexpr int max_possible_value = 0x3fff;
 
         void Decode(const int16_t value);
@@ -167,6 +171,8 @@ namespace ALM
 
         // make one step of execution
         int Tik(Memory::RandomAcsessMemory &data, Memory::RandomAcsessMemory &commands);
+
+        std::string const GetErr();
     };
 
 } // namespace ALM
