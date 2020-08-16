@@ -4,6 +4,10 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <termios.h>
 
 namespace terminal
 {
@@ -84,6 +88,18 @@ namespace terminal
         TitledBox(int x_pos1, int y_pos1, int x_pos2, int y_pos2, std::string box_title);
         std::string title;
         void Print() override;
+    };
+
+    class InputListener
+    {
+    public:
+    private:
+        char lastkey[16];
+        int SwitchRegime(int regime, int vtime, int vmin, int echo, int sigint);
+
+    public:
+        int ReadKey();
+        char *GetKey() { return lastkey; }
     };
 
 } // namespace terminal

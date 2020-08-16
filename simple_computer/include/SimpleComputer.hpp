@@ -2,7 +2,7 @@
 
 #include "memory.hpp"
 #include "execution.hpp"
-#include "SimpleView.hpp"
+#include "SimpleUI.hpp"
 
 namespace mySimpleComputer
 {

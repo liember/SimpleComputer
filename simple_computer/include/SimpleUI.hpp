@@ -1,6 +1,5 @@
 #pragma once
 
-#include "myReadkey.hpp"
 #include "terminal.hpp"
 
 namespace mySimpleComputer

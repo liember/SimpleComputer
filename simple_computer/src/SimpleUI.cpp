@@ -1,9 +1,4 @@
-#include <string>
-#include <sstream>
-#include <iomanip>
-#include <iostream>
-
-#include "SimpleView.hpp"
+#include "SimpleUI.hpp"
 
 using namespace mySimpleComputer;
 
@@ -25,9 +20,5 @@ int View::Draw()
     input.Print();
 
     terminal::comands::GotoXY(2, 16);
-
-    int i;
-    std::cin >> i;
-
     return 0;
 }
