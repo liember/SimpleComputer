@@ -13,8 +13,7 @@ int Executor::Tik(Memory::RandomAcsessMemory &data, Memory::RandomAcsessMemory &
         }
         catch (Errors::UndefinedCommand &e)
         {
-            std::cerr << "Undef cmd: " << e.GetVal() << '\n';
-            exit(1);
+            err_msg = "Undef cmd: " + std::to_string(e.GetVal()) + '\n';
         }
 
         // TO DO fully err log (vall addr, oerands, instruction counter)
@@ -164,24 +163,9 @@ void Executor::Decode(const int16_t value)
     }
 }
 
-int Executor::GetPos()
-{
-    return instruction_counter.Read();
-}
-
-bool Executor::CheckState()
-{
-    return state.Read(Flags::interrupt);
-}
-
 void Executor::Interrupt()
 {
     state.Set(Flags::interrupt, true);
-}
-
-int Executor::CheckOutput()
-{
-    return output.Read();
 }
 
 void Executor::Restart()

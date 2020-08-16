@@ -150,25 +150,23 @@ namespace ALM
         Memory::ValRegister output;
 
     public:
-        // sets instruction counter
-        // void SetPos(int pos);
-
-        // returns current value (copy of class) of instruction counter
-        int GetPos();
-
-        // Returns (true) if interrupt
-        bool CheckState();
+        // Get info functions (returns buffeers)
+        const Memory::FlagRegisters GetState() const { return state; }
+        const Memory::ValRegister GetInstruction() const { return instruction_counter; }
+        const Memory::ValRegister GetAccamulator() const { return accamulator; }
+        const Memory::ValRegister GetBuf1() const { return buf1; }
+        const Memory::ValRegister GetBuf2() const { return buf2; }
+        const Memory::ValRegister GetBuf3() const { return buf3; }
+        const Memory::ValRegister GetBuf4() const { return buf4; }
+        const Memory::ValRegister GetBuf5() const { return buf5; }
+        const Memory::ValRegister GetBuf6() const { return buf6; }
+        const Memory::ValRegister GetOutput() const { return output; }
+        const std::string GetErr() const { return err_msg; }
 
         // Set interrupt flag - true
         void Interrupt();
-
-        // returns value in output buffer
-        // if value is apsent returns MAX_INT
-        int CheckOutput();
-
         // sets instruction counter - 0
         void Restart();
-
         // make one step of execution
         int Tik(Memory::RandomAcsessMemory &data, Memory::RandomAcsessMemory &commands);
 
