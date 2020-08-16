@@ -6,28 +6,47 @@
 #include <memory>
 #include <array>
 
-#include "exceptions.hpp"
-
 namespace Memory
 {
 
-    class UndefIndex : virtual public std::exception
+    namespace errors
     {
-    protected:
-        int index;
-
-    public:
-        explicit UndefIndex(int i)
+        class UndefIndex : virtual public std::exception
         {
-            index = i;
-        }
-        virtual ~UndefIndex() throw() {}
+        protected:
+            int index;
 
-        int GetVal()
+        public:
+            explicit UndefIndex(int i)
+            {
+                index = i;
+            }
+            virtual ~UndefIndex() throw() {}
+
+            const int GetVal() const throw()
+            {
+                return index;
+            }
+        };
+
+        class SizeFailrule : virtual public std::exception
         {
-            return index;
-        }
-    };
+        protected:
+            int index;
+
+        public:
+            explicit SizeFailrule(int i)
+            {
+                index = i;
+            }
+            virtual ~SizeFailrule() throw() {}
+
+            const int GetVal() const throw()
+            {
+                return index;
+            }
+        };
+    } // namespace errors
 
     inline constexpr uint16_t max_mem_size = 128;
     // standart memory value (if does not set by user)

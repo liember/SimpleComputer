@@ -1,5 +1,4 @@
 #include "memory.hpp"
-#include "exceptions.hpp"
 
 #include <iostream>
 
@@ -9,8 +8,7 @@ RandomAcsessMemory::RandomAcsessMemory() : size(standart_memory_size)
 {
     if (standart_memory_size > max_mem_size)
     {
-        err_info++;
-        throw StringException("Standart memory size more than max memory size");
+        throw errors::SizeFailrule(standart_memory_size);
     }
 
     std::unique_ptr<int16_t[]> new_memory(new int16_t[size]);
@@ -21,8 +19,7 @@ RandomAcsessMemory::RandomAcsessMemory(int s) : size(s)
 {
     if (s > max_mem_size)
     {
-        err_info++;
-        throw StringException("Memory size " + std::to_string(s) + " more than max memory size");
+        throw errors::SizeFailrule(s);
     }
 
     std::unique_ptr<int16_t[]> new_memory(new int16_t[size]);
@@ -39,7 +36,7 @@ int16_t RandomAcsessMemory::Read(unsigned int index)
     if (index >= size)
     {
         err_info++;
-        throw UndefIndex(index);
+        throw errors::UndefIndex(index);
     }
     return memory[index];
 }
@@ -68,7 +65,7 @@ void RandomAcsessMemory::Set(int index, uint16_t value)
     if (index >= size)
     {
         err_info++;
-        throw UndefIndex(index);
+        throw errors::UndefIndex(index);
     }
     memory[index] = value;
 }
@@ -81,7 +78,7 @@ int FlagRegisters::Read(uint8_t regist)
     }
     else
     {
-        throw UndefIndex(regist);
+        throw errors::UndefIndex(regist);
     }
     return 0;
 }
@@ -104,7 +101,7 @@ void FlagRegisters::Set(uint8_t regist, bool value)
     }
     else
     {
-        throw UndefIndex(regist);
+        throw errors::UndefIndex(regist);
     }
 }
 
