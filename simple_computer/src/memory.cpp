@@ -75,7 +75,7 @@ void RandomAcsessMemory::Set(int index, uint16_t value)
 
 int FlagRegisters::Read(uint8_t regist)
 {
-    if ((regist >= 0) && (regist <= 4))
+    if ((regist >= 0) && (regist <= 7))
     {
         return (((flags) >> regist) & 1);
     }
@@ -93,10 +93,17 @@ void FlagRegisters::Init()
 
 void FlagRegisters::Set(uint8_t regist, bool value)
 {
-    if (value)
-        flags = flags | (1 << regist);
+    if ((regist >= 0) && (regist <= 7))
+    {
+        if (value)
+            flags = flags | (1 << regist);
+        else
+            flags = flags & (~(1 << regist));
+    }
     else
-        flags = flags & (~(1 << regist));
+    {
+        throw UndefIndex(regist);
+    }
 }
 
 void ValRegister::Set(int16_t v)
