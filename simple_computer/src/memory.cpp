@@ -8,7 +8,7 @@ RandomAcsessMemory::RandomAcsessMemory() : size(standart_memory_size)
 {
     if (standart_memory_size > max_mem_size)
     {
-        throw errors::SizeFailrule(standart_memory_size);
+        throw Errors::SizeFailrule(standart_memory_size);
     }
 
     std::unique_ptr<int16_t[]> new_memory(new int16_t[size]);
@@ -19,7 +19,7 @@ RandomAcsessMemory::RandomAcsessMemory(int s) : size(s)
 {
     if (s > max_mem_size)
     {
-        throw errors::SizeFailrule(s);
+        throw Errors::SizeFailrule(s);
     }
 
     std::unique_ptr<int16_t[]> new_memory(new int16_t[size]);
@@ -36,7 +36,7 @@ int16_t RandomAcsessMemory::Read(unsigned int index)
     if (index >= size)
     {
         err_info++;
-        throw errors::UndefIndex(index);
+        throw Errors::UndefIndex(index);
     }
     return memory[index];
 }
@@ -65,7 +65,7 @@ void RandomAcsessMemory::Set(int index, uint16_t value)
     if (index >= size)
     {
         err_info++;
-        throw errors::UndefIndex(index);
+        throw Errors::UndefIndex(index);
     }
     memory[index] = value;
 }
@@ -78,7 +78,7 @@ int FlagRegisters::Read(uint8_t regist)
     }
     else
     {
-        throw errors::UndefIndex(regist);
+        throw Errors::UndefIndex(regist);
     }
     return 0;
 }
@@ -101,7 +101,7 @@ void FlagRegisters::Set(uint8_t regist, bool value)
     }
     else
     {
-        throw errors::UndefIndex(regist);
+        throw Errors::UndefIndex(regist);
     }
 }
 

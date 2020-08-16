@@ -9,7 +9,7 @@
 namespace Memory
 {
 
-    namespace errors
+    namespace Errors
     {
         class UndefIndex : virtual public std::exception
         {
@@ -46,7 +46,7 @@ namespace Memory
                 return index;
             }
         };
-    } // namespace errors
+    } // namespace Errors
 
     inline constexpr uint16_t max_mem_size = 128;
     // standart memory value (if does not set by user)
