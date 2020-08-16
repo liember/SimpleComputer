@@ -11,6 +11,24 @@
 namespace Memory
 {
 
+    class UndefIndex : virtual public std::exception
+    {
+    protected:
+        int index;
+
+    public:
+        explicit UndefIndex(int i)
+        {
+            index = i;
+        }
+        virtual ~UndefIndex() throw() {}
+
+        int GetVal()
+        {
+            return index;
+        }
+    };
+
     inline constexpr uint16_t max_mem_size = 128;
     // standart memory value (if does not set by user)
     inline constexpr uint16_t standart_memory_size = 100;
@@ -19,6 +37,8 @@ namespace Memory
     {
     private:
         std::unique_ptr<int16_t[]> memory;
+
+        int err_info;
 
     public:
         const int size;
@@ -62,7 +82,3 @@ namespace Memory
     };
 
 } // namespace Memory
-
-
-
-
