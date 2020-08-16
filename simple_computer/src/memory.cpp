@@ -88,6 +88,7 @@ int FlagRegisters::Read(uint8_t regist)
 
 void FlagRegisters::Init()
 {
+    modified = true;
     flags = 0;
 }
 
@@ -95,6 +96,7 @@ void FlagRegisters::Set(uint8_t regist, bool value)
 {
     if ((regist >= 0) && (regist <= 7))
     {
+        modified = true;
         if (value)
             flags = flags | (1 << regist);
         else
@@ -108,6 +110,7 @@ void FlagRegisters::Set(uint8_t regist, bool value)
 
 void ValRegister::Set(int16_t v)
 {
+    modified = true;
     cell = v;
 }
 int16_t ValRegister::Read()

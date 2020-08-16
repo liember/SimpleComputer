@@ -62,9 +62,16 @@ namespace Memory
     private:
         int16_t cell;
 
+        bool modified;
+
     public:
         ValRegister();
-
+        bool isModified()
+        {
+            bool mo = modified;
+            modified = false;
+            return mo;
+        }
         void Set(int16_t v);
         int16_t Read();
     };
@@ -75,8 +82,16 @@ namespace Memory
     private:
         uint8_t flags;
 
+        bool modified;
+
     public:
         void Init();
+        bool isModified()
+        {
+            bool mo = modified;
+            modified = false;
+            return mo;
+        }
         int Read(uint8_t regist);
         void Set(uint8_t regist, bool value);
     };
